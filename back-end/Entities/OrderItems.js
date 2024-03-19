@@ -1,3 +1,6 @@
+import db from "../dbConfig.js";
+import Sequelize from "sequelize";
+
 const OrderItems = db.define("OrderItems", {
   order_item_id: {
     type: Sequelize.INTEGER,

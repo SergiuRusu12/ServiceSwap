@@ -33,7 +33,7 @@ function Create_DB() {
 function FK_Config() {
   Users.hasMany(Orders, { foreignKey: "buyer_fk_user_id" });
   Users.hasMany(MessagesChat, { foreignKey: "sender_fk_user_id" });
-  Orders.belongsTo(User, { foreignKey: "buyer_fk_user_id" });
+  Orders.belongsTo(Users, { foreignKey: "buyer_fk_user_id" });
   Orders.hasMany(OrderItems, { foreignKey: "order_fk" });
   Orders.hasOne(Reviews, { foreignKey: "order_fk_order_id" });
   Services.belongsTo(Categories, { foreignKey: "category_fk" });

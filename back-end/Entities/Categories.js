@@ -1,3 +1,6 @@
+import db from "../dbConfig.js";
+import Sequelize from "sequelize";
+
 const Categories = db.define("Categories", {
   category_id: {
     type: Sequelize.INTEGER,

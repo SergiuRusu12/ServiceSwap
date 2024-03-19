@@ -1,3 +1,6 @@
+import db from "../dbConfig.js";
+import Sequelize from "sequelize";
+
 const Reviews = db.define("Reviews", {
   review_id: {
     type: Sequelize.INTEGER,
