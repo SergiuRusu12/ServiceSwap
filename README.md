@@ -1,6 +1,7 @@
 cd my-app
 
 npm install react-scripts --save
+npm install react-router-dom
 
 npm install @fortawesome/fontawesome-svg-core @fortawesome/free-brands-svg-icons @fortawesome/free-regular-svg-icons @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome
 

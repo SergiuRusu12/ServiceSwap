@@ -1,10 +1,13 @@
 import "./App.css";
-
+import LoginSignup from "./components/LoginSignup";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 function App() {
   return (
-    <div className="App">
-      <h1>Service Swap</h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<LoginSignup />} />
+      </Routes>
+    </Router>
   );
 }
 
