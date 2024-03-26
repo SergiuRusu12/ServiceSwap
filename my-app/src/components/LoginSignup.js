@@ -119,6 +119,9 @@ const LoginSignup = () => {
 
   return (
     <form className="container" onSubmit={handleSubmit}>
+      <div className="header">
+        <div className="text">{action}</div>
+      </div>
       {/* Rest of your component */}
       <div className="inputs">
         {/* Email input for Sign Up */}
