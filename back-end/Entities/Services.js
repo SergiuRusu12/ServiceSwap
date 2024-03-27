@@ -36,6 +36,10 @@ const Services = db.define("Services", {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
+  locality: {
+    type: Sequelize.STRING, // Assuming locality is a string like "Cluj-Napoca"
+    allowNull: true, // Assuming locality may not be applicable to all categories, set to false if it's always required
+  },
 });
 
 export default Services;

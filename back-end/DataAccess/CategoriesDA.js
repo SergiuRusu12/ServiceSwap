@@ -21,6 +21,13 @@ async function deleteCategoryById(category_id) {
 async function updateCategoryById(category_id, categoryDetails) {
   return await Categories.update(categoryDetails, { where: { category_id } });
 }
+async function getCategoriesByIds(categoryIds) {
+  return await Categories.findAll({
+    where: {
+      category_id: categoryIds,
+    },
+  });
+}
 
 export {
   getCategories,
@@ -28,4 +35,5 @@ export {
   createCategory,
   deleteCategoryById,
   updateCategoryById,
+  getCategoriesByIds, // Make sure to export this new function
 };

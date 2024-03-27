@@ -24,6 +24,12 @@ const User = db.define("User", {
     type: Sequelize.TEXT,
     allowNull: true,
   },
+  // Add the user_type field as an enum
+  user_type: {
+    type: Sequelize.ENUM("normal", "admin"),
+    allowNull: false,
+    defaultValue: "normal", // Assuming 'normal' is the default user type
+  },
 });
 
 export default User;

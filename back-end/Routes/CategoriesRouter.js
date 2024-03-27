@@ -1,5 +1,3 @@
-// categoriesRouter.js
-
 import express from "express";
 import {
   getCategories,
@@ -7,6 +5,7 @@ import {
   createCategory,
   deleteCategoryById,
   updateCategoryById,
+  getCategoriesByIds, // Import the new function
 } from "../DataAccess/CategoriesDA.js";
 
 let categoriesRouter = express.Router();
@@ -40,6 +39,19 @@ categoriesRouter.put("/category/:id", async (req, res) => {
     return res.status(200).json({ message: "Category updated successfully" });
   } else {
     return res.status(404).json({ error: true, message: "Category not found" });
+  }
+});
+
+categoriesRouter.post("/categories/names", async (req, res) => {
+  try {
+    const categoryIds = req.body; // Expect an array of category IDs
+    // Fetch categories directly by their IDs
+    const categories = await getCategoriesByIds(categoryIds);
+    res.json(categories.map((cat) => cat.name));
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: true, message: "Error fetching category names" });
   }
 });
 

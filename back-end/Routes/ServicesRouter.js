@@ -7,6 +7,7 @@ import {
   createService,
   deleteServiceById,
   updateServiceById,
+  getServicesByCategoryId,
 } from "../DataAccess/ServicesDA.js";
 
 let servicesRouter = express.Router();
@@ -40,6 +41,18 @@ servicesRouter.put("/service/:id", async (req, res) => {
     return res.status(200).json({ message: "Service updated successfully" });
   } else {
     return res.status(404).json({ error: true, message: "Service not found" });
+  }
+});
+
+servicesRouter.get("/services/category/:categoryId", async (req, res) => {
+  try {
+    const categoryId = req.params.categoryId;
+    const services = await getServicesByCategoryId(categoryId);
+    res.json(services);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: true, message: "Error fetching services by category" });
   }
 });
 

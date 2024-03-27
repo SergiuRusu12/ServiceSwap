@@ -27,10 +27,20 @@ async function updateServiceById(service_id, serviceDetails) {
   return await Services.update(serviceDetails, { where: { service_id } });
 }
 
+async function getServicesByCategoryId(categoryId) {
+  return await Services.findAll({
+    where: {
+      category_fk: categoryId,
+      service_status: "Active", // Assuming you want only active services
+    },
+  });
+}
+
 export {
   getServices,
   getServiceById,
   createService,
   deleteServiceById,
   updateServiceById,
+  getServicesByCategoryId,
 };

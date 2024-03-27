@@ -1,0 +1,145 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevents horizontal scroll */
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  overflow-y: auto; /* Ensures vertical scroll */
+}
+
+.container {
+  padding-top: 70px; /* Adjust this value to the height of your fixed header */
+  padding-bottom: 30px; /* Space for the bottom */
+}
+
+.container {
+  width: 80%;
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.service-card {
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.service-card:not(:last-child) {
+  margin-bottom: 30px;
+}
+
+.service-card h2 {
+  background-color: #007bff; /* A blue header background */
+  color: #fff;
+  padding: 15px 20px;
+  margin: 0;
+  font-size: 24px;
+}
+
+.service-card p {
+  padding: 15px 20px;
+  margin: 0;
+  color: #333;
+  font-size: 16px;
+}
+
+.service-card img {
+  max-width: 100%;
+  display: block;
+  height: auto;
+}
+
+/* Add responsiveness */
+@media (max-width: 768px) {
+  .container {
+    width: 90%;
+  }
+}
+
+/* Assuming your dropdown has a class named "dropdown" */
+
+.dropdown {
+  color: #000; /* Set text color to black (or any color that contrasts with your dropdown background) */
+  background-color: #fff; /* Set a background color that contrasts with your text color */
+}
+
+/* Style options within the dropdown */
+.dropdown option {
+  background: #fff; /* Ensure options are visible against a white background */
+  color: #000; /* Text color for options */
+}
+
+/* Change the text color for options when they are selected or in focus */
+.dropdown option:checked,
+.dropdown option:focus,
+.dropdown option:hover {
+  background: #007bff; /* Highlight color when selected or hovered */
+  color: #fff;
+}
+.filters select {
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+}
+
+.dropdown {
+  z-index: 1000; /* Or any number higher than the other elements on the page */
+  /* Other styles */
+}
+/* Modify the existing dropdown option styles */
+.dropdown option:checked,
+.dropdown option:focus,
+.dropdown option:hover {
+  background: #007bff; /* Blue background */
+  color: #fff; /* White text */
+}
+
+.dropdown option {
+  min-height: 20px; /* Or any other minimum height */
+  /* Other styles */
+}
+/* Space between filters and service cards */
+.filters {
+  margin-bottom: 30px; /* Add space below the filter dropdowns */
+}
+
+/* Adjusting padding for the container to give more space around elements */
+.container {
+  padding-top: 50px; /* Increasing top padding slightly */
+  padding-bottom: 40px; /* Adding more space at the bottom */
+}
+
+/* Adjusting service card spacing for better visual separation */
+.service-card {
+  margin-bottom: 35px; /* Slightly more space between service cards */
+}
+
+/* Styling adjustments for dropdown to keep it minimal */
+.filters select {
+  background-color: #f8f9fa; /* A light grey background for the dropdown */
+  color: #495057; /* A darker grey for the text to reduce contrast */
+}
+
+/* Style options within the dropdown for better visibility */
+.dropdown option {
+  padding: 10px; /* More padding for better clickability */
+}
+
+/* Ensuring the service card headers aren't too blue */
+.service-card h2 {
+  background-color: #0056b3; /* A less intense blue */
+}
