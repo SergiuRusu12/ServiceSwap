@@ -11,6 +11,10 @@ cd back-end
 
 npm install cors
 
+npm install cloudinary
+
+npm i @cloudinary/url-gen @cloudinary/react
+
 npm install dotenv
 
 npm install express

@@ -131,6 +131,9 @@ const MainPage = () => {
             <div className="service-card" key={service.service_id}>
               <h2>{service.title}</h2>
               <p>{service.description}</p>
+              {service.image_url && (
+                <img src={service.image_url} alt={service.title} />
+              )}
             </div>
           ))
         ) : (
