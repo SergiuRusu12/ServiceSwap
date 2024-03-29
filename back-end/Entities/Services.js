@@ -40,6 +40,10 @@ const Services = db.define("Services", {
     type: Sequelize.STRING, // Assuming locality is a string like "Cluj-Napoca"
     allowNull: true, // Assuming locality may not be applicable to all categories, set to false if it's always required
   },
+  image_url: {
+    type: Sequelize.STRING,
+    allowNull: true, // or false if you want to make it required
+  },
 });
 
 export default Services;

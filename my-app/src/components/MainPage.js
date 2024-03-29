@@ -1,8 +1,7 @@
 // MainPage.js
 import React, { useEffect, useState } from "react";
-import "../components-css/MainPage.css"; // Make sure to create and import the CSS styles
+import "../components-css/MainPage.css";
 
-// Assuming you have a predefined list of localities
 const localities = [
   "Alba Iulia",
   "Alexandria",
