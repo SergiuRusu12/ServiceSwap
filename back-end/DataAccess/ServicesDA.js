@@ -35,7 +35,12 @@ async function getServicesByCategoryId(categoryId) {
     },
   });
 }
-
+async function updateServiceImageById(service_id, imageUrl) {
+  return await Services.update(
+    { image_url: imageUrl },
+    { where: { service_id } }
+  );
+}
 export {
   getServices,
   getServiceById,
@@ -43,4 +48,5 @@ export {
   deleteServiceById,
   updateServiceById,
   getServicesByCategoryId,
+  updateServiceImageById,
 };

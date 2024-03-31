@@ -8,6 +8,7 @@ import {
   deleteServiceById,
   updateServiceById,
   getServicesByCategoryId,
+  updateServiceImageById,
 } from "../DataAccess/ServicesDA.js";
 
 let servicesRouter = express.Router();
@@ -53,6 +54,20 @@ servicesRouter.get("/services/category/:categoryId", async (req, res) => {
     res
       .status(500)
       .json({ error: true, message: "Error fetching services by category" });
+  }
+});
+servicesRouter.put("/service/:id/image", async (req, res) => {
+  const { id } = req.params;
+  const { imageUrl } = req.body;
+  try {
+    const result = await updateServiceImageById(id, imageUrl);
+    if (result[0]) {
+      res.json({ message: "Image updated successfully" });
+    } else {
+      res.status(404).json({ error: true, message: "Service not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: true, message: "Error updating image" });
   }
 });
 

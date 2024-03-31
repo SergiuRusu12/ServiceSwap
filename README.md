@@ -2,13 +2,14 @@ cd my-app
 
 npm install react-scripts --save
 npm install react-router-dom
-
+npm install react-slick slick-carousel
+npm install firebase
 npm install @fortawesome/fontawesome-svg-core @fortawesome/free-brands-svg-icons @fortawesome/free-regular-svg-icons @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome
 
 cd ..
 
 cd back-end
-
+npm install firebase
 npm install cors
 
 npm install cloudinary

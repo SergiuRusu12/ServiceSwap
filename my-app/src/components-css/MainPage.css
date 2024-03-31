@@ -143,3 +143,47 @@ body {
 .service-card h2 {
   background-color: #0056b3; /* A less intense blue */
 }
+
+/* Add your existing styles above */
+
+.service-card {
+  display: flex;
+  align-items: flex-start; /* Align the top of children */
+  padding: 15px;
+  gap: 20px;
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+  margin-bottom: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.service-info {
+  display: flex;
+  flex-direction: column; /* Stack title and description vertically */
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.service-image {
+  max-width: 200px;
+  height: auto;
+  border-radius: 10px;
+  margin-right: 20px; /* Right margin for spacing */
+}
+
+.service-card h2 {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 0;
+  border-radius: 5px;
+  display: inline-block; /* Make the background only as wide as the text */
+}
+
+.service-card p {
+  padding: 15px 0;
+  margin: 0;
+  color: #333;
+}
+
+/* Continue with your existing media queries and other styles */

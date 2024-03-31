@@ -1,6 +1,7 @@
-// MainPage.js
 import React, { useEffect, useState } from "react";
 import "../components-css/MainPage.css";
+// import { storage } from "../firebase"; // Make sure the path is correct
+// import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const localities = [
   "Alba Iulia",
@@ -55,6 +56,7 @@ const MainPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
+    // Function to fetch categories from your API
     const fetchCategories = async () => {
       try {
         const response = await fetch("http://localhost:9000/api/categories");
@@ -69,6 +71,7 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
+    // Function to fetch services from your API
     const fetchServices = async () => {
       const url = selectedCategory
         ? `http://localhost:9000/api/services/category/${selectedCategory}`
@@ -97,6 +100,7 @@ const MainPage = () => {
     <div className="container">
       <h1>Service Swap</h1>
       <div className="filters">
+        {/* Filters for locality and category */}
         <select
           value={selectedLocality}
           onChange={(e) => setSelectedLocality(e.target.value)}
@@ -129,11 +133,15 @@ const MainPage = () => {
         {filteredServices.length > 0 ? (
           filteredServices.map((service) => (
             <div className="service-card" key={service.service_id}>
-              <h2>{service.title}</h2>
-              <p>{service.description}</p>
               {service.image_url && (
-                <img src={service.image_url} alt={service.title} />
+                <div className="service-image">
+                  <img src={service.image_url} alt={service.title} />
+                </div>
               )}
+              <div className="service-info">
+                <h2>{service.title}</h2>
+                <p>{service.description}</p>
+              </div>
             </div>
           ))
         ) : (
