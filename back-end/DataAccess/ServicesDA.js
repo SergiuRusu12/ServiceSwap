@@ -41,6 +41,34 @@ async function updateServiceImageById(service_id, imageUrl) {
     { where: { service_id } }
   );
 }
+// Function to update the first extra image of a service by ID
+async function updateServiceExtraImage1ById(service_id, extraImage1Url) {
+  return await Services.update(
+    { extra_image_1: extraImage1Url },
+    { where: { service_id } }
+  );
+}
+
+// Function to update the second extra image of a service by ID
+async function updateServiceExtraImage2ById(service_id, extraImage2Url) {
+  return await Services.update(
+    { extra_image_2: extraImage2Url },
+    { where: { service_id } }
+  );
+}
+
+// Function to update all image fields of a service by ID
+async function updateAllServiceImagesById(service_id, imageUrls) {
+  return await Services.update(
+    {
+      image_url: imageUrls.image_url,
+      extra_image_1: imageUrls.extra_image_1,
+      extra_image_2: imageUrls.extra_image_2,
+    },
+    { where: { service_id } }
+  );
+}
+
 export {
   getServices,
   getServiceById,
@@ -49,4 +77,7 @@ export {
   updateServiceById,
   getServicesByCategoryId,
   updateServiceImageById,
+  updateAllServiceImagesById,
+  updateServiceExtraImage1ById,
+  updateServiceExtraImage2ById,
 };

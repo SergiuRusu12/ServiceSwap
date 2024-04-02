@@ -9,6 +9,9 @@ import {
   updateServiceById,
   getServicesByCategoryId,
   updateServiceImageById,
+  updateAllServiceImagesById,
+  updateServiceExtraImage1ById,
+  updateServiceExtraImage2ById,
 } from "../DataAccess/ServicesDA.js";
 
 let servicesRouter = express.Router();
@@ -68,6 +71,62 @@ servicesRouter.put("/service/:id/image", async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ error: true, message: "Error updating image" });
+  }
+});
+
+// Add route to update extra_image_1 for a service by ID
+servicesRouter.put("/service/:id/extraImage1", async (req, res) => {
+  const { id } = req.params;
+  const { extraImage1Url } = req.body;
+  try {
+    const result = await updateServiceExtraImage1ById(id, extraImage1Url);
+    if (result[0]) {
+      res.json({ message: "Extra Image 1 updated successfully" });
+    } else {
+      res.status(404).json({ error: true, message: "Service not found" });
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: true, message: "Error updating Extra Image 1" });
+  }
+});
+
+// Add route to update extra_image_2 for a service by ID
+servicesRouter.put("/service/:id/extraImage2", async (req, res) => {
+  const { id } = req.params;
+  const { extraImage2Url } = req.body;
+  try {
+    const result = await updateServiceExtraImage2ById(id, extraImage2Url);
+    if (result[0]) {
+      res.json({ message: "Extra Image 2 updated successfully" });
+    } else {
+      res.status(404).json({ error: true, message: "Service not found" });
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: true, message: "Error updating Extra Image 2" });
+  }
+});
+
+// Add route to update all images for a service by ID
+servicesRouter.put("/service/:id/allImages", async (req, res) => {
+  const { id } = req.params;
+  const { image_url, extra_image_1, extra_image_2 } = req.body;
+  try {
+    const result = await updateAllServiceImagesById(id, {
+      image_url,
+      extra_image_1,
+      extra_image_2,
+    });
+    if (result[0]) {
+      res.json({ message: "All images updated successfully" });
+    } else {
+      res.status(404).json({ error: true, message: "Service not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: true, message: "Error updating images" });
   }
 });
 

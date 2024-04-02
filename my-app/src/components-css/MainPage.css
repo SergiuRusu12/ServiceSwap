@@ -66,8 +66,6 @@ body {
   }
 }
 
-/* Assuming your dropdown has a class named "dropdown" */
-
 .dropdown {
   color: #000; /* Set text color to black (or any color that contrasts with your dropdown background) */
   background-color: #fff; /* Set a background color that contrasts with your text color */
@@ -174,16 +172,30 @@ body {
 .service-card h2 {
   background-color: #007bff;
   color: #fff;
-  padding: 10px 15px;
+  padding: 15px 20px;
   margin: 0;
   border-radius: 5px;
-  display: inline-block; /* Make the background only as wide as the text */
+  display: inline-block + 10px; /* Make the background only as wide as the text */
 }
 
 .service-card p {
   padding: 15px 0;
-  margin: 0;
+  margin: 10px;
   color: #333;
+  position: relative;
+}
+.details-button {
+  bottom: 10px;
+  right: 10px;
+  padding: 8px 12px;
+  background: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-/* Continue with your existing media queries and other styles */
+.details-button:hover {
+  background-color: #0056b3;
+}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../components-css/MainPage.css";
+import { useNavigate } from "react-router-dom";
 // import { storage } from "../firebase"; // Make sure the path is correct
 // import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
@@ -49,14 +50,14 @@ const localities = [
   "Zalau",
   "Other",
 ];
+
 const MainPage = () => {
   const [services, setServices] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedLocality, setSelectedLocality] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-
+  const navigate = useNavigate();
   useEffect(() => {
-    // Function to fetch categories from your API
     const fetchCategories = async () => {
       try {
         const response = await fetch("http://localhost:9000/api/categories");
@@ -71,7 +72,6 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
-    // Function to fetch services from your API
     const fetchServices = async () => {
       const url = selectedCategory
         ? `http://localhost:9000/api/services/category/${selectedCategory}`
@@ -142,6 +142,12 @@ const MainPage = () => {
                 <h2>{service.title}</h2>
                 <p>{service.description}</p>
               </div>
+              <button
+                className="details-button"
+                onClick={() => navigate(`/service/${service.service_id}`)}
+              >
+                See details...
+              </button>
             </div>
           ))
         ) : (

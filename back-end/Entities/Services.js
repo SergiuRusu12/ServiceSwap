@@ -44,6 +44,15 @@ const Services = db.define("Services", {
     type: Sequelize.STRING,
     allowNull: true, // or false if you want to make it required
   },
+  extra_image_1: {
+    type: Sequelize.STRING,
+    allowNull: true, // Set to false if the image is required
+  },
+  // Adding the extra_image_3 field
+  extra_image_2: {
+    type: Sequelize.STRING,
+    allowNull: true, // Set to false if the image is required
+  },
 });
 
 export default Services;
