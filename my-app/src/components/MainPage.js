@@ -56,6 +56,7 @@ const MainPage = () => {
   const [categories, setCategories] = useState([]);
   const [selectedLocality, setSelectedLocality] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     const fetchCategories = async () => {
@@ -88,19 +89,26 @@ const MainPage = () => {
     fetchServices();
   }, [selectedCategory]);
 
-  const filteredServices = selectedLocality
-    ? services.filter(
-        (service) =>
-          service.locality === selectedLocality &&
-          service.service_status === "Active"
-      )
-    : services.filter((service) => service.service_status === "Active");
+  const filteredServices = services
+    .filter((service) => service.service_status === "Active")
+    .filter(
+      (service) =>
+        service.locality === selectedLocality || selectedLocality === ""
+    )
+    .filter((service) =>
+      service.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
   return (
     <div className="container">
       <h1>Service Swap</h1>
       <div className="filters">
-        {/* Filters for locality and category */}
+        <input
+          type="text"
+          placeholder="Search by title..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
         <select
           value={selectedLocality}
           onChange={(e) => setSelectedLocality(e.target.value)}
@@ -112,7 +120,6 @@ const MainPage = () => {
             </option>
           ))}
         </select>
-
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
@@ -128,7 +135,6 @@ const MainPage = () => {
           ))}
         </select>
       </div>
-
       <div className="services-list">
         {filteredServices.length > 0 ? (
           filteredServices.map((service) => (

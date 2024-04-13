@@ -199,3 +199,41 @@ body {
 .details-button:hover {
   background-color: #0056b3;
 }
+
+.filters input[type="text"] {
+  padding: 8px;
+  margin-right: 10px; /* Right margin for spacing between filter elements */
+  border: 1px solid #ddd; /* Light grey border */
+  border-radius: 4px; /* Rounded corners */
+  background-color: white;
+  color: black; /* Text color */
+  width: 100%; /* Full width within its container */
+  max-width: 300px; /* Maximum width so it doesn't get too long */
+  box-sizing: border-box; /* Includes padding and border in the element's total width */
+  outline: none; /* Removes the default focus outline */
+}
+
+.filters input[type="text"]:focus {
+  border-color: #0056b3; /* A blue border on focus for better visibility */
+  box-shadow: 0 0 8px rgba(0, 86, 179, 0.2); /* Soft blue glow for visual feedback */
+}
+
+/* Make sure the filters container is flex to align items nicely */
+.filters {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  margin-bottom: 30px; /* Space below the filters before the list starts */
+}
+
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column; /* Stack filters vertically on smaller screens */
+    align-items: stretch; /* Align items to stretch to container width */
+  }
+  .filters input[type="text"],
+  .filters select {
+    width: calc(100% - 20px); /* Full width minus padding for mobile devices */
+    max-width: none; /* Overrides the max-width set above */
+    margin-bottom: 10px; /* Adds margin at the bottom for spacing */
+  }
+}
