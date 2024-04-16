@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "../components-css/ServicePage.css";
+import Toolbar from "./Toolbar.js";
 
 export const ServicePage = () => {
   const { serviceId } = useParams();
@@ -39,44 +40,47 @@ export const ServicePage = () => {
   };
 
   return (
-    <div className="service-page-container">
-      <div className="image-slider">
-        {images.length > 1 && (
-          <button className="prev" onClick={goToPreviousImage}>
-            ❮
-          </button>
-        )}
-        <img
-          src={images[currentImage]}
-          alt={service.title}
-          className="main-image"
-        />
-        {images.length > 1 && (
-          <button className="next" onClick={goToNextImage}>
-            ❯
-          </button>
-        )}
-      </div>
-      <div className="service-content">
-        <h1 className="service-title text-background">{service.title}</h1>
-        <p className="service-description text-background">
-          {service.description}
-        </p>
-        <p className="service-locality text-background">{service.locality}</p>
-      </div>
-
-      {/* Navigation dots */}
-      {images.length > 1 && (
-        <div className="navigation-dots">
-          {images.map((_, idx) => (
-            <span
-              key={idx}
-              className={currentImage === idx ? "dot active" : "dot"}
-              onClick={() => setCurrentImage(idx)}
-            ></span>
-          ))}
+    <>
+      <Toolbar /> {/* Add the Toolbar component here */}
+      <div className="service-page-container">
+        <div className="image-slider">
+          {images.length > 1 && (
+            <button className="prev" onClick={goToPreviousImage}>
+              ❮
+            </button>
+          )}
+          <img
+            src={images[currentImage]}
+            alt={service.title}
+            className="main-image"
+          />
+          {images.length > 1 && (
+            <button className="next" onClick={goToNextImage}>
+              ❯
+            </button>
+          )}
         </div>
-      )}
-    </div>
+        <div className="service-content">
+          <h1 className="service-title text-background">{service.title}</h1>
+          <p className="service-description text-background">
+            {service.description}
+          </p>
+          <p className="service-locality text-background">{service.locality}</p>
+        </div>
+
+        {/* Navigation dots */}
+        {images.length > 1 && (
+          <div className="navigation-dots">
+            {images.map((_, idx) => (
+              <span
+                key={idx}
+                className={currentImage === idx ? "dot active" : "dot"}
+                onClick={() => setCurrentImage(idx)}
+              ></span>
+            ))}
+          </div>
+        )}
+      </div>
+    </>
   );
 };

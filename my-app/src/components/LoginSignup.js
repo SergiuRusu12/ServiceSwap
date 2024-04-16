@@ -60,6 +60,8 @@ const LoginSignup = () => {
         // Pseudo-hash the userID
         const hashedUserID = pseudoHashUserID(user.user_id);
         navigate(`/main/${hashedUserID}`);
+
+        localStorage.setItem("hashedUserID", hashedUserID);
       } catch (error) {
         console.error("Login error:", error);
         alert("An error occurred during login. Please try again.");
