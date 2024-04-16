@@ -21,7 +21,7 @@
 .text {
   font-size: 50px;
   font-weight: bold;
-  color: darkblue; /* Adjusted to a darker blue to fit the theme */
+  color: rgb(33, 33, 242); /* Adjusted to a darker blue to fit the theme */
 }
 
 .inputs {
@@ -99,7 +99,7 @@
   width: 200px;
   height: 50px;
   color: #fff;
-  background-color: mediumblue; /* Adjusted to medium blue for a stronger blue theme */
+  background-color: #0465cb; /* Adjusted to medium blue for a stronger blue theme */
   border-radius: 50px;
   font-size: 15px;
   font-weight: bold;
@@ -114,6 +114,6 @@
 }
 
 #subBtn {
-  background-color: navy; /* Dark blue for the submit button for contrast */
+  background-color: #0465cb; /* Dark blue for the submit button for contrast */
   margin-bottom: 25px;
 }
