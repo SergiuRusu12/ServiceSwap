@@ -1,8 +1,12 @@
 // PostServiceModal.js
 import React, { useState, useEffect } from "react";
 import "../components-css/PostServiceModal.css";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "../firebase";
 
-const PostServiceModal = ({ isOpen, setModalOpen }) => {
+const PostServiceModal = (props) => {
+  // Accept props here
+  const { isOpen, setModalOpen, refreshServices } = props;
   const [categories, setCategories] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
 
@@ -96,10 +100,69 @@ const PostServiceModal = ({ isOpen, setModalOpen }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle the form submission to your API
+
+    // First, handle the file uploads to Firebase
+    const uploadPromises = selectedImages.map((image) => {
+      const imageRef = ref(storage, `images/${image.name}`);
+      return uploadBytes(imageRef, image).then((snapshot) => {
+        return getDownloadURL(snapshot.ref);
+      });
+    });
+
+    try {
+      // Wait for all uploads to finish and gather the URLs
+      const imageUrls = await Promise.all(uploadPromises);
+
+      // Prepare the service data with the image URLs
+      const serviceData = {
+        ...formData,
+        price: null, // Assuming price is not managed yet
+        item_in_exchange: formData.itemInExchange,
+        seller_fk_user_id: parseInt(atob(localStorage.getItem("hashedUserID"))), // Decode and convert to integer
+        service_status: "Active", // Default to Active
+        category_fk: categories.find(
+          (cat) => cat.category_name === formData.category
+        )?.category_id, // Get the ID of the selected category
+        locality: formData.locality,
+        image_url: imageUrls[0] || null, // The first image URL or null if not present
+        extra_image_1: imageUrls[1] || null, // The second image URL or null
+        extra_image_2: imageUrls[2] || null, // The third image URL or null
+      };
+
+      // Now send serviceData to your server...
+      const response = await fetch("http://localhost:9000/api/service", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(serviceData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      // Clear the form upon success
+      setFormData({
+        title: "",
+        description: "",
+        itemInExchange: "",
+        category: "",
+        locality: "",
+        serviceStatus: "Active",
+      });
+      setSelectedImages([]);
+      setModalOpen(false);
+      alert("Service posted successfully!");
+      refreshServices(); // Refresh the MainPage to show the new service
+    } catch (error) {
+      console.error("Failed to upload images and/or post the service:", error);
+    }
   };
 
-  if (!isOpen) return null; // Don't render if not open
+  // ...
+
+  if (!isOpen) return null;
 
   return (
     <div className="modal-overlay">
@@ -168,7 +231,6 @@ const PostServiceModal = ({ isOpen, setModalOpen }) => {
               accept="image/*"
               onChange={handleImageChange}
             />
-            {/* Show preview of selected images */}
             <div className="image-preview">
               {Array.from(selectedImages).map((image, index) => (
                 <div key={index} className="preview-wrapper">
@@ -176,7 +238,6 @@ const PostServiceModal = ({ isOpen, setModalOpen }) => {
                     src={URL.createObjectURL(image)}
                     alt={`Preview ${index + 1}`}
                   />
-                  {/* Optionally, add a remove button */}
                 </div>
               ))}
             </div>

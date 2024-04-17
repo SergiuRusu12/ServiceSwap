@@ -10,54 +10,9 @@ import {
 import "../components-css/Toolbar.css";
 import PostServiceModal from "./PostServiceModal"; // This will be your new modal component
 
-// const localities = [
-//   "Alba Iulia",
-//   "Alexandria",
-//   "Arad",
-//   "Bacau",
-//   "Baia Mare",
-//   "Bistrita",
-//   "Botosani",
-//   "Braila",
-//   "Brasov",
-//   "Bucuresti",
-//   "Buzau",
-//   "Calarasi",
-//   "Cluj-Napoca",
-//   "Constanta",
-//   "Craiova",
-//   "Deva",
-//   "Drobeta-Turnu Severin",
-//   "Focsani",
-//   "Galati",
-//   "Giurgiu",
-//   "Iasi",
-//   "Miercurea Ciuc",
-//   "Oradea",
-//   "Piatra Neamt",
-//   "Pitesti",
-//   "Ploiesti",
-//   "Radauti",
-//   "Ramnicu Valcea",
-//   "Resita",
-//   "Roman",
-//   "Satu Mare",
-//   "Sfantu Gheorghe",
-//   "Sibiu",
-//   "Slatina",
-//   "Slobozia",
-//   "Suceava",
-//   "Targoviste",
-//   "Targu Jiu",
-//   "Targu Mures",
-//   "Timisoara",
-//   "Tulcea",
-//   "Vaslui",
-//   "Zalau",
-//   "Other",
-// ];
-
-const Toolbar = () => {
+const Toolbar = (props) => {
+  // Accept props here
+  const { refreshServices } = props; // Destructure if needed
   const navigate = useNavigate();
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -106,7 +61,11 @@ const Toolbar = () => {
         </div>
       </div>
       {isModalOpen && (
-        <PostServiceModal isOpen={isModalOpen} setModalOpen={setModalOpen} />
+        <PostServiceModal
+          isOpen={isModalOpen}
+          setModalOpen={setModalOpen}
+          refreshServices={refreshServices}
+        />
       )}
     </>
   );

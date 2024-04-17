@@ -73,6 +73,17 @@ const MainPage = () => {
     fetchCategories();
   }, []);
 
+  const refreshServices = async () => {
+    try {
+      const response = await fetch("http://localhost:9000/api/services");
+      const data = await response.json();
+      setServices(data);
+      console.log("Services refreshed", data); // Check if the services are updated
+    } catch (error) {
+      console.error("Failed to refresh services:", error);
+    }
+  };
+
   useEffect(() => {
     const fetchServices = async () => {
       const url = selectedCategory
@@ -102,7 +113,7 @@ const MainPage = () => {
 
   return (
     <>
-      <Toolbar />
+      <Toolbar refreshServices={refreshServices} />
       <div className="containerMain">
         <h1>Service Swap</h1>
         <div className="filters">
