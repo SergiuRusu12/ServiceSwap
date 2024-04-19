@@ -98,6 +98,7 @@
   justify-content: center;
   align-items: center;
   background-color: #f8f9fa; /* Light background color */
+  position: relative;
 }
 
 /* Image preview styles */
@@ -105,4 +106,18 @@
   max-width: 100%; /* Ensures the image fits within the wrapper */
   max-height: 100%; /* Ensures the image fits within the wrapper */
   object-fit: cover; /* Ensures the image covers the area, can be changed to 'contain' based on preference */
+}
+
+.preview-wrapper button {
+  position: absolute; /* Position the button absolutely to place it at the bottom */
+  bottom: 10px; /* Adjust this value as needed to move the button up so it's visible */
+  left: 50%;
+  transform: translateX(-50%); /* Center the button horizontally */
+  background-color: #dc3545; /* Bootstrap 'danger' color for delete buttons */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem; /* Smaller padding for the button */
+  font-size: 0.75rem; /* Smaller font size for the button */
+  cursor: pointer;
 }

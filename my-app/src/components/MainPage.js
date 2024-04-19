@@ -113,7 +113,7 @@ const MainPage = () => {
 
   return (
     <>
-      <Toolbar refreshServices={refreshServices} />
+      <Toolbar refreshServices={refreshServices} context="MainPage" />
       <div className="containerMain">
         <h1>Service Swap</h1>
         <div className="filters">

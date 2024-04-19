@@ -6,10 +6,11 @@ import { storage } from "../firebase";
 
 const PostServiceModal = (props) => {
   // Accept props here
-  const { isOpen, setModalOpen, refreshServices } = props;
+  const { isOpen, setModalOpen, refreshServices, context, serviceToEdit } =
+    props;
+
   const [categories, setCategories] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
-
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -18,6 +19,12 @@ const PostServiceModal = (props) => {
     locality: "",
     serviceStatus: "Active", // default value
   });
+  const removeSelectedImage = (indexToRemove) => {
+    setSelectedImages(
+      selectedImages.filter((_, index) => index !== indexToRemove)
+    );
+  };
+
   const handleImageChange = (event) => {
     // Get the selected files from the input
     const files = event.target.files;
@@ -31,22 +38,64 @@ const PostServiceModal = (props) => {
     // Update the state with the selected files
     setSelectedImages([...files]);
   };
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch("http://localhost:9000/api/categories");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setCategories(data);
-      } catch (error) {
-        console.error("Fetch error: ", error.message);
-      }
-    };
 
+  // Fetch categories independently
+  useEffect(() => {
     if (isOpen) {
+      const fetchCategories = async () => {
+        try {
+          const response = await fetch("http://localhost:9000/api/categories");
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const data = await response.json();
+          setCategories(data);
+        } catch (error) {
+          console.error("Fetch error:", error.message);
+        }
+      };
+
       fetchCategories();
+    }
+  }, [isOpen]);
+
+  // Set form data for editing independently
+  useEffect(() => {
+    if (isOpen && serviceToEdit && categories.length) {
+      const category =
+        categories.find((c) => c.category_id === serviceToEdit.category_fk)
+          ?.category_name || "";
+      setFormData({
+        title: serviceToEdit.title,
+        description: serviceToEdit.description,
+        itemInExchange: serviceToEdit.item_in_exchange || "",
+        category,
+        locality: serviceToEdit.locality || "",
+        serviceStatus: serviceToEdit.service_status || "Active",
+      });
+
+      setSelectedImages(
+        [
+          serviceToEdit.image_url,
+          serviceToEdit.extra_image_1,
+          serviceToEdit.extra_image_2,
+        ].filter(Boolean)
+      );
+    }
+  }, [isOpen, serviceToEdit, categories]);
+
+  // Reset form when modal is closed
+  useEffect(() => {
+    if (!isOpen) {
+      setFormData({
+        title: "",
+        description: "",
+        itemInExchange: "",
+        category: "",
+        locality: "",
+        serviceStatus: "Active",
+      });
+      setSelectedImages([]);
     }
   }, [isOpen]);
 
@@ -97,41 +146,58 @@ const PostServiceModal = (props) => {
     "Zalau",
     "Other",
   ];
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    // First, handle the file uploads to Firebase
-    const uploadPromises = selectedImages.map((image) => {
+  const uploadImages = async () => {
+    const newImages = selectedImages.filter((img) => img instanceof File);
+    const uploadPromises = newImages.map((image) => {
       const imageRef = ref(storage, `images/${image.name}`);
       return uploadBytes(imageRef, image).then((snapshot) => {
         return getDownloadURL(snapshot.ref);
       });
     });
+    return Promise.all(uploadPromises);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Verify that at least one image is selected or already exists
+    if (selectedImages.length === 0) {
+      alert("Please upload at least one image.");
+      return;
+    }
 
     try {
-      // Wait for all uploads to finish and gather the URLs
-      const imageUrls = await Promise.all(uploadPromises);
+      // Gather URLs from already uploaded images and upload new images if necessary
+      const existingImageUrls = selectedImages.filter(
+        (img) => typeof img === "string"
+      );
+      const newImageUrls = await uploadImages(); // This function uploads only new images
+      const allImageUrls = [...existingImageUrls, ...newImageUrls];
 
       // Prepare the service data with the image URLs
       const serviceData = {
         ...formData,
-        price: null, // Assuming price is not managed yet
+        price: null, // Replace with actual logic if managing price
         item_in_exchange: formData.itemInExchange,
-        seller_fk_user_id: parseInt(atob(localStorage.getItem("hashedUserID"))), // Decode and convert to integer
-        service_status: "Active", // Default to Active
+        seller_fk_user_id: parseInt(atob(localStorage.getItem("hashedUserID"))),
+        service_status: "Active",
         category_fk: categories.find(
           (cat) => cat.category_name === formData.category
-        )?.category_id, // Get the ID of the selected category
+        )?.category_id,
         locality: formData.locality,
-        image_url: imageUrls[0] || null, // The first image URL or null if not present
-        extra_image_1: imageUrls[1] || null, // The second image URL or null
-        extra_image_2: imageUrls[2] || null, // The third image URL or null
+        image_url: allImageUrls[0] || null,
+        extra_image_1: allImageUrls[1] || null,
+        extra_image_2: allImageUrls[2] || null,
       };
 
-      // Now send serviceData to your server...
-      const response = await fetch("http://localhost:9000/api/service", {
-        method: "POST",
+      const endpoint = serviceToEdit
+        ? `http://localhost:9000/api/service/${serviceToEdit.service_id}`
+        : "http://localhost:9000/api/service";
+      const method = serviceToEdit ? "PUT" : "POST";
+
+      // Make the request to the server
+      const response = await fetch(endpoint, {
+        method: method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -142,7 +208,7 @@ const PostServiceModal = (props) => {
         throw new Error("Network response was not ok");
       }
 
-      // Clear the form upon success
+      // Clear the form and close the modal upon success
       setFormData({
         title: "",
         description: "",
@@ -153,9 +219,17 @@ const PostServiceModal = (props) => {
       });
       setSelectedImages([]);
       setModalOpen(false);
-      refreshServices(); // Refresh the MainPage to show the new service
+
+      // Refresh the list of services
+      if (context === "ProfilePage") {
+        props.refreshPage();
+      } else {
+        refreshServices && refreshServices();
+      }
+      window.location.reload();
     } catch (error) {
-      console.error("Failed to upload images and/or post the service:", error);
+      console.error("Error:", error);
+      alert("Failed to post the service. Please try again.");
     }
   };
 
@@ -231,14 +305,24 @@ const PostServiceModal = (props) => {
               onChange={handleImageChange}
             />
             <div className="image-preview">
-              {Array.from(selectedImages).map((image, index) => (
-                <div key={index} className="preview-wrapper">
-                  <img
-                    src={URL.createObjectURL(image)}
-                    alt={`Preview ${index + 1}`}
-                  />
-                </div>
-              ))}
+              {selectedImages.map((image, index) => {
+                // Check if 'image' is a File object; if it's a string, it's assumed to be a URL
+                const isFileObject = image instanceof File;
+                const imageUrl = isFileObject
+                  ? URL.createObjectURL(image)
+                  : image;
+                return (
+                  <div key={index} className="preview-wrapper">
+                    <img src={imageUrl} alt={`Preview ${index + 1}`} />
+                    <button
+                      type="button"
+                      onClick={() => removeSelectedImage(index)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                );
+              })}
             </div>
           </div>
           <button type="submit">Post Service</button>

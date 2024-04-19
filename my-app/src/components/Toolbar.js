@@ -10,7 +10,7 @@ import {
 import "../components-css/Toolbar.css";
 import PostServiceModal from "./PostServiceModal"; // This will be your new modal component
 
-const Toolbar = (props) => {
+const Toolbar = ({ onEditService, ...props }) => {
   // Accept props here
   const { refreshServices } = props; // Destructure if needed
   const navigate = useNavigate();
