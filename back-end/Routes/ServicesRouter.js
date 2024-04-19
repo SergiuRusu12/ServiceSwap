@@ -12,6 +12,7 @@ import {
   updateAllServiceImagesById,
   updateServiceExtraImage1ById,
   updateServiceExtraImage2ById,
+  getServicesByUserId,
 } from "../DataAccess/ServicesDA.js";
 
 let servicesRouter = express.Router();
@@ -127,6 +128,17 @@ servicesRouter.put("/service/:id/allImages", async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ error: true, message: "Error updating images" });
+  }
+});
+servicesRouter.get("/services/user/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const services = await getServicesByUserId(userId);
+    res.json(services);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: true, message: "Error fetching services for user" });
   }
 });
 

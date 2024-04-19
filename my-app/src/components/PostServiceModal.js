@@ -153,7 +153,6 @@ const PostServiceModal = (props) => {
       });
       setSelectedImages([]);
       setModalOpen(false);
-      alert("Service posted successfully!");
       refreshServices(); // Refresh the MainPage to show the new service
     } catch (error) {
       console.error("Failed to upload images and/or post the service:", error);

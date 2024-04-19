@@ -68,6 +68,13 @@ async function updateAllServiceImagesById(service_id, imageUrls) {
     { where: { service_id } }
   );
 }
+async function getServicesByUserId(seller_fk_user_id) {
+  return await Services.findAll({
+    where: {
+      seller_fk_user_id,
+    },
+  });
+}
 
 export {
   getServices,
@@ -80,4 +87,5 @@ export {
   updateAllServiceImagesById,
   updateServiceExtraImage1ById,
   updateServiceExtraImage2ById,
+  getServicesByUserId,
 };
