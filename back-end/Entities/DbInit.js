@@ -40,6 +40,8 @@ function FK_Config() {
   OrderItems.belongsTo(Orders, { foreignKey: "order_fk" });
   OrderItems.belongsTo(Services, { foreignKey: "service_fk" });
   Categories.hasMany(Services, { foreignKey: "category_fk" });
+  Users.hasMany(MessagesChat, { foreignKey: "receiver_fk_user_id" });
+  MessagesChat.belongsTo(Services, { foreignKey: "service_id_fk" });
 }
 
 function DB_Init() {

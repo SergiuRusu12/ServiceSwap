@@ -24,6 +24,14 @@ const MessagesChat = db.define("MessagesChat", {
     type: Sequelize.DATE,
     allowNull: false,
   },
+  receiver_fk_user_id: {
+    type: Sequelize.INTEGER,
+    allowNull: false, // Set to false if every message must have a receiver, true if optional
+  },
+  service_id_fk: {
+    type: Sequelize.INTEGER,
+    allowNull: false, // Set to false if messages are always related to a service
+  },
 });
 
 export default MessagesChat;
