@@ -2,7 +2,7 @@ import db from "../dbConfig.js";
 import Sequelize from "sequelize";
 
 const MessagesChat = db.define("MessagesChat", {
-  msg_id: {
+  chat_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
     autoIncrement: true,

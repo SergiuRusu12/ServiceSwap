@@ -5,6 +5,7 @@ import {
   faUser,
   faSignOutAlt,
   faPlus,
+  faComments,
 } from "@fortawesome/free-solid-svg-icons";
 import "../components-css/Toolbar.css";
 import PostServiceModal from "./PostServiceModal";
@@ -40,6 +41,16 @@ const Toolbar = ({ onEditService, ...props }) => {
     }
   };
 
+  const navigateToChats = () => {
+    const hashedUserID = localStorage.getItem("hashedUserID");
+    if (hashedUserID) {
+      const userID = atob(hashedUserID); // Decoding the base64 user ID
+      navigate(`/chats/${userID}`);
+    } else {
+      navigate("/login"); // Redirect to login or some other page if userID is not found
+    }
+  };
+
   return (
     <>
       <div className="toolbar">
@@ -49,6 +60,9 @@ const Toolbar = ({ onEditService, ...props }) => {
         <div className="toolbar-actions">
           <button onClick={handlePostServiceClick}>
             <FontAwesomeIcon icon={faPlus} /> Post Service
+          </button>
+          <button onClick={navigateToChats}>
+            <FontAwesomeIcon icon={faComments} /> Chats
           </button>
           <button onClick={handleLogout}>
             <FontAwesomeIcon icon={faSignOutAlt} /> Logout

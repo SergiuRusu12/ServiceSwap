@@ -7,6 +7,7 @@ import Orders from "./Orders.js";
 import Reviews from "./Reviews.js";
 import Services from "./Services.js";
 import Users from "./Users.js";
+import Message from "./Messages.js";
 
 env.config();
 
@@ -33,6 +34,7 @@ function Create_DB() {
 function FK_Config() {
   Users.hasMany(Orders, { foreignKey: "buyer_fk_user_id" });
   Users.hasMany(MessagesChat, { foreignKey: "sender_fk_user_id" });
+  Users.hasMany(MessagesChat, { foreignKey: "receiver_fk_user_id" });
   Orders.belongsTo(Users, { foreignKey: "buyer_fk_user_id" });
   Orders.hasMany(OrderItems, { foreignKey: "order_fk" });
   Orders.hasOne(Reviews, { foreignKey: "order_fk_order_id" });
@@ -40,8 +42,20 @@ function FK_Config() {
   OrderItems.belongsTo(Orders, { foreignKey: "order_fk" });
   OrderItems.belongsTo(Services, { foreignKey: "service_fk" });
   Categories.hasMany(Services, { foreignKey: "category_fk" });
-  Users.hasMany(MessagesChat, { foreignKey: "receiver_fk_user_id" });
+  MessagesChat.hasMany(Message, { foreignKey: "chat_id_fk" });
+  Message.belongsTo(Users, { foreignKey: "sender_id" });
+  Message.belongsTo(Users, { foreignKey: "receiver_id" });
   MessagesChat.belongsTo(Services, { foreignKey: "service_id_fk" });
+
+  Message.belongsTo(Services, { foreignKey: "service_id_fk" });
+  MessagesChat.belongsTo(Users, {
+    as: "Sender",
+    foreignKey: "sender_fk_user_id",
+  });
+  MessagesChat.belongsTo(Users, {
+    as: "Receiver",
+    foreignKey: "receiver_fk_user_id",
+  });
 }
 
 function DB_Init() {

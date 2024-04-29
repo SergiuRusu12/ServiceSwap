@@ -67,14 +67,14 @@ INSERT INTO `categories` (`category_id`, `category_name`) VALUES
 	(49, 'Other');
 
 CREATE TABLE IF NOT EXISTS `messageschat` (
-  `msg_id` int(11) NOT NULL AUTO_INCREMENT,
+  `chat_id` int(11) NOT NULL AUTO_INCREMENT,
   `sender_fk_user_id` int(11) NOT NULL,
   `order_fk` int(11) DEFAULT NULL,
   `msg_content` text NOT NULL,
   `timestamp` datetime NOT NULL,
   `receiver_fk_user_id` int(11) NOT NULL,
   `service_id_fk` int(11) NOT NULL,
-  PRIMARY KEY (`msg_id`),
+  PRIMARY KEY (`chat_id`),
   KEY `sender_fk_user_id` (`sender_fk_user_id`),
   KEY `receiver_fk_user_id` (`receiver_fk_user_id`),
   KEY `service_id_fk` (`service_id_fk`),
