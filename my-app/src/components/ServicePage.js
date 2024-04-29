@@ -15,14 +15,13 @@ export const ServicePage = () => {
       );
       const data = await response.json();
       setService(data);
-      // Assuming the response has the service data directly
     };
 
     fetchServiceDetails();
   }, [serviceId]);
 
   if (!service) {
-    return <div>Loading...</div>; // Or some loading indicator
+    return <div>Loading...</div>;
   }
 
   const images = [
@@ -65,7 +64,12 @@ export const ServicePage = () => {
           <p className="service-description text-background">
             {service.description}
           </p>
-          <p className="service-locality text-background">{service.locality}</p>
+          <p className="service-locality text-background">
+            Locality: {service.locality}
+          </p>
+          <p className="service-locality text-background">
+            Service in exchange: {service.item_in_exchange}{" "}
+          </p>
         </div>
 
         {/* Navigation dots */}

@@ -83,8 +83,6 @@ CREATE TABLE IF NOT EXISTS `messageschat` (
   CONSTRAINT `messageschat_ibfk_3` FOREIGN KEY (`service_id_fk`) REFERENCES `services` (`service_id`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
-INSERT INTO `messageschat` (`msg_id`, `sender_fk_user_id`, `order_fk`, `msg_content`, `timestamp`, `receiver_fk_user_id`, `service_id_fk`) VALUES
-	(1, 5, 1, 'Hi, how can I help you today?', '2024-03-20 15:00:00', 2, 2);
 
 CREATE TABLE IF NOT EXISTS `orderitems` (
   `order_item_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -143,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `services` (
   PRIMARY KEY (`service_id`),
   KEY `category_fk` (`category_fk`),
   CONSTRAINT `services_ibfk_1` FOREIGN KEY (`category_fk`) REFERENCES `categories` (`category_id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 INSERT INTO `services` (`service_id`, `title`, `description`, `price`, `item_in_exchange`, `seller_fk_user_id`, `service_status`, `category_fk`, `locality`, `image_url`, `extra_image_1`, `extra_image_2`) VALUES
 	(1, 'Custom Web Development', 'Providing teaching services from concept for children. Providing teaching services from concept for children. Providing teaching services from concept for children.Providing teaching services from concept for children', NULL, 'Farming', 2, 'Active', 3, 'Constanta', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/1.jpg?alt=media&token=ea1a0267-4694-4782-acf8-2f76009466b9', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/7.jpg?alt=media&token=c85837e9-47ed-4704-a6a7-93fff27664fd', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/4.jpg?alt=media&token=d3e95c96-d1bd-476c-892c-69af11acc9ba'),

@@ -259,14 +259,20 @@ const PostServiceModal = (props) => {
             }
             required
           />
-          <input
-            type="text"
-            placeholder="Service in Exchange"
+          <select
             value={formData.itemInExchange}
             onChange={(e) =>
               setFormData({ ...formData, itemInExchange: e.target.value })
             }
-          />
+            required
+          >
+            <option value="">Select Category for service in Exchange</option>
+            {categories.map((category) => (
+              <option key={category.category_id} value={category.category_name}>
+                {category.category_name}
+              </option>
+            ))}
+          </select>
           <select
             value={formData.category}
             onChange={(e) =>

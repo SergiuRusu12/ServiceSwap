@@ -1,4 +1,3 @@
-// Toolbar.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,11 +7,10 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import "../components-css/Toolbar.css";
-import PostServiceModal from "./PostServiceModal"; // This will be your new modal component
+import PostServiceModal from "./PostServiceModal";
 
 const Toolbar = ({ onEditService, ...props }) => {
-  // Accept props here
-  const { refreshServices } = props; // Destructure if needed
+  const { refreshServices } = props;
   const navigate = useNavigate();
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -31,7 +29,7 @@ const Toolbar = ({ onEditService, ...props }) => {
   };
 
   const handlePostServiceClick = () => {
-    setModalOpen(true); // Open the modal when the button is clicked
+    setModalOpen(true);
   };
 
   const navigateToProfile = () => {
