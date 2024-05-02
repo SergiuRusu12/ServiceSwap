@@ -12,19 +12,11 @@ const Message = db.define("Message", {
     type: Sequelize.INTEGER,
     allowNull: false,
     references: {
-      model: "MessagesChat",
+      model: "Chat", // Assuming your chat model is named 'Chat'
       key: "chat_id",
     },
   },
   sender_id: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    references: {
-      model: "User",
-      key: "user_id",
-    },
-  },
-  receiver_id: {
     type: Sequelize.INTEGER,
     allowNull: false,
     references: {
@@ -39,10 +31,11 @@ const Message = db.define("Message", {
   timestamp: {
     type: Sequelize.DATE,
     allowNull: false,
+    defaultValue: Sequelize.NOW,
   },
   service_id_fk: {
     type: Sequelize.INTEGER,
-    allowNull: false,
+    allowNull: true,
     references: {
       model: "Services",
       key: "service_id",
