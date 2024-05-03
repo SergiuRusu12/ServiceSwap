@@ -1,11 +1,25 @@
 import Message from "../Entities/Messages.js";
 
-// Get all messages in a chat
 async function getMessagesByChatId(chat_id) {
-  return await Message.findAll({
-    where: { chat_id_fk: chat_id },
-    order: [["timestamp", "ASC"]],
-  });
+  try {
+    console.log("Fetching messages for chat ID:", chat_id);
+    const messages = await Message.findAll({
+      where: { chat_id_fk: chat_id },
+      // include: [
+      //   {
+      //     model: User,
+      //     as: "Sender",
+      //     attributes: ["username", "user_id"],
+      //   },
+      // ],
+      order: [["timestamp", "ASC"]],
+    });
+    console.log("Messages fetched:", messages);
+    return messages;
+  } catch (error) {
+    console.error("Error in getMessagesByChatId:", error);
+    throw error; // Or handle it as needed
+  }
 }
 
 // Create a new message

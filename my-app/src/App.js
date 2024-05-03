@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ServicePage } from "./components/ServicePage";
 import ProfilePage from "./components/ProfilePage";
 import Chats from "./components/Chats";
+import ChatRoom from "./components/ChatRoom";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/service/:serviceId" element={<ServicePage />} />
         <Route path="/chats/:userId" element={<Chats />} />
         <Route path="/user/:userId" element={<ProfilePage />} />
+        <Route path="/chat/:userId/:chatId" element={<ChatRoom />} />
       </Routes>
     </Router>
   );

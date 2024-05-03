@@ -1,0 +1,107 @@
+/* General Layout */
+.chat-layout {
+  display: flex;
+  height: 100vh; /* Full height of the viewport */
+  align-items: stretch; /* Stretch children to fill the container height */
+}
+
+/* Sidebar */
+.chat-sidebar {
+  margin-top: 80px;
+  margin-bottom: 20px;
+  margin-left: 10px;
+  width: 250px; /* Consistent width for the sidebar */
+  background-color: #f8f9fa; /* Soft background color */
+  border-right: 1px solid #dee2e6; /* Subtle border for separation */
+  padding: 20px; /* Padding for spacing */
+  overflow-y: auto; /* Enable scrolling for overflow content */
+  border-color: black;
+  border-radius: 10px;
+}
+
+.chat-entry {
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.chat-entry:hover {
+  background-color: #e9ecef; /* Hover state */
+}
+
+/* Chat Room */
+.chat-room {
+  margin-top: 40px;
+  padding: 20px;
+  width: 100%;
+  flex-grow: 1; /* Takes remaining space */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center alignment for better focus */
+}
+
+.messages-container {
+  flex-grow: 1; /* Grow to use available space */
+  width: 100%;
+  max-width: 600px; /* Optimal width for reading */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px; /* Margin for visual spacing from the viewport edges */
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 8px;
+  overflow-y: auto; /* Allow scrolling inside the message container */
+  padding: 20px; /* Padding inside the message container */
+}
+
+.message {
+  padding: 10px 15px;
+  border-radius: 15px; /* Rounded corners for messages */
+  margin: 5px 0; /* Margin between messages */
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.sent {
+  align-self: flex-end;
+  background-color: #dcf8c6;
+}
+
+.received {
+  align-self: flex-start;
+  background-color: #ececec;
+}
+
+/* Input Area */
+.message-input {
+  width: 600px;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 8px;
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.05); /* Subtle top shadow for depth */
+}
+
+.message-input input {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #dee2e6;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+
+.message-input button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.message-input button:hover {
+  background-color: #0056b3;
+}

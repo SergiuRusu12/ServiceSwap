@@ -66,23 +66,62 @@ INSERT INTO `categories` (`category_id`, `category_name`) VALUES
 	(48, 'Chef'),
 	(49, 'Other');
 
-CREATE TABLE IF NOT EXISTS `messageschat` (
+CREATE TABLE IF NOT EXISTS `chat` (
   `chat_id` int(11) NOT NULL AUTO_INCREMENT,
-  `sender_fk_user_id` int(11) NOT NULL,
-  `order_fk` int(11) DEFAULT NULL,
-  `msg_content` text NOT NULL,
-  `timestamp` datetime NOT NULL,
-  `receiver_fk_user_id` int(11) NOT NULL,
   `service_id_fk` int(11) NOT NULL,
+  `timestamp` datetime NOT NULL,
+  `initiator_id` int(11) DEFAULT NULL,
+  `receiver_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`chat_id`),
-  KEY `sender_fk_user_id` (`sender_fk_user_id`),
-  KEY `receiver_fk_user_id` (`receiver_fk_user_id`),
   KEY `service_id_fk` (`service_id_fk`),
-  CONSTRAINT `messageschat_ibfk_1` FOREIGN KEY (`sender_fk_user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `messageschat_ibfk_2` FOREIGN KEY (`receiver_fk_user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `messageschat_ibfk_3` FOREIGN KEY (`service_id_fk`) REFERENCES `services` (`service_id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  KEY `initiator_id` (`initiator_id`),
+  KEY `receiver_id` (`receiver_id`),
+  CONSTRAINT `chat_ibfk_1` FOREIGN KEY (`service_id_fk`) REFERENCES `services` (`service_id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `chat_ibfk_2` FOREIGN KEY (`initiator_id`) REFERENCES `user` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `chat_ibfk_3` FOREIGN KEY (`receiver_id`) REFERENCES `user` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+INSERT INTO `chat` (`chat_id`, `service_id_fk`, `timestamp`, `initiator_id`, `receiver_id`) VALUES
+	(2, 4, '2024-05-02 20:20:36', 4, 8);
+
+CREATE TABLE IF NOT EXISTS `message` (
+  `message_id` int(11) NOT NULL AUTO_INCREMENT,
+  `chat_id_fk` int(11) NOT NULL,
+  `sender_id` int(11) NOT NULL,
+  `message_content` text NOT NULL,
+  `timestamp` datetime NOT NULL,
+  `service_id_fk` int(11) DEFAULT NULL,
+  PRIMARY KEY (`message_id`),
+  KEY `chat_id_fk` (`chat_id_fk`),
+  KEY `sender_id` (`sender_id`),
+  KEY `service_id_fk` (`service_id_fk`),
+  CONSTRAINT `message_ibfk_1` FOREIGN KEY (`chat_id_fk`) REFERENCES `chat` (`chat_id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `message_ibfk_2` FOREIGN KEY (`sender_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `message_ibfk_3` FOREIGN KEY (`service_id_fk`) REFERENCES `services` (`service_id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+INSERT INTO `message` (`message_id`, `chat_id_fk`, `sender_id`, `message_content`, `timestamp`, `service_id_fk`) VALUES
+	(2, 2, 8, 'asdas', '2024-05-02 20:03:28', NULL),
+	(3, 2, 4, 'aa', '2024-05-02 20:09:33', NULL),
+	(4, 2, 8, 'sada', '2024-05-02 20:09:37', NULL),
+	(5, 2, 4, 'aa', '2024-05-02 20:17:16', NULL),
+	(6, 2, 4, 'sal', '2024-05-02 20:37:06', NULL),
+	(44, 2, 8, 'buna', '2024-05-02 23:54:33', NULL),
+	(45, 2, 4, 'buna', '2024-05-02 23:54:36', NULL),
+	(46, 2, 8, 'te pup frumosule', '2024-05-02 23:54:40', NULL),
+	(47, 2, 4, 'si eu', '2024-05-02 23:54:42', NULL),
+	(48, 2, 4, 'ai servicii? milsugi', '2024-05-02 23:54:46', NULL),
+	(49, 2, 8, 'da', '2024-05-02 23:54:48', NULL),
+	(50, 2, 8, 'ambele da', '2024-05-02 23:54:51', NULL),
+	(51, 2, 8, 'buna', '2024-05-02 23:56:53', NULL),
+	(52, 2, 4, 'buna frate', '2024-05-02 23:56:59', NULL),
+	(53, 2, 8, 'cf', '2024-05-02 23:57:08', NULL),
+	(54, 2, 4, 'bine tuu', '2024-05-02 23:57:16', NULL),
+	(55, 2, 8, 'sal', '2024-05-02 23:59:52', NULL),
+	(56, 2, 4, 'cf', '2024-05-02 23:59:55', NULL),
+	(57, 2, 8, 'bine tu', '2024-05-02 23:59:59', NULL),
+	(58, 2, 4, 'bine si eu rege', '2024-05-03 00:00:02', NULL),
+	(59, 2, 8, 'uauauauia', '2024-05-03 00:00:04', NULL);
 
 CREATE TABLE IF NOT EXISTS `orderitems` (
   `order_item_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -92,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `orderitems` (
   KEY `service_fk` (`service_fk`),
   KEY `order_fk` (`order_fk`),
   CONSTRAINT `orderitems_ibfk_1` FOREIGN KEY (`service_fk`) REFERENCES `services` (`service_id`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  CONSTRAINT `orderitems_ibfk_2` FOREIGN KEY (`order_fk`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `orderitems_ibfk_2` FOREIGN KEY (`order_fk`) REFERENCES `orders` (`order_id`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 INSERT INTO `orderitems` (`order_item_id`, `service_fk`, `order_fk`) VALUES
@@ -141,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `services` (
   PRIMARY KEY (`service_id`),
   KEY `category_fk` (`category_fk`),
   CONSTRAINT `services_ibfk_1` FOREIGN KEY (`category_fk`) REFERENCES `categories` (`category_id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 INSERT INTO `services` (`service_id`, `title`, `description`, `price`, `item_in_exchange`, `seller_fk_user_id`, `service_status`, `category_fk`, `locality`, `image_url`, `extra_image_1`, `extra_image_2`) VALUES
 	(1, 'Custom Web Development', 'Providing teaching services from concept for children. Providing teaching services from concept for children. Providing teaching services from concept for children.Providing teaching services from concept for children', NULL, 'Farming', 2, 'Active', 3, 'Constanta', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/1.jpg?alt=media&token=ea1a0267-4694-4782-acf8-2f76009466b9', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/7.jpg?alt=media&token=c85837e9-47ed-4704-a6a7-93fff27664fd', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/4.jpg?alt=media&token=d3e95c96-d1bd-476c-892c-69af11acc9ba'),
@@ -151,7 +190,7 @@ INSERT INTO `services` (`service_id`, `title`, `description`, `price`, `item_in_
 	(5, 'Basic Carpentry Work', 'Offering carpentry services such as repairs, installations, and custom projects.', NULL, 'Wood', 5, 'Active', 7, 'Constanta', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/5.jpg?alt=media&token=f1cc20ad-a211-48e3-acb5-62608f77425f', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/5.jpg?alt=media&token=f1cc20ad-a211-48e3-acb5-62608f77425f', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/5.jpg?alt=media&token=f1cc20ad-a211-48e3-acb5-62608f77425f'),
 	(6, 'Plumbing Solutions', 'Experienced plumber available for leaks, installations, and maintenance.', NULL, 'Plumbing tools', 6, 'Active', 6, 'Bucuresti', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/6.jpg?alt=media&token=3f6c14c1-d691-4f70-9482-172b651993ce', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/6.jpg?alt=media&token=3f6c14c1-d691-4f70-9482-172b651993ce', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/6.jpg?alt=media&token=3f6c14c1-d691-4f70-9482-172b651993ce'),
 	(7, 'Residential Cleaning Services', 'Thorough cleaning services for apartments and homes. Trustworthy and efficient.', NULL, 'Cleaning supplies', 2, 'Active', 5, 'Constanta', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/7.jpg?alt=media&token=c85837e9-47ed-4704-a6a7-93fff27664fd', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/7.jpg?alt=media&token=c85837e9-47ed-4704-a6a7-93fff27664fd', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/7.jpg?alt=media&token=c85837e9-47ed-4704-a6a7-93fff27664fd'),
-	(11, 'Private Tutor for Math MATH MATH', 'I give math tutorials. I am a nerd, a big one! I give math tutorials. I am a nerd, a big one! I give math tutorials. I am a nerd, a big one! I give math tutorials. I am a nerd, a big one! I give math tutorials. I am a nerd, a big one! Very big one! !!!\n', NULL, 'orice!!! !', 8, 'Active', 7, 'Brasov', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/images%2F2.jpg?alt=media&token=36ab4a6b-b19c-4330-99ad-d0505c74d668', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/images%2F3.jpg?alt=media&token=5f70d817-fa9c-4cec-b8f0-d7d7bf949386', NULL);
+	(11, 'Private Tutor', 'I give math tutorials. I am a nerd, a big one! I give math tutorials. I am a nerd, a big one! I give math tutorials. I am a nerd, a big one! I give math tutorials. I am a nerd, a big one! I give math tutorials. I am a nerd, a big one! Very big one! !!!\n', NULL, 'Electrician', 8, 'Active', 7, 'Brasov', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/images%2F3.jpg?alt=media&token=5f70d817-fa9c-4cec-b8f0-d7d7bf949386', NULL, NULL);
 
 CREATE TABLE IF NOT EXISTS `user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,

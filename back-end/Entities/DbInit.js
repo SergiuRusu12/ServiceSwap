@@ -59,6 +59,7 @@ function FK_Config() {
   Chat.hasMany(Message, { foreignKey: "chat_id_fk" });
 
   // A message has one sender, which is a user
+
   Message.belongsTo(Users, { as: "Sender", foreignKey: "sender_id" });
   Users.hasMany(Message, { as: "MessagesSent", foreignKey: "sender_id" });
 

@@ -5,26 +5,35 @@ import {
   deleteMessageById,
 } from "../DataAccess/MessageDA.js";
 
-const messageRouter = express.Router();
+let messageRouter = express.Router();
 
-// Route to get all messages for a specific chat
 messageRouter.get("/chats/:chatId/messages", async (req, res) => {
   try {
     const chatId = parseInt(req.params.chatId, 10);
     const messages = await getMessagesByChatId(chatId);
     res.json(messages);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Failed to fetch messages:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
 // Route to create a new message
 messageRouter.post("/messages", async (req, res) => {
+  const { chat_id_fk, sender_id, message_content } = req.body;
+  if (!chat_id_fk || !sender_id || !message_content) {
+    return res.status(400).json({ error: "Missing required message fields." });
+  }
   try {
-    const message = await createMessage(req.body);
+    const message = await createMessage({
+      chat_id_fk,
+      sender_id,
+      message_content,
+    });
     res.status(201).json(message);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error("Failed to create message:", error);
+    res.status(500).json({ error: error.message });
   }
 });
 
