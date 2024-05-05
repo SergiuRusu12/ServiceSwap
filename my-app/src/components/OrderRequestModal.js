@@ -43,6 +43,7 @@ const OrderRequestModal = ({
   };
 
   const getExchangeItem = (categories, orderDetails) => {
+    if (!orderDetails) return null;
     const matchedCategoryTitle = categories.find(
       (c) =>
         Number(c.category_id) === Number(orderDetails[0].service_in_exchange_id)
