@@ -11,6 +11,8 @@ function ChatRoom() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [isBuyer, setIsBuyer] = useState(false);
+  const [sellerId, setSellerId] = useState(null);
+  const [orderDetails, setOrderDetails] = useState(null);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -40,16 +42,33 @@ function ChatRoom() {
   }, [messages]);
 
   useEffect(() => {
-    fetch(`http://localhost:9000/api/chats/${chatId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setIsBuyer(data.initiator_id === userId);
-      })
-      .catch((error) => {
-        console.error("Error fetching chat details:", error);
-        setError("Failed to load chat details. Please try again later.");
+    const fetchDetails = async () => {
+      setLoading(true);
+      try {
+        const chatResponse = await fetch(
+          `http://localhost:9000/api/chats/${chatId}`
+        );
+        const chatData = await chatResponse.json();
+        setIsBuyer(chatData.initiator_id === userId);
+        setSellerId(chatData.receiver_id);
+
+        const orderResponse = await fetch(
+          `http://localhost:9000/api/orders/byChat/${chatId}`
+        );
+        if (orderResponse.ok) {
+          const orderData = await orderResponse.json();
+          setOrderDetails(orderData); // Assuming you have a state hook to store order details
+        } else {
+          setOrderDetails(null); // No orders found or error
+        }
+      } catch (error) {
+        console.error("Error fetching details:", error);
+        setError("Failed to load details. Please try again later.");
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+    fetchDetails();
   }, [chatId, userId]);
 
   const sendMessage = () => {
@@ -78,10 +97,10 @@ function ChatRoom() {
     setShowModal(true); // Shows the modal for order confirmation
   };
 
-  const handleConfirmOrder = () => {
-    console.log("Order confirmed");
-    // Here, add the function to initiate the order to your backend
-    setShowModal(false); // Close modal after confirmation
+  const handleConfirmOrder = (selectedCategory) => {
+    console.log("Order confirmed with service in exchange:", selectedCategory);
+    // Implement the API call to initiate the order here
+    setShowModal(false);
   };
 
   return (
@@ -122,6 +141,13 @@ function ChatRoom() {
             {isBuyer && (
               <button onClick={handleOrderInitiation}>Initiate Order</button>
             )}
+            {!isBuyer &&
+              orderDetails &&
+              orderDetails[0].order_status_seller === "Pending" && (
+                <button onClick={() => setShowModal(true)}>
+                  Respond to Order
+                </button>
+              )}
           </div>
         </div>
       </div>
@@ -129,6 +155,12 @@ function ChatRoom() {
         <OrderRequestModal
           onClose={() => setShowModal(false)}
           onConfirm={handleConfirmOrder}
+          serviceId={serviceId}
+          userId={userId} // pass userId to the modal
+          sellerId={sellerId}
+          chatId={chatId}
+          isBuyer={isBuyer}
+          orderDetails={orderDetails}
         />
       )}
     </>

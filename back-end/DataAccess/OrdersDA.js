@@ -7,14 +7,19 @@ async function getOrders() {
   return await Orders.findAll();
 }
 
+// Inside OrdersDA.js or similar file
+async function createOrder(orderDetails) {
+  try {
+    return await Orders.create(orderDetails);
+  } catch (error) {
+    console.error("Error creating order:", error);
+    throw error;
+  }
+}
+
 // Function to get an order by ID
 async function getOrderById(order_id) {
   return await Orders.findByPk(order_id);
-}
-
-// Function to create a new order
-async function createOrder(order) {
-  return await Orders.create(order);
 }
 
 // Function to delete an order by ID

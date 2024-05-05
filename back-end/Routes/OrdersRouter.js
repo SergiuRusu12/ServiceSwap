@@ -1,6 +1,7 @@
 // ordersRouter.js
 
 import express from "express";
+import Orders from "../Entities/Orders.js";
 import {
   getOrders,
   getOrderById,
@@ -11,16 +12,56 @@ import {
 
 let ordersRouter = express.Router();
 
+// Example POST route handler in your ordersRouter
+
 ordersRouter.post("/order", async (req, res) => {
+  const {
+    buyer_fk_user_id,
+    seller_fk_user_id,
+    service_fk_service_id,
+    service_in_exchange_id,
+    order_status_buyer,
+    order_status_seller,
+    chat_id,
+  } = req.body;
   try {
-    const newOrder = await createOrder(req.body);
-    return res.status(201).json(newOrder);
+    const newOrder = await createOrder({
+      buyer_fk_user_id,
+      seller_fk_user_id,
+      service_fk_service_id,
+      service_in_exchange_id,
+      order_status_buyer,
+      order_status_seller,
+      chat_id,
+    });
+    res.status(201).json(newOrder);
   } catch (error) {
-    return res
-      .status(400)
-      .json({ error: true, message: "Failed to create order." });
+    console.error("Failed to create order:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+// Add this inside ordersRouter.js
+
+// Route to get an order by chatId
+ordersRouter.get("/orders/byChat/:chatId", async (req, res) => {
+  const { chatId } = req.params;
+  try {
+    const orders = await Orders.findAll({
+      where: { chat_id: chatId },
+    });
+    if (orders.length === 0) {
+      return res
+        .status(404)
+        .json({ error: true, message: "No orders found for this chat." });
+    }
+    res.json(orders);
+  } catch (error) {
+    console.error("Failed to fetch orders by chatId:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 // Route to get all orders
 ordersRouter.get("/orders", async (req, res) => {
   return res.json(await getOrders());
@@ -43,6 +84,32 @@ ordersRouter.put("/order/:id", async (req, res) => {
     return res.status(200).json({ message: "Order updated successfully" });
   } else {
     return res.status(404).json({ error: true, message: "Order not found" });
+  }
+});
+// Updates the order status for either buyer or seller
+ordersRouter.patch("/order/:id/status", async (req, res) => {
+  const { userId, status, role } = req.body; // role should be either 'buyer' or 'seller'
+  try {
+    const order = await getOrderById(req.params.id);
+    if (!order) {
+      return res.status(404).json({ error: true, message: "Order not found" });
+    }
+
+    if (role === "buyer") {
+      order.order_status_buyer = status;
+    } else if (role === "seller") {
+      order.order_status_seller = status;
+    }
+
+    await order.save();
+    return res
+      .status(200)
+      .json({ message: "Order status updated successfully", order });
+  } catch (error) {
+    console.error("Failed to update order status:", error);
+    return res
+      .status(500)
+      .json({ error: true, message: "Failed to update order status." });
   }
 });
 

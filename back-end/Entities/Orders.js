@@ -34,6 +34,11 @@ const Orders = db.define("Orders", {
     allowNull: false,
     defaultValue: "Pending", // Defaulting to 'Pending'
   },
+  chat_id: {
+    // Ensure you have this field if using chat_id to link orders
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
 });
 
 export default Orders;
