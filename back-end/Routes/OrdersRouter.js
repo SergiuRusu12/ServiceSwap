@@ -11,11 +11,16 @@ import {
 
 let ordersRouter = express.Router();
 
-// Route to create a new order
 ordersRouter.post("/order", async (req, res) => {
-  return res.status(201).json(await createOrder(req.body));
+  try {
+    const newOrder = await createOrder(req.body);
+    return res.status(201).json(newOrder);
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ error: true, message: "Failed to create order." });
+  }
 });
-
 // Route to get all orders
 ordersRouter.get("/orders", async (req, res) => {
   return res.json(await getOrders());
@@ -32,11 +37,9 @@ ordersRouter.delete("/order/:id", async (req, res) => {
   return res.status(204).send();
 });
 
-// Route to update an order by ID
 ordersRouter.put("/order/:id", async (req, res) => {
   let result = await updateOrderById(req.params.id, req.body);
   if (result[0]) {
-    // Check if any rows were updated
     return res.status(200).json({ message: "Order updated successfully" });
   } else {
     return res.status(404).json({ error: true, message: "Order not found" });

@@ -3,14 +3,18 @@ import { useParams } from "react-router-dom";
 import "../components-css/ChatRoom.css";
 import Toolbar from "./Toolbar.js";
 import ChatSidebar from "./ChatSideBar.js";
+import OrderRequestModal from "./OrderRequestModal.js"; // Import your Modal component once created
 
 function ChatRoom() {
-  const { chatId } = useParams();
+  const { chatId, serviceId } = useParams();
   const userId = parseInt(useParams().userId, 10);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [isBuyer, setIsBuyer] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const messageEndRef = useRef(null);
 
   const fetchMessages = useCallback(() => {
@@ -33,15 +37,30 @@ function ChatRoom() {
 
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]); // Scroll to bottom every time messages update
+  }, [messages]);
+
+  useEffect(() => {
+    fetch(`http://localhost:9000/api/chats/${chatId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setIsBuyer(data.initiator_id === userId);
+      })
+      .catch((error) => {
+        console.error("Error fetching chat details:", error);
+        setError("Failed to load chat details. Please try again later.");
+        setLoading(false);
+      });
+  }, [chatId, userId]);
 
   const sendMessage = () => {
     if (!newMessage.trim()) return;
     const messageToSend = {
       chat_id_fk: chatId,
       sender_id: userId,
+      service_id_fk: serviceId,
       message_content: newMessage.trim(),
     };
+
     fetch("http://localhost:9000/api/messages", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -53,6 +72,16 @@ function ChatRoom() {
         setNewMessage("");
       })
       .catch((err) => setError("Failed to send message."));
+  };
+
+  const handleOrderInitiation = () => {
+    setShowModal(true); // Shows the modal for order confirmation
+  };
+
+  const handleConfirmOrder = () => {
+    console.log("Order confirmed");
+    // Here, add the function to initiate the order to your backend
+    setShowModal(false); // Close modal after confirmation
   };
 
   return (
@@ -90,9 +119,18 @@ function ChatRoom() {
               autoFocus
             />
             <button onClick={sendMessage}>Send</button>
+            {isBuyer && (
+              <button onClick={handleOrderInitiation}>Initiate Order</button>
+            )}
           </div>
         </div>
       </div>
+      {showModal && (
+        <OrderRequestModal
+          onClose={() => setShowModal(false)}
+          onConfirm={handleConfirmOrder}
+        />
+      )}
     </>
   );
 }

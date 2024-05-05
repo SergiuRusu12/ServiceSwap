@@ -21,7 +21,7 @@ const Chats = () => {
         }
         const data = await response.json();
         setChats(data);
-        setError(null); // Clear any previous errors on successful fetch
+        setError(null);
       } catch (error) {
         setError("Failed to load chats. Please try again later.");
         console.error("Error fetching chats:", error);
@@ -33,8 +33,8 @@ const Chats = () => {
     fetchChats();
   }, [userId]);
 
-  const handleChatClick = (chatId) => {
-    navigate(`/chat/${userId}/${chatId}`);
+  const handleChatClick = (chatId, serviceId) => {
+    navigate(`/chat/${userId}/${chatId}/${serviceId}`); // Navigate with correct serviceId
   };
 
   return (
@@ -50,7 +50,9 @@ const Chats = () => {
               <div
                 key={chat.chat_id}
                 className="chat-entry"
-                onClick={() => handleChatClick(chat.chat_id)}
+                onClick={() =>
+                  handleChatClick(chat.chat_id, chat.Service.service_id)
+                }
               >
                 <div className="chat-user">
                   {chat.Receiver ? chat.Receiver.username : "Unknown"}

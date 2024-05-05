@@ -12,17 +12,27 @@ const Orders = db.define("Orders", {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
+  seller_fk_user_id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
   service_fk_service_id: {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
-  order_status: {
+  service_in_exchange_id: {
+    type: Sequelize.INTEGER,
+    allowNull: true, // This field can be null if no service is exchanged
+  },
+  order_status_buyer: {
     type: Sequelize.STRING,
     allowNull: false,
+    defaultValue: "Pending", // Defaulting to 'Pending'
   },
-  payment_info: {
-    type: Sequelize.TEXT,
-    allowNull: true,
+  order_status_seller: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: "Pending", // Defaulting to 'Pending'
   },
 });
 

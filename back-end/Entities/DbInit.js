@@ -35,6 +35,12 @@ function FK_Config() {
   Users.hasMany(Orders, { foreignKey: "buyer_fk_user_id" });
   Orders.belongsTo(Users, { foreignKey: "buyer_fk_user_id" });
 
+  Users.hasMany(Orders, {
+    as: "SellerOrders",
+    foreignKey: "seller_fk_user_id",
+  });
+  Orders.belongsTo(Users, { as: "Seller", foreignKey: "seller_fk_user_id" });
+
   // User and Review Relationships via Orders
   Orders.hasOne(Reviews, { foreignKey: "order_fk_order_id" });
 

@@ -20,7 +20,7 @@ messageRouter.get("/chats/:chatId/messages", async (req, res) => {
 
 // Route to create a new message
 messageRouter.post("/messages", async (req, res) => {
-  const { chat_id_fk, sender_id, message_content } = req.body;
+  const { chat_id_fk, sender_id, service_id_fk, message_content } = req.body;
   if (!chat_id_fk || !sender_id || !message_content) {
     return res.status(400).json({ error: "Missing required message fields." });
   }
@@ -28,6 +28,7 @@ messageRouter.post("/messages", async (req, res) => {
     const message = await createMessage({
       chat_id_fk,
       sender_id,
+      service_id_fk, // Ensure this is correctly extracted
       message_content,
     });
     res.status(201).json(message);

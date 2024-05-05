@@ -37,10 +37,10 @@ async function getChatsByUserId(userId) {
         },
         {
           model: Services,
-          attributes: ["title"],
+          attributes: ["title", "service_id"], // Include the 'id' attribute here
         },
       ],
-      order: [["chat_id", "DESC"]], // Changed from `timestamp` to `chat_id`
+      order: [["chat_id", "DESC"]],
     });
     return chats;
   } catch (error) {
