@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useNavigate } from "react-router";
+
 import { useParams } from "react-router-dom";
 import "../components-css/ChatRoom.css";
 import Toolbar from "./Toolbar.js";
@@ -18,6 +20,7 @@ function ChatRoom() {
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const messageEndRef = useRef(null);
+  const navigate = useNavigate();
 
   const fetchMessages = useCallback(() => {
     fetch(`http://localhost:9000/api/chats/${chatId}/messages`)
@@ -101,6 +104,7 @@ function ChatRoom() {
     console.log("Order confirmed with service in exchange:", selectedCategory);
     // Implement the API call to initiate the order here
     setShowModal(false);
+    navigate(0);
   };
 
   return (

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../components-css/OrderRequestModal.css";
+import { useNavigate } from "react-router";
 
 const OrderRequestModal = ({
   onClose,
@@ -14,6 +15,7 @@ const OrderRequestModal = ({
   const [serviceDetails, setServiceDetails] = useState(null);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch service details and set the default category
@@ -83,6 +85,7 @@ const OrderRequestModal = ({
       .catch((err) => {
         console.error("Failed to create order:", err);
       });
+    navigate(0);
   };
 
   const handleAccept = () => {
@@ -107,6 +110,7 @@ const OrderRequestModal = ({
         onConfirm(); // You can refresh or handle UI changes as needed
       })
       .catch((err) => console.error("Failed to update order status:", err));
+    navigate(0);
   };
 
   const handleDeny = () => {
@@ -121,6 +125,7 @@ const OrderRequestModal = ({
         }
       })
       .catch((err) => console.error("Failed to delete order:", err));
+    navigate(0);
   };
 
   return (
