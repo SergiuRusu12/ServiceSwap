@@ -138,9 +138,11 @@ function ChatRoom() {
               autoFocus
             />
             <button onClick={sendMessage}>Send</button>
-            {isBuyer && (
-              <button onClick={handleOrderInitiation}>Initiate Order</button>
-            )}
+            {isBuyer &&
+              orderDetails &&
+              orderDetails[0].order_status_buyer === "Pending" && (
+                <button onClick={handleOrderInitiation}>Initiate Order</button>
+              )}
             {!isBuyer &&
               orderDetails &&
               orderDetails[0].order_status_seller === "Pending" && (
