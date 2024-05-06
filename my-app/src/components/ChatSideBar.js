@@ -7,7 +7,13 @@ function ChatSidebar({ userId }) {
   useEffect(() => {
     fetch(`http://localhost:9000/api/user/${userId}/chats`)
       .then((response) => response.json())
-      .then((data) => setChats(data))
+      .then((data) => {
+        const sortedChats = data.sort(
+          (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+        );
+
+        setChats(sortedChats);
+      })
       .catch((error) => console.error("Failed to load chats:", error));
   }, [userId]);
 
