@@ -111,7 +111,7 @@ const ProfilePage = () => {
             </p>
           </div>
           <div className="user-services-pfp">
-            <h2>User's Services</h2>
+            <h2>My Services</h2>
             <div className="services-list-pfp">
               {services.map((service) => (
                 <div className="service-card-pfp" key={service.service_id}>
