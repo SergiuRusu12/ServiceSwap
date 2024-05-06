@@ -2,6 +2,7 @@ import { Op } from "sequelize";
 import User from "../Entities/Users.js";
 import Services from "../Entities/Services.js";
 import Chat from "../Entities/Chat.js";
+import Sequelize from "sequelize";
 
 async function getChats() {
   return await Chat.findAll();
@@ -48,7 +49,16 @@ async function getChatsByUserId(userId) {
     throw new Error("Unable to fetch chats");
   }
 }
-
+async function updateChatTimestamp(chatId) {
+  await Chat.update(
+    {
+      timestamp: Sequelize.fn("NOW"),
+    },
+    {
+      where: { chat_id: chatId },
+    }
+  );
+}
 export {
   getChats,
   getChatById,
@@ -56,4 +66,5 @@ export {
   deleteChatById,
   updateChatById,
   getChatsByUserId,
+  updateChatTimestamp,
 };

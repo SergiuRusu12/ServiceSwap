@@ -20,7 +20,11 @@ const Chats = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        setChats(data);
+        const sortedChats = data.sort(
+          (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+        );
+
+        setChats(sortedChats);
         setError(null);
       } catch (error) {
         setError("Failed to load chats. Please try again later.");

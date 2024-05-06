@@ -4,6 +4,7 @@ import {
   createMessage,
   deleteMessageById,
 } from "../DataAccess/MessageDA.js";
+import { updateChatTimestamp } from "../DataAccess/ChatDA.js";
 
 let messageRouter = express.Router();
 
@@ -31,6 +32,9 @@ messageRouter.post("/messages", async (req, res) => {
       service_id_fk, // Ensure this is correctly extracted
       message_content,
     });
+
+    await updateChatTimestamp(chat_id_fk);
+
     res.status(201).json(message);
   } catch (error) {
     console.error("Failed to create message:", error);
