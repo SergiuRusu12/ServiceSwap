@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../components-css/Orders.css";
+import Toolbar from "./Toolbar";
 
 const Orders = () => {
   const { userId } = useParams();
@@ -149,87 +150,90 @@ const Orders = () => {
   }
 
   return (
-    <div className="orders-container">
-      <h1>Your Orders</h1>
+    <>
+      <Toolbar></Toolbar>
+      <div className="orders-container">
+        <h1>Your Orders</h1>
 
-      <div className="role-section">
-        <h2>As Buyer</h2>
-        {buyerOrders.length > 0 ? (
-          buyerOrders.map((order) => (
-            <div key={order.order_id} className="order-entry">
-              <p className="order-details">Service: {order.serviceName}</p>
-              <p className="order-details">
-                Exchanging with:{" "}
-                {getCategoryNameById(order.service_in_exchange_id)}
-              </p>
-              <div className="order-actions">
-                <button onClick={() => handleMarkAsDone(order)}>
-                  Mark as Done
-                </button>
-                <button onClick={() => handleCreateReport(order.order_id)}>
-                  Create Report Ticket
-                </button>
+        <div className="role-section">
+          <h2>As Buyer</h2>
+          {buyerOrders.length > 0 ? (
+            buyerOrders.map((order) => (
+              <div key={order.order_id} className="order-entry">
+                <p className="order-details">Service: {order.serviceName}</p>
+                <p className="order-details">
+                  Exchanging with:{" "}
+                  {getCategoryNameById(order.service_in_exchange_id)}
+                </p>
+                <div className="order-actions">
+                  <button onClick={() => handleMarkAsDone(order)}>
+                    Mark as Done
+                  </button>
+                  <button onClick={() => handleCreateReport(order.order_id)}>
+                    Create Report Ticket
+                  </button>
+                </div>
               </div>
-            </div>
-          ))
-        ) : (
-          <p>No orders as buyer.</p>
-        )}
-      </div>
-
-      <div className="role-section">
-        <h2>As Seller</h2>
-        {sellerOrders.length > 0 ? (
-          sellerOrders.map((order) => (
-            <div key={order.order_id} className="order-entry">
-              <p className="order-details">Service: {order.serviceName}</p>
-              <p className="order-details">
-                Exchanging with:{" "}
-                {getCategoryNameById(order.service_in_exchange_id)}
-              </p>
-              <div className="order-actions">
-                <button onClick={() => handleMarkAsDone(order)}>
-                  Mark as Done
-                </button>
-                <button onClick={() => handleCreateReport(order.order_id)}>
-                  Create Report Ticket
-                </button>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p>No orders as seller.</p>
-        )}
-      </div>
-
-      <div className="role-section completed-section">
-        <h2>Completed Orders</h2>
-        {completedOrders.length > 0 ? (
-          completedOrders.map((order) => (
-            <div key={order.order_id} className="order-entry completed-entry">
-              <p className="order-details">Service: {order.serviceName}</p>
-              <p className="order-details">
-                Exchanging with:{" "}
-                {getCategoryNameById(order.service_in_exchange_id)}
-              </p>
-            </div>
-          ))
-        ) : (
-          <p>No completed orders.</p>
-        )}
-      </div>
-
-      {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <h4>Confirm Completion</h4>
-            <p>Did the other user complete his end of the deal?</p>
-            <button onClick={confirmMarkAsDone}>Yes</button>
-            <button onClick={() => setShowModal(false)}>No</button>
-          </div>
+            ))
+          ) : (
+            <p>No orders as buyer.</p>
+          )}
         </div>
-      )}
-    </div>
+
+        <div className="role-section">
+          <h2>As Seller</h2>
+          {sellerOrders.length > 0 ? (
+            sellerOrders.map((order) => (
+              <div key={order.order_id} className="order-entry">
+                <p className="order-details">Service: {order.serviceName}</p>
+                <p className="order-details">
+                  Exchanging with:{" "}
+                  {getCategoryNameById(order.service_in_exchange_id)}
+                </p>
+                <div className="order-actions">
+                  <button onClick={() => handleMarkAsDone(order)}>
+                    Mark as Done
+                  </button>
+                  <button onClick={() => handleCreateReport(order.order_id)}>
+                    Create Report Ticket
+                  </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>No orders as seller.</p>
+          )}
+        </div>
+
+        <div className="role-section completed-section">
+          <h2>Completed Orders</h2>
+          {completedOrders.length > 0 ? (
+            completedOrders.map((order) => (
+              <div key={order.order_id} className="order-entry completed-entry">
+                <p className="order-details">Service: {order.serviceName}</p>
+                <p className="order-details">
+                  Exchanging with:{" "}
+                  {getCategoryNameById(order.service_in_exchange_id)}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p>No completed orders.</p>
+          )}
+        </div>
+
+        {showModal && (
+          <div className="modal">
+            <div className="modal-content">
+              <h4>Confirm Completion</h4>
+              <p>Did the other user complete his end of the deal?</p>
+              <button onClick={confirmMarkAsDone}>Yes</button>
+              <button onClick={() => setShowModal(false)}>No</button>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
