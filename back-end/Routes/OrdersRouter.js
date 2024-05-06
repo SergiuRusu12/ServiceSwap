@@ -113,4 +113,20 @@ ordersRouter.patch("/order/:id/status", async (req, res) => {
   }
 });
 
+ordersRouter.get("/orders/user/:userId", async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const buyerOrders = await Orders.findAll({
+      where: { buyer_fk_user_id: userId },
+    });
+    const sellerOrders = await Orders.findAll({
+      where: { seller_fk_user_id: userId },
+    });
+    res.json({ buyerOrders, sellerOrders });
+  } catch (error) {
+    console.error("Failed to fetch user orders:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 export default ordersRouter;

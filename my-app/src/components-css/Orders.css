@@ -1,0 +1,225 @@
+/* Styles for the Orders page container */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevents horizontal scroll */
+}
+
+.orders-container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 8px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Heading styles within the Orders component */
+.orders-container h1 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.orders-container h2 {
+  color: #555;
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+/* Individual order entry styling */
+.order-entry {
+  padding: 15px;
+  margin: 10px 0;
+  background-color: #f9f9f9;
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.order-entry:hover {
+  background-color: #e9e9ef;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for order details */
+.order-details {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* Clear separation of roles (Buyer/Seller) */
+.role-section {
+  margin-bottom: 40px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .orders-container {
+    margin: 20px;
+    padding: 10px;
+  }
+
+  .orders-container h1 {
+    font-size: 20px;
+  }
+
+  .orders-container h2 {
+    font-size: 18px;
+  }
+
+  .order-entry {
+    padding: 10px;
+  }
+
+  .order-details {
+    font-size: 14px;
+  }
+}
+.order-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin: 10px 0;
+  background-color: #f9f9f9;
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.order-entry:hover {
+  background-color: #e9e9ef;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.order-details {
+  flex-grow: 1;
+}
+
+.order-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.order-actions button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+}
+
+.order-actions button:hover {
+  background-color: #0056b3;
+}
+.completed-section .order-entry {
+  background-color: #a0d7a2; /* Slightly more grayish than the normal entries */
+  color: #666; /* Darker text for better readability on a gray background */
+}
+
+.completed-section .order-entry:hover {
+  background-color: #e0e0e0; /* Slightly darker on hover */
+  box-shadow: none; /* No shadow on hover to emphasize the 'completed' state */
+}
+* Full-screen modal backdrop */ .modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+  z-index: 1050; /* High z-index to ensure it is on top */
+}
+
+/* Modal content box */
+.modal-content {
+  position: relative;
+  padding: 20px;
+  width: 300px; /* Fixed width, adjust as necessary */
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Modal close button */
+.modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #aaa;
+  font-size: 24px;
+}
+.modal-content {
+  background: white;
+  padding: 30px; /* Increased padding for better spacing */
+  border-radius: 15px; /* Smoother corners */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
+  width: auto; /* Auto width based on content with max limit */
+  max-width: 90%; /* Max width to prevent too wide modals on large screens */
+  text-align: center;
+  position: relative; /* For absolute positioning of the close button */
+  transition: transform 0.3s ease-out; /* Smooth transform on open/close */
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 24px;
+  color: #666; /* Subtle color */
+}
+
+/* Button styling within the modal */
+.modal button {
+  padding: 10px 20px;
+  margin: 10px; /* Space between buttons */
+  background-color: #007bff; /* Theme color for buttons */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s; /* Smooth background color transition */
+}
+
+.modal button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Ensuring that the modal animation is smooth and centered */
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Animate modal appearance for better UX */
+@keyframes modalOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-content {
+  animation: modalOpen 0.3s ease-out forwards;
+}

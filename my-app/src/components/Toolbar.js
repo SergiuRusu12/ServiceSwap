@@ -6,6 +6,7 @@ import {
   faSignOutAlt,
   faPlus,
   faComments,
+  faBox,
 } from "@fortawesome/free-solid-svg-icons";
 import "../components-css/Toolbar.css";
 import PostServiceModal from "./PostServiceModal";
@@ -40,6 +41,13 @@ const Toolbar = ({ onEditService, ...props }) => {
       navigate(`/user/${userID}`);
     }
   };
+  const navigateToOrders = () => {
+    const hashedUserID = localStorage.getItem("hashedUserID");
+    if (hashedUserID) {
+      const userID = atob(hashedUserID);
+      navigate(`/orders/${userID}`);
+    }
+  };
 
   const navigateToChats = () => {
     const hashedUserID = localStorage.getItem("hashedUserID");
@@ -60,6 +68,9 @@ const Toolbar = ({ onEditService, ...props }) => {
         <div className="toolbar-actions">
           <button onClick={handlePostServiceClick}>
             <FontAwesomeIcon icon={faPlus} /> Post Service
+          </button>
+          <button className="orders-button" onClick={navigateToOrders}>
+            <FontAwesomeIcon icon={faBox} /> Orders
           </button>
           <button onClick={navigateToChats}>
             <FontAwesomeIcon icon={faComments} /> Chats

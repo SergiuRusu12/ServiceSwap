@@ -7,7 +7,7 @@ import { ServicePage } from "./components/ServicePage";
 import ProfilePage from "./components/ProfilePage";
 import Chats from "./components/Chats";
 import ChatRoom from "./components/ChatRoom";
-
+import Orders from "./components/Orders";
 function App() {
   return (
     <Router>
@@ -21,6 +21,7 @@ function App() {
         <Route path="/chats/:userId" element={<Chats />} />
         <Route path="/user/:userId" element={<ProfilePage />} />
         <Route path="/chat/:userId/:chatId/:serviceId" element={<ChatRoom />} />
+        <Route path="/orders/:userId" element={<Orders />} />
       </Routes>
     </Router>
   );
