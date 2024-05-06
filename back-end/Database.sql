@@ -79,10 +79,13 @@ CREATE TABLE IF NOT EXISTS `chat` (
   CONSTRAINT `chat_ibfk_1` FOREIGN KEY (`service_id_fk`) REFERENCES `services` (`service_id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `chat_ibfk_2` FOREIGN KEY (`initiator_id`) REFERENCES `user` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `chat_ibfk_3` FOREIGN KEY (`receiver_id`) REFERENCES `user` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 INSERT INTO `chat` (`chat_id`, `service_id_fk`, `timestamp`, `initiator_id`, `receiver_id`) VALUES
-	(2, 4, '2024-05-02 20:20:36', 8, 4);
+	(2, 4, '2024-05-06 00:07:47', 8, 4),
+	(3, 5, '2024-05-06 00:09:20', 1, 8),
+	(7, 1, '2024-05-06 12:53:53', 8, 2),
+	(8, 2, '2024-05-06 13:32:57', 8, 1);
 
 CREATE TABLE IF NOT EXISTS `message` (
   `message_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -98,13 +101,27 @@ CREATE TABLE IF NOT EXISTS `message` (
   CONSTRAINT `message_ibfk_1` FOREIGN KEY (`chat_id_fk`) REFERENCES `chat` (`chat_id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `message_ibfk_2` FOREIGN KEY (`sender_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `message_ibfk_3` FOREIGN KEY (`service_id_fk`) REFERENCES `services` (`service_id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 INSERT INTO `message` (`message_id`, `chat_id_fk`, `sender_id`, `message_content`, `timestamp`, `service_id_fk`) VALUES
 	(60, 2, 8, 'sal', '2024-05-05 18:18:33', 4),
 	(61, 2, 4, 'sal', '2024-05-05 18:18:36', 4),
 	(62, 2, 8, 'aaaa', '2024-05-05 18:23:48', 4),
-	(63, 2, 4, 'aa', '2024-05-05 20:00:59', 4);
+	(63, 2, 4, 'aa', '2024-05-05 20:00:59', 4),
+	(73, 2, 8, 'lalala', '2024-05-05 22:44:24', 4),
+	(74, 2, 8, 'nice job mai frejnd', '2024-05-05 22:44:46', 4),
+	(75, 2, 8, 'salut', '2024-05-05 23:58:44', 4),
+	(76, 2, 8, 'sal', '2024-05-05 23:59:10', 4),
+	(77, 2, 4, 'buna', '2024-05-06 00:00:08', 4),
+	(78, 2, 8, 'sall', '2024-05-06 00:00:56', 4),
+	(104, 7, 8, 'saaalut fraateee lee meeeu', '2024-05-06 12:52:48', 1),
+	(105, 7, 2, 'buna rege', '2024-05-06 12:53:17', 1),
+	(106, 7, 8, 'buna frate, ce ziceai ca vrei in schimb', '2024-05-06 12:53:29', 1),
+	(107, 7, 8, '?', '2024-05-06 12:53:29', 1),
+	(108, 7, 2, 'farmer', '2024-05-06 12:53:40', 1),
+	(109, 7, 8, 'nu stiu farmer dar stiu barista e ok', '2024-05-06 12:53:50', 1),
+	(110, 7, 8, '"', '2024-05-06 12:53:50', 1),
+	(111, 7, 2, 'da', '2024-05-06 12:53:53', 1);
 
 CREATE TABLE IF NOT EXISTS `orderitems` (
   `order_item_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -132,10 +149,12 @@ CREATE TABLE IF NOT EXISTS `orders` (
   KEY `seller_fk_user_id` (`seller_fk_user_id`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`buyer_fk_user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`seller_fk_user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 INSERT INTO `orders` (`order_id`, `buyer_fk_user_id`, `seller_fk_user_id`, `service_fk_service_id`, `service_in_exchange_id`, `order_status_buyer`, `order_status_seller`, `chat_id`) VALUES
-	(36, 8, 4, 4, 19, 'InProgress', 'InProgress', 2);
+	(43, 8, 4, 4, 4, 'InProgress', 'InProgress', 2),
+	(46, 8, 2, 1, 2, 'InProgress', 'Pending', 6),
+	(48, 8, 2, 1, 2, 'InProgress', 'InProgress', 7);
 
 CREATE TABLE IF NOT EXISTS `reviews` (
   `review_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -164,17 +183,18 @@ CREATE TABLE IF NOT EXISTS `services` (
   PRIMARY KEY (`service_id`),
   KEY `category_fk` (`category_fk`),
   CONSTRAINT `services_ibfk_1` FOREIGN KEY (`category_fk`) REFERENCES `categories` (`category_id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 INSERT INTO `services` (`service_id`, `title`, `description`, `price`, `item_in_exchange`, `seller_fk_user_id`, `service_status`, `category_fk`, `locality`, `image_url`, `extra_image_1`, `extra_image_2`) VALUES
-	(1, 'Custom Web Development', 'Providing teaching services from concept for children. Providing teaching services from concept for children. Providing teaching services from concept for children.Providing teaching services from concept for children', NULL, 'Farming', 2, 'Active', 3, 'Constanta', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/1.jpg?alt=media&token=ea1a0267-4694-4782-acf8-2f76009466b9', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/7.jpg?alt=media&token=c85837e9-47ed-4704-a6a7-93fff27664fd', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/4.jpg?alt=media&token=d3e95c96-d1bd-476c-892c-69af11acc9ba'),
-	(2, 'Complete Garden Care', 'Full service garden care including planting, weeding, and landscape design.', NULL, 'Gardening tools', 1, 'Active', 8, 'Constanta', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/2.jpg?alt=media&token=2782d2ec-7d4d-4d8f-8263-ae485d75533d', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/2.jpg?alt=media&token=2782d2ec-7d4d-4d8f-8263-ae485d75533d', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/2.jpg?alt=media&token=2782d2ec-7d4d-4d8f-8263-ae485d75533d'),
-	(3, 'Private Tutor for Sciences', 'Qualified teacher for one-on-one science tutoring sessions, focused on biology and chemistry.', NULL, 'Lab equipment', 3, 'Active', 3, 'Bucuresti', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/3.jpg?alt=media&token=d444c032-7dd3-4c39-a5a1-efcfe17a17be', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/3.jpg?alt=media&token=d444c032-7dd3-4c39-a5a1-efcfe17a17be', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/3.jpg?alt=media&token=d444c032-7dd3-4c39-a5a1-efcfe17a17be'),
+	(1, 'Custom Web Development', 'Providing teaching services from concept for children. Providing teaching services from concept for children. Providing teaching services from concept for children.Providing teaching services from concept for children', NULL, 'Farmer', 2, 'Active', 3, 'Constanta', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/1.jpg?alt=media&token=ea1a0267-4694-4782-acf8-2f76009466b9', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/7.jpg?alt=media&token=c85837e9-47ed-4704-a6a7-93fff27664fd', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/4.jpg?alt=media&token=d3e95c96-d1bd-476c-892c-69af11acc9ba'),
+	(2, 'Complete Garden Care', 'Full service garden care including planting, weeding, and landscape design.', NULL, 'Farmer', 1, 'Active', 8, 'Constanta', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/2.jpg?alt=media&token=2782d2ec-7d4d-4d8f-8263-ae485d75533d', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/2.jpg?alt=media&token=2782d2ec-7d4d-4d8f-8263-ae485d75533d', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/2.jpg?alt=media&token=2782d2ec-7d4d-4d8f-8263-ae485d75533d'),
+	(3, 'Private Tutor for Sciences', 'Qualified teacher for one-on-one science tutoring sessions, focused on biology and chemistry.', NULL, 'Farmer', 3, 'Active', 3, 'Bucuresti', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/3.jpg?alt=media&token=d444c032-7dd3-4c39-a5a1-efcfe17a17be', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/3.jpg?alt=media&token=d444c032-7dd3-4c39-a5a1-efcfe17a17be', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/3.jpg?alt=media&token=d444c032-7dd3-4c39-a5a1-efcfe17a17be'),
 	(4, 'Household Electrical Jobs', 'All types of home electrical jobs, including wiring and appliance installation.', NULL, 'Electrician', 4, 'Active', 4, 'Bucuresti', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/4.jpg?alt=media&token=d3e95c96-d1bd-476c-892c-69af11acc9ba', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/4.jpg?alt=media&token=d3e95c96-d1bd-476c-892c-69af11acc9ba', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/4.jpg?alt=media&token=d3e95c96-d1bd-476c-892c-69af11acc9ba'),
-	(5, 'Basic Carpentry Work', 'Offering carpentry services such as repairs, installations, and custom projects.', NULL, 'Wood', 5, 'Active', 7, 'Constanta', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/5.jpg?alt=media&token=f1cc20ad-a211-48e3-acb5-62608f77425f', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/5.jpg?alt=media&token=f1cc20ad-a211-48e3-acb5-62608f77425f', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/5.jpg?alt=media&token=f1cc20ad-a211-48e3-acb5-62608f77425f'),
-	(6, 'Plumbing Solutions', 'Experienced plumber available for leaks, installations, and maintenance.', NULL, 'Plumbing tools', 6, 'Active', 6, 'Bucuresti', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/6.jpg?alt=media&token=3f6c14c1-d691-4f70-9482-172b651993ce', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/6.jpg?alt=media&token=3f6c14c1-d691-4f70-9482-172b651993ce', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/6.jpg?alt=media&token=3f6c14c1-d691-4f70-9482-172b651993ce'),
-	(7, 'Residential Cleaning Services', 'Thorough cleaning services for apartments and homes. Trustworthy and efficient.', NULL, 'Cleaning supplies', 2, 'Active', 5, 'Constanta', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/7.jpg?alt=media&token=c85837e9-47ed-4704-a6a7-93fff27664fd', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/7.jpg?alt=media&token=c85837e9-47ed-4704-a6a7-93fff27664fd', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/7.jpg?alt=media&token=c85837e9-47ed-4704-a6a7-93fff27664fd'),
-	(11, 'Private Tutor', 'I give math tutorials. I am a nerd, a big one! I give math tutorials. I am a nerd, a big one! I give math tutorials. I am a nerd, a big one! I give math tutorials. I am a nerd, a big one! I give math tutorials. I am a nerd, a big one! Very big one! !!!\n', NULL, 'Electrician', 8, 'Active', 7, 'Brasov', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/images%2F3.jpg?alt=media&token=5f70d817-fa9c-4cec-b8f0-d7d7bf949386', NULL, NULL);
+	(5, 'Basic Carpentry Work', 'Offering carpentry services such as repairs, installations, and custom projects.', NULL, 'Farmer', 5, 'Active', 7, 'Constanta', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/5.jpg?alt=media&token=f1cc20ad-a211-48e3-acb5-62608f77425f', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/5.jpg?alt=media&token=f1cc20ad-a211-48e3-acb5-62608f77425f', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/5.jpg?alt=media&token=f1cc20ad-a211-48e3-acb5-62608f77425f'),
+	(6, 'Plumbing Solutions', 'Experienced plumber available for leaks, installations, and maintenance.', NULL, 'Farmer', 6, 'Active', 6, 'Bucuresti', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/6.jpg?alt=media&token=3f6c14c1-d691-4f70-9482-172b651993ce', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/6.jpg?alt=media&token=3f6c14c1-d691-4f70-9482-172b651993ce', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/6.jpg?alt=media&token=3f6c14c1-d691-4f70-9482-172b651993ce'),
+	(7, 'Residential Cleaning Services', 'Thorough cleaning services for apartments and homes. Trustworthy and efficient.', NULL, 'Farmer', 2, 'Active', 5, 'Constanta', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/7.jpg?alt=media&token=c85837e9-47ed-4704-a6a7-93fff27664fd', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/7.jpg?alt=media&token=c85837e9-47ed-4704-a6a7-93fff27664fd', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/7.jpg?alt=media&token=c85837e9-47ed-4704-a6a7-93fff27664fd'),
+	(11, 'Private Tutor', 'I give math tutorials. I am a nerd, a big one! I give math tutorials. I am a nerd, a big one! I give math tutorials. I am a nerd, a big one! I give math tutorials. I am a nerd, a big one! I give math tutorials. I am a nerd, a big one! Very big one! !!!\n', NULL, 'Electrician', 8, 'Active', 7, 'Brasov', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/images%2F3.jpg?alt=media&token=5f70d817-fa9c-4cec-b8f0-d7d7bf949386', NULL, NULL),
+	(55, 'Cevaaa', 'cevaaaaaaaaaaaaaaaaaaa', NULL, 'Electrician', 5, 'Active', 4, 'Constanta', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/images%2F3.jpg?alt=media&token=5f70d817-fa9c-4cec-b8f0-d7d7bf949386', NULL, NULL);
 
 CREATE TABLE IF NOT EXISTS `user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
