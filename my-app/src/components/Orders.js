@@ -13,6 +13,12 @@ const Orders = () => {
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [currentOrderToMark, setCurrentOrderToMark] = useState(null);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportTitle, setReportTitle] = useState("");
+  const [reportMessage, setReportMessage] = useState("");
+  const [currentOrderId, setCurrentOrderId] = useState(null);
+  const [formError, setFormError] = useState("");
+
   const navigate = useNavigate();
 
   // Fetch categories
@@ -137,8 +143,81 @@ const Orders = () => {
   };
 
   const handleCreateReport = (orderId) => {
-    console.log("Creating report for:", orderId);
-    // API call to create a report could go here
+    setCurrentOrderId(orderId);
+    setShowReportModal(true);
+  };
+
+  const handleReportChange = (setter) => (event) => {
+    setter(event.target.value);
+  };
+
+  const submitReport = () => {
+    setFormError("");
+
+    // Validation checks
+    if (!reportTitle || reportTitle.length < 5) {
+      setFormError("Title must be at least 5 characters long.");
+      return;
+    }
+    if (!reportMessage || reportMessage.length < 15) {
+      setFormError("Message must be at least 15 characters long.");
+      return;
+    }
+
+    const ticket = {
+      ticket_title: reportTitle,
+      ticket_message: reportMessage,
+      ticket_status: "Open",
+      ticket_creator_user_id_fk: parseInt(userId),
+      order_id_fk: currentOrderId,
+    };
+
+    fetch("http://localhost:9000/api/tickets", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(ticket),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to create ticket");
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Ticket created:", data);
+        // Update the order status for both buyer and seller
+        const updateOrderStatus = async () => {
+          const statuses = ["buyer", "seller"];
+          for (const role of statuses) {
+            const updateOrderUrl = `http://localhost:9000/api/order/${currentOrderId}/status`;
+            await fetch(updateOrderUrl, {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                userId: parseInt(userId),
+                status: "Closed",
+                role,
+              }),
+            }).then((response) => {
+              if (!response.ok)
+                throw new Error(`Failed to update ${role} status`);
+            });
+          }
+        };
+
+        return updateOrderStatus();
+      })
+      .then(() => {
+        console.log(
+          "Order status updated to 'Closed' for both buyer and seller"
+        );
+        setShowReportModal(false); // Close modal on success
+        setReportTitle("");
+        setReportMessage("");
+        navigate(0); // Refresh or redirect as needed
+      })
+      .catch((error) => {
+        console.error("Failed to process your request:", error);
+        setFormError("Failed to create ticket: " + error.message);
+      });
   };
 
   if (loading) {
@@ -229,6 +308,28 @@ const Orders = () => {
               <p>Did the other user complete his end of the deal?</p>
               <button onClick={confirmMarkAsDone}>Yes</button>
               <button onClick={() => setShowModal(false)}>No</button>
+            </div>
+          </div>
+        )}
+        {showReportModal && (
+          <div className="modal">
+            <div className="modal-content">
+              <h4>Create Report Ticket</h4>
+              <input
+                type="text"
+                placeholder="Title"
+                value={reportTitle}
+                onChange={handleReportChange(setReportTitle)}
+              />
+              <textarea
+                placeholder="Message"
+                value={reportMessage}
+                onChange={handleReportChange(setReportMessage)}
+              />
+              {formError && <div className="form-error">{formError}</div>}
+
+              <button onClick={submitReport}>Submit Report</button>
+              <button onClick={() => setShowReportModal(false)}>Cancel</button>
             </div>
           </div>
         )}

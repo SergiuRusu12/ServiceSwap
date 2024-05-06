@@ -8,6 +8,7 @@ import Services from "./Services.js";
 import Users from "./Users.js";
 import Message from "./Messages.js";
 import Chat from "./Chat.js";
+import Tickets from "./Tickets.js";
 env.config();
 
 function Create_DB() {
@@ -74,6 +75,11 @@ function FK_Config() {
 
   // If a Chat is directly linked to a Service (optional)
   Chat.belongsTo(Services, { foreignKey: "service_id_fk" });
+  Users.hasMany(Tickets, { foreignKey: "ticket_creator_user_id_fk" });
+  Tickets.belongsTo(Users, { foreignKey: "ticket_creator_user_id_fk" });
+
+  Orders.hasMany(Tickets, { foreignKey: "order_id_fk" });
+  Tickets.belongsTo(Orders, { foreignKey: "order_id_fk" });
 }
 
 function DB_Init() {

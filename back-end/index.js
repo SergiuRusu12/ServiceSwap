@@ -11,6 +11,7 @@ import servicesRouter from "./Routes/ServicesRouter.js";
 import userRouter from "./Routes/UsersRouter.js";
 import chatRouter from "./Routes/ChatRouter.js";
 import messageRouter from "./Routes/MessagesRouter.js";
+import ticketsRouter from "./Routes/TicketsRouter.js";
 env.config();
 
 let app = express();
@@ -32,6 +33,8 @@ app.use("/api", reviewsRouter);
 app.use("/api", servicesRouter);
 app.use("/api", userRouter);
 app.use("/api", messageRouter);
+app.use("/api", ticketsRouter);
+
 let port = process.env.PORT || 8001;
 app.listen(port);
 console.log("API is runnning at " + port);

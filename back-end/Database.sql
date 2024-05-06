@@ -149,12 +149,12 @@ CREATE TABLE IF NOT EXISTS `orders` (
   KEY `seller_fk_user_id` (`seller_fk_user_id`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`buyer_fk_user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`seller_fk_user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 INSERT INTO `orders` (`order_id`, `buyer_fk_user_id`, `seller_fk_user_id`, `service_fk_service_id`, `service_in_exchange_id`, `order_status_buyer`, `order_status_seller`, `chat_id`) VALUES
-	(43, 8, 4, 4, 4, 'InProgress', 'InProgress', 2),
-	(46, 8, 2, 1, 2, 'InProgress', 'Pending', 6),
-	(48, 8, 2, 1, 2, 'InProgress', 'InProgress', 7);
+	(43, 8, 4, 1, 4, 'Completed', 'Completed', 2),
+	(46, 2, 8, 4, 21, 'InProgress', 'InProgress', 6),
+	(48, 8, 2, 1, 25, 'InProgress', 'InProgress', 7);
 
 CREATE TABLE IF NOT EXISTS `reviews` (
   `review_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -183,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `services` (
   PRIMARY KEY (`service_id`),
   KEY `category_fk` (`category_fk`),
   CONSTRAINT `services_ibfk_1` FOREIGN KEY (`category_fk`) REFERENCES `categories` (`category_id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 INSERT INTO `services` (`service_id`, `title`, `description`, `price`, `item_in_exchange`, `seller_fk_user_id`, `service_status`, `category_fk`, `locality`, `image_url`, `extra_image_1`, `extra_image_2`) VALUES
 	(1, 'Custom Web Development', 'Providing teaching services from concept for children. Providing teaching services from concept for children. Providing teaching services from concept for children.Providing teaching services from concept for children', NULL, 'Farmer', 2, 'Active', 3, 'Constanta', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/1.jpg?alt=media&token=ea1a0267-4694-4782-acf8-2f76009466b9', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/7.jpg?alt=media&token=c85837e9-47ed-4704-a6a7-93fff27664fd', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/4.jpg?alt=media&token=d3e95c96-d1bd-476c-892c-69af11acc9ba'),
@@ -194,7 +194,26 @@ INSERT INTO `services` (`service_id`, `title`, `description`, `price`, `item_in_
 	(6, 'Plumbing Solutions', 'Experienced plumber available for leaks, installations, and maintenance.', NULL, 'Farmer', 6, 'Active', 6, 'Bucuresti', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/6.jpg?alt=media&token=3f6c14c1-d691-4f70-9482-172b651993ce', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/6.jpg?alt=media&token=3f6c14c1-d691-4f70-9482-172b651993ce', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/6.jpg?alt=media&token=3f6c14c1-d691-4f70-9482-172b651993ce'),
 	(7, 'Residential Cleaning Services', 'Thorough cleaning services for apartments and homes. Trustworthy and efficient.', NULL, 'Farmer', 2, 'Active', 5, 'Constanta', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/7.jpg?alt=media&token=c85837e9-47ed-4704-a6a7-93fff27664fd', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/7.jpg?alt=media&token=c85837e9-47ed-4704-a6a7-93fff27664fd', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/7.jpg?alt=media&token=c85837e9-47ed-4704-a6a7-93fff27664fd'),
 	(11, 'Private Tutor', 'I give math tutorials. I am a nerd, a big one! I give math tutorials. I am a nerd, a big one! I give math tutorials. I am a nerd, a big one! I give math tutorials. I am a nerd, a big one! I give math tutorials. I am a nerd, a big one! Very big one! !!!\n', NULL, 'Electrician', 8, 'Active', 7, 'Brasov', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/images%2F3.jpg?alt=media&token=5f70d817-fa9c-4cec-b8f0-d7d7bf949386', NULL, NULL),
-	(55, 'Cevaaa', 'cevaaaaaaaaaaaaaaaaaaa', NULL, 'Electrician', 5, 'Active', 4, 'Constanta', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/images%2F3.jpg?alt=media&token=5f70d817-fa9c-4cec-b8f0-d7d7bf949386', NULL, NULL);
+	(55, 'Cevaaa', 'cevaaaaaaaaaaaaaaaaaaa', NULL, 'Electrician', 5, 'Active', 4, 'Constanta', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/images%2F3.jpg?alt=media&token=5f70d817-fa9c-4cec-b8f0-d7d7bf949386', NULL, NULL),
+	(56, 'serviciu frumos', 'serviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumosserviciu frumos', NULL, 'Cleaner', 8, 'Active', 22, 'Galati', 'https://firebasestorage.googleapis.com/v0/b/serviceswap-b5da9.appspot.com/o/images%2Fbackground.jpg?alt=media&token=b001cccd-8fab-4305-83ec-4930e6dc9be4', NULL, NULL);
+
+CREATE TABLE IF NOT EXISTS `tickets` (
+  `ticket_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ticket_title` varchar(255) NOT NULL,
+  `ticket_message` text NOT NULL,
+  `ticket_status` varchar(255) NOT NULL DEFAULT 'Open',
+  `ticket_creator_user_id_fk` int(11) NOT NULL,
+  `order_id_fk` int(11) NOT NULL,
+  PRIMARY KEY (`ticket_id`),
+  KEY `ticket_creator_user_id_fk` (`ticket_creator_user_id_fk`),
+  KEY `order_id_fk` (`order_id_fk`),
+  CONSTRAINT `tickets_ibfk_1` FOREIGN KEY (`ticket_creator_user_id_fk`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `tickets_ibfk_2` FOREIGN KEY (`order_id_fk`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+INSERT INTO `tickets` (`ticket_id`, `ticket_title`, `ticket_message`, `ticket_status`, `ticket_creator_user_id_fk`, `order_id_fk`) VALUES
+	(10, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'Open', 8, 48),
+	(14, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'Open', 8, 48);
 
 CREATE TABLE IF NOT EXISTS `user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -204,17 +223,17 @@ CREATE TABLE IF NOT EXISTS `user` (
   `profile_info` text DEFAULT NULL,
   `user_type` enum('normal','admin') NOT NULL DEFAULT 'normal',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 INSERT INTO `user` (`user_id`, `username`, `email`, `password`, `profile_info`, `user_type`) VALUES
-	(1, 'AlexGreen', 'alex.green@example.com', 'safePassword987', 'Job: Farmer. Passionate about sustainable agriculture and organic farming.', 'normal'),
-	(2, 'CaseyRiver', 'casey.river@example.com', 'secureKey789', 'Job: Teacher. Dedicated to inspiring young minds through innovative education.', 'normal'),
+	(1, 'AlexGreen', 'alex.green@example.com', 'safePassword987', '', 'normal'),
+	(2, 'CaseyRiver', 'casey.river@example.com', 'secureKey789', '', 'normal'),
+	(3, 'sergiu', 'sergiurusu122@gmail.com', '1234', NULL, 'normal'),
 	(4, 'EmilyStone', 'emily.stone@example.com', 'emPassword12!', NULL, 'normal'),
 	(5, 'MichaelBlanc', 'michael.blanc@example.com', 'pass123Michael!', NULL, 'normal'),
 	(6, 'SarahConnor', 'sarah.connor@example.com', 'terminator2!', NULL, 'normal'),
 	(7, 'admin', 'james.tiberius@example.com', '1234', NULL, 'admin'),
-	(8, 'user', 'anna.banana@example.com', '1234', NULL, 'normal'),
-	(9, 'sergiu', 'sergiurusu122@gmail.com', '1234', NULL, 'normal');
+	(8, 'user', 'anna.banana@example.com', '1234', NULL, 'normal');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
