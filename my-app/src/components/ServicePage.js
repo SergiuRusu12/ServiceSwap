@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "../components-css/ServicePage.css";
 import Toolbar from "./Toolbar.js";
+import { useNavigate } from "react-router-dom";
 
 export const ServicePage = () => {
-  const { serviceId } = useParams();
+  const { serviceId, initiatorIds } = useParams();
   const [service, setService] = useState(null);
   const [currentImage, setCurrentImage] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchServiceDetails = async () => {
@@ -19,6 +21,27 @@ export const ServicePage = () => {
 
     fetchServiceDetails();
   }, [serviceId]);
+
+  const handleSendMessage = () => {
+    const initiatorId = initiatorIds; // Assuming the user's ID is stored in localStorage
+    const receiverId = service.seller_fk_user_id; // Assuming the service object has this field
+
+    fetch("http://localhost:9000/api/chats/initiate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        initiator_id: initiatorId,
+        receiver_id: receiverId,
+        service_id: serviceId,
+      }),
+    })
+      .then((res) => res.json())
+      .then((chat) => {
+        ///chat/:userId/:chatId/:serviceId
+        navigate(`/chat/${initiatorIds}/${chat.chat_id}/${serviceId}`);
+      })
+      .catch((err) => console.error("Failed to initiate or find chat", err));
+  };
 
   if (!service) {
     return <div>Loading...</div>;
@@ -40,9 +63,9 @@ export const ServicePage = () => {
 
   return (
     <>
-      <Toolbar /> {/* Add the Toolbar component here */}
+      <Toolbar />
       <div className="service-page-container">
-        <div className="image-slider">
+        <div className="image-container">
           {images.length > 1 && (
             <button className="prev" onClick={goToPreviousImage}>
               ❮
@@ -58,32 +81,31 @@ export const ServicePage = () => {
               ❯
             </button>
           )}
+          {images.length > 1 && (
+            <div className="navigation-dots">
+              {images.map((_, idx) => (
+                <span
+                  key={idx}
+                  className={currentImage === idx ? "dot active" : "dot"}
+                  onClick={() => setCurrentImage(idx)}
+                ></span>
+              ))}
+            </div>
+          )}
         </div>
-        <div className="service-content">
-          <h1 className="service-title text-background">{service.title}</h1>
-          <p className="service-description text-background">
-            {service.description}
+        <div className="service-details">
+          <h1 className="service-title">{service.title}</h1>
+          <p className="service-description">{service.description}</p>
+          <p className="service-locality">Locality: {service.locality}</p>
+          <p className="service-exchange">
+            Service in exchange: {service.item_in_exchange}
           </p>
-          <p className="service-locality text-background">
-            Locality: {service.locality}
-          </p>
-          <p className="service-locality text-background">
-            Service in exchange: {service.item_in_exchange}{" "}
-          </p>
-        </div>
-
-        {/* Navigation dots */}
-        {images.length > 1 && (
-          <div className="navigation-dots">
-            {images.map((_, idx) => (
-              <span
-                key={idx}
-                className={currentImage === idx ? "dot active" : "dot"}
-                onClick={() => setCurrentImage(idx)}
-              ></span>
-            ))}
+          <div className="message-button-container">
+            <button className="message-button" onClick={handleSendMessage}>
+              Send Message
+            </button>
           </div>
-        )}
+        </div>
       </div>
     </>
   );

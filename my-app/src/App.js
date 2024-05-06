@@ -14,7 +14,10 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginSignup />} />
         <Route path="/main/:hashedUserID" element={<MainPage />} />
-        <Route path="/service/:serviceId" element={<ServicePage />} />
+        <Route
+          path="/service/:serviceId/:initiatorIds"
+          element={<ServicePage />}
+        />
         <Route path="/chats/:userId" element={<Chats />} />
         <Route path="/user/:userId" element={<ProfilePage />} />
         <Route path="/chat/:userId/:chatId/:serviceId" element={<ChatRoom />} />

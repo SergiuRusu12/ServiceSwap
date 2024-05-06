@@ -41,6 +41,10 @@ const Chats = () => {
     navigate(`/chat/${userId}/${chatId}/${serviceId}`); // Navigate with correct serviceId
   };
 
+  const handleServicePage = (serviceId) => {
+    navigate(`/service/${serviceId}/${userId}`);
+  };
+
   return (
     <div className="chats-container">
       <Toolbar />
@@ -65,6 +69,15 @@ const Chats = () => {
                 <div className="chat-timestamp">
                   {new Date(chat.timestamp).toLocaleString()}
                 </div>
+                <button
+                  className="chat-service-button"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent the chat click event
+                    handleServicePage(chat.Service.service_id);
+                  }}
+                >
+                  Go to Service
+                </button>
               </div>
             ))
           ) : (

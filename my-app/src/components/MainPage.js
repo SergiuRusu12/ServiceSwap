@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 // import { storage } from "../firebase"; // Make sure the path is correct
 // import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Toolbar from "./Toolbar";
+import { useParams } from "react-router-dom";
 
 const localities = [
   "Alba Iulia",
@@ -58,7 +59,11 @@ const MainPage = () => {
   const [selectedLocality, setSelectedLocality] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const { hashedUserID } = useParams();
   const navigate = useNavigate();
+
+  const userId = atob(hashedUserID);
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -164,7 +169,9 @@ const MainPage = () => {
                 </div>
                 <button
                   className="details-button"
-                  onClick={() => navigate(`/service/${service.service_id}`)}
+                  onClick={() =>
+                    navigate(`/service/${service.service_id}/${userId}`)
+                  }
                 >
                   See details...
                 </button>

@@ -7,7 +7,7 @@ import {
   updateChatById,
   getChatsByUserId,
 } from "../DataAccess/ChatDA.js";
-
+import Chat from "../Entities/Chat.js";
 let chatRouter = express.Router();
 
 chatRouter.post("/chats", async (req, res) => {
@@ -46,6 +46,35 @@ chatRouter.get("/user/:userId/chats", async (req, res) => {
     res.json(chats);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+// Express route handler in your Node.js backend
+// Express route handler in your Node.js backend
+chatRouter.post("/chats/initiate", async (req, res) => {
+  const { initiator_id, receiver_id, service_id } = req.body;
+  try {
+    const existingChat = await Chat.findOne({
+      where: {
+        initiator_id,
+        receiver_id,
+        service_id_fk: service_id, // Changed from service_id to service_id_fk
+      },
+    });
+    if (existingChat) {
+      res.json(existingChat);
+    } else {
+      const newChat = await Chat.create({
+        initiator_id,
+        receiver_id,
+        service_id_fk: service_id, // Ensure to use the correct column name
+        timestamp: new Date(), // Set the timestamp to the current time
+      });
+      res.status(201).json(newChat);
+    }
+  } catch (error) {
+    console.error("Failed to initiate chat:", error);
+    res.status(500).json({ message: "Error initiating chat" });
   }
 });
 

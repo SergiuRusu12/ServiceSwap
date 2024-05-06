@@ -77,9 +77,9 @@ function ChatRoom() {
   const sendMessage = () => {
     if (!newMessage.trim()) return;
     const messageToSend = {
-      chat_id_fk: chatId,
-      sender_id: userId,
-      service_id_fk: serviceId,
+      chat_id_fk: Number(chatId),
+      sender_id: Number(userId),
+      service_id_fk: Number(serviceId),
       message_content: newMessage.trim(),
     };
 
