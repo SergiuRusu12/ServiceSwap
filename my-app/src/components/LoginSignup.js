@@ -59,8 +59,12 @@ const LoginSignup = () => {
 
         // Pseudo-hash the userID
         const hashedUserID = pseudoHashUserID(user.user_id);
-        navigate(`/main/${hashedUserID}`);
 
+        if (user.user_type === "admin") {
+          navigate(`/admin/${user.user_id}`);
+        } else {
+          navigate(`/main/${hashedUserID}`);
+        }
         localStorage.setItem("hashedUserID", hashedUserID);
       } catch (error) {
         console.error("Login error:", error);

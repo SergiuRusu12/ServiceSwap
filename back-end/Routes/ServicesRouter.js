@@ -92,6 +92,41 @@ servicesRouter.put("/service/:id/extraImage1", async (req, res) => {
       .json({ error: true, message: "Error updating Extra Image 1" });
   }
 });
+// Route to get services with status 'Pending'
+servicesRouter.get("/services/pending", async (req, res) => {
+  try {
+    const pendingServices = await Services.findAll({
+      where: { service_status: "Pending" },
+    });
+    if (pendingServices.length > 0) {
+      res.json(pendingServices);
+    } else {
+      res
+        .status(404)
+        .json({ error: true, message: "No pending services found" });
+    }
+  } catch (error) {
+    console.error("Failed to fetch pending services:", error);
+    res.status(500).json({ error: true, message: "Internal Server Error" });
+  }
+});
+// Route to update the status of a service
+servicesRouter.patch("/service/:id/status", async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body; // 'Active' or 'Denied'
+  try {
+    const result = await updateServiceById(id, { service_status: status });
+    if (result[0]) {
+      // Assuming Sequelize ORM is used which returns an array [count of affected rows]
+      res.status(200).json({ message: "Service status updated successfully" });
+    } else {
+      res.status(404).json({ error: true, message: "Service not found" });
+    }
+  } catch (error) {
+    console.error("Failed to update service status:", error);
+    res.status(500).json({ error: true, message: "Internal Server Error" });
+  }
+});
 
 // Add route to update extra_image_2 for a service by ID
 servicesRouter.put("/service/:id/extraImage2", async (req, res) => {

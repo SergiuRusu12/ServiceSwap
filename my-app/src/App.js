@@ -8,6 +8,9 @@ import ProfilePage from "./components/ProfilePage";
 import Chats from "./components/Chats";
 import ChatRoom from "./components/ChatRoom";
 import Orders from "./components/Orders";
+import AdminDashboard from "./components/AdminDashboard";
+import AdminServiceApproval from "./components/AdminServiceApproval";
+import AdminTicketManagement from "./components/AdminTicketManagement";
 function App() {
   return (
     <Router>
@@ -22,6 +25,15 @@ function App() {
         <Route path="/user/:userId" element={<ProfilePage />} />
         <Route path="/chat/:userId/:chatId/:serviceId" element={<ChatRoom />} />
         <Route path="/orders/:userId" element={<Orders />} />
+        <Route path="/admin/:userId" element={<AdminDashboard />} />
+        <Route
+          path="/adminServiceApproval"
+          element={<AdminServiceApproval />}
+        />
+        <Route
+          path="/adminTicketManagement"
+          element={<AdminTicketManagement />}
+        />
       </Routes>
     </Router>
   );

@@ -11,6 +11,9 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [services, setServices] = useState([]);
+  const [activeServices, setActiveServices] = useState([]);
+  const [pendingServices, setPendingServices] = useState([]);
+  const [deniedServices, setDeniedServices] = useState([]);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [serviceToEdit, setServiceToEdit] = useState(null);
   // Handler for the edit button
@@ -46,6 +49,15 @@ const ProfilePage = () => {
       );
       const userServices = await servicesResponse.json();
       setServices(userServices);
+      setActiveServices(
+        userServices.filter((service) => service.service_status === "Active")
+      );
+      setPendingServices(
+        userServices.filter((service) => service.service_status === "Pending")
+      );
+      setDeniedServices(
+        userServices.filter((service) => service.service_status === "Denied")
+      );
     } catch (error) {
       console.error("Error:", error);
     }
@@ -73,6 +85,7 @@ const ProfilePage = () => {
         setServices(
           services.filter((service) => service.service_id !== serviceId)
         );
+        navigate(0);
       } catch (error) {
         console.error("Error:", error);
       }
@@ -94,6 +107,7 @@ const ProfilePage = () => {
     // Navigate to the current user's profile page to cause a remount
     navigate(`/user/${userId}`);
   };
+
   return (
     <>
       <Toolbar refreshServices={refreshUserServices} context="ProfilePage" />
@@ -113,33 +127,44 @@ const ProfilePage = () => {
           <div className="user-services-pfp">
             <h2>My Services</h2>
             <div className="services-list-pfp">
-              {services.map((service) => (
-                <div className="service-card-pfp" key={service.service_id}>
-                  {service.image_url && (
-                    <img
-                      src={service.image_url}
-                      alt={service.title}
-                      className="service-image-pfp"
-                    />
-                  )}
-                  <div className="service-info-pfp">
-                    <h3>{service.title}</h3>
-                    <p>{service.description}</p>
-                  </div>
-                  <div className="service-actions-pfp">
-                    <button
-                      className="edit-btn-pfp"
-                      onClick={() => openEditModal(service)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="delete-btn-pfp"
-                      onClick={() => deleteService(service.service_id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
+              {[
+                { title: "Active Services", data: activeServices },
+                { title: "Pending Services", data: pendingServices },
+                { title: "Denied Services", data: deniedServices },
+              ].map((section) => (
+                <div key={section.title}>
+                  <h2>{section.title}</h2>
+                  {section.data.map((service) => (
+                    <div key={service.service_id} className="service-card-pfp">
+                      {service.image_url && (
+                        <img
+                          src={service.image_url}
+                          alt={service.title}
+                          className="service-image-pfp"
+                        />
+                      )}
+                      <div className="service-info-pfp">
+                        <h3>{service.title}</h3>
+                        <p>{service.description}</p>
+                        <div className="service-actions-pfp">
+                          <button
+                            className="delete-btn-pfp"
+                            onClick={() => deleteService(service.service_id)}
+                          >
+                            Delete
+                          </button>
+                          {section.title === "Active Services" && (
+                            <button
+                              className="edit-btn-pfp"
+                              onClick={() => openEditModal(service)}
+                            >
+                              Edit
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
@@ -152,8 +177,8 @@ const ProfilePage = () => {
         <PostServiceModal
           isOpen={editModalOpen}
           setModalOpen={setEditModalOpen}
-          refreshServices={refreshUserServices} // You might not need this if you're using handleServiceUpdate
-          onServiceUpdate={handleServiceUpdate} // Add this prop
+          refreshServices={refreshUserServices}
+          onServiceUpdate={handleServiceUpdate}
           context="ProfilePage"
           serviceToEdit={serviceToEdit}
           refreshPage={refreshPage}

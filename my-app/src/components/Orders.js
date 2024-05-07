@@ -310,7 +310,7 @@ const Orders = () => {
             <p>No orders as seller.</p>
           )}
         </div>
-        <div className="role-section completed-section">
+        <div className="role-section partial-completed-section">
           <h2>Waiting your completion...</h2>
           {partiallyCompletedOrders.length > 0 ? (
             partiallyCompletedOrders.map((order) => (

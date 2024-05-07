@@ -123,11 +123,11 @@ body {
   background-color: #a0d7a2; /* Slightly more grayish than the normal entries */
   color: #666; /* Darker text for better readability on a gray background */
 }
-
-.completed-section .order-entry:hover {
-  background-color: #e0e0e0; /* Slightly darker on hover */
-  box-shadow: none; /* No shadow on hover to emphasize the 'completed' state */
+.partial-completed-section .order-entry {
+  background-color: #efef5c; /* Slightly more grayish than the normal entries */
+  color: #666;
 }
+
 * Full-screen modal backdrop */ .modal {
   position: fixed;
   top: 0;
