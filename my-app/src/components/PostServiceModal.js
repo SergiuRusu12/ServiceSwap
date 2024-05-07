@@ -17,7 +17,7 @@ const PostServiceModal = (props) => {
     itemInExchange: "",
     category: "",
     locality: "",
-    serviceStatus: "Active", // default value
+    serviceStatus: "Pending", // default value
   });
   const removeSelectedImage = (indexToRemove) => {
     setSelectedImages(
@@ -71,7 +71,7 @@ const PostServiceModal = (props) => {
         itemInExchange: serviceToEdit.item_in_exchange || "",
         category,
         locality: serviceToEdit.locality || "",
-        serviceStatus: serviceToEdit.service_status || "Active",
+        serviceStatus: serviceToEdit.service_status || "Pending",
       });
 
       setSelectedImages(
@@ -93,7 +93,7 @@ const PostServiceModal = (props) => {
         itemInExchange: "",
         category: "",
         locality: "",
-        serviceStatus: "Active",
+        serviceStatus: "Pending",
       });
       setSelectedImages([]);
     }
@@ -180,7 +180,7 @@ const PostServiceModal = (props) => {
         price: null, // Replace with actual logic if managing price
         item_in_exchange: formData.itemInExchange,
         seller_fk_user_id: parseInt(atob(localStorage.getItem("hashedUserID"))),
-        service_status: "Active",
+        service_status: "Pending",
         category_fk: categories.find(
           (cat) => cat.category_name === formData.category
         )?.category_id,
@@ -215,7 +215,7 @@ const PostServiceModal = (props) => {
         itemInExchange: "",
         category: "",
         locality: "",
-        serviceStatus: "Active",
+        serviceStatus: "Pending",
       });
       setSelectedImages([]);
       setModalOpen(false);
