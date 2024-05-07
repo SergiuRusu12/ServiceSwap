@@ -56,13 +56,15 @@ body {
 .service-card h2 {
   color: #fff;
   padding: 15px 20px;
-  margin: 0;
+  margin-top: 10px;
+  margin-bottom: 0px;
   font-size: 24px;
   width: 575px;
   background-color: #007bff;
   text-align: justify;
   border-radius: 5px;
   display: inline-block + 10px;
+  line-height: 1.2;
 }
 
 .service-card p {
@@ -145,28 +147,28 @@ body {
   background-color: #0056b3;
 }
 
-.filters input[type="text"] {
-  padding: 8px;
-  margin-right: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: white;
-  color: black;
-  width: 100%;
-  max-width: 300px;
-  box-sizing: border-box;
-  outline: none;
-}
-
-.filters input[type="text"]:focus {
-  border-color: #0056b3;
-  box-shadow: 0 0 8px rgba(0, 86, 179, 0.2);
-}
-
 .filters {
   display: flex;
-  align-items: center;
-  margin-bottom: 30px;
+  align-items: center; /* Ensure vertical alignment is centered */
+  justify-content: flex-start; /* Align items at the start of the line */
+  gap: 10px; /* Optional: adds space between elements */
+  margin: 20px 0; /* Adjusted margin for better spacing */
+}
+
+.filters input[type="text"],
+.filters select {
+  height: 40px; /* Make sure the height matches */
+  padding: 8px; /* Consistent padding */
+  margin-right: 10px; /* Consistent margin on the right */
+  border: 1px solid #ddd; /* Consistent border */
+  border-radius: 4px; /* Rounded corners for aesthetics */
+  background-color: #f8f9fa; /* Background color */
+  font-size: 16px; /* Ensures text is similarly sized */
+  box-sizing: border-box; /* Includes padding and border in width */
+}
+
+.filters select {
+  cursor: pointer; /* Ensures cursor indicates interactivity */
 }
 
 @media (max-width: 768px) {
@@ -201,4 +203,112 @@ body {
     margin-top: 10px; /* Space from the description text */
     width: auto; /* Full width on small screens */
   }
+}
+.filters {
+  display: flex;
+  flex-direction: column; /* Stacks the filters vertically */
+  align-items: center; /* Center-aligns the filters */
+  margin: 20px 0; /* Adds some vertical space around the filters */
+}
+
+.filters input[type="text"],
+.filters select {
+  width: 100%; /* Full width for better alignment */
+  max-width: 300px; /* Limits the maximum width for aesthetics */
+  height: 40px; /* Consistent height for all filter elements */
+  padding: 8px; /* Comfortable padding inside the filters */
+  margin-bottom: 10px; /* Adds space between each filter */
+  border: 1px solid #ddd; /* Subtle border styling */
+  border-radius: 4px; /* Rounded corners */
+  background-color: #f8f9fa; /* Light grey background */
+  font-size: 16px; /* Readable font size */
+  box-sizing: border-box; /* Border and padding included in width */
+}
+
+.filters select {
+  cursor: pointer; /* Indicates that these are selectable */
+}
+
+@media (max-width: 768px) {
+  .filters {
+    width: 90%; /* Responsive width on smaller screens */
+  }
+}
+.filters {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.search-bar {
+  width: 100%; /* Adjusts width to full container width */
+  display: flex;
+  justify-content: center; /* Centers the search input */
+  margin-bottom: 10px; /* Space between search bar and dropdowns */
+}
+
+.dropdown-group {
+  display: flex;
+  justify-content: center; /* Centers the dropdowns */
+  gap: 10px; /* Provides space between dropdowns */
+}
+
+.filters input[type="text"],
+.filters select {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  color: #495057;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px; /* Maximum width of inputs and selects */
+}
+
+@media (max-width: 768px) {
+  .dropdown-group {
+    flex-direction: column; /* Stacks dropdowns vertically on small screens */
+  }
+}
+
+.service-card {
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  min-height: 200px;
+  width: 1000px;
+  display: flex;
+  align-items: flex-start;
+  padding: 15px;
+  gap: 20px;
+  text-align: justify;
+  border-radius: 10px;
+}
+
+.service-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-grow: 1;
+  padding: 0;
+}
+
+.details-button {
+  align-self: flex-start;
+  padding: 8px 12px;
+  background: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.details-button:hover {
+  background-color: #0056b3;
 }

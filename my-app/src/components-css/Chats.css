@@ -63,6 +63,7 @@
 }
 .chat-service-button {
   margin-left: 20px; /* Space from chat details */
+  margin-bottom: 23px;
   padding: 5px 10px;
   background-color: #007bff;
   color: white;

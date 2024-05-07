@@ -122,38 +122,44 @@ const MainPage = () => {
       <div className="containerMain">
         <h1>Service Swap</h1>
         <div className="filters">
-          <input
-            type="text"
-            placeholder="Search by title..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <select
-            value={selectedLocality}
-            onChange={(e) => setSelectedLocality(e.target.value)}
-          >
-            <option value="">All Localities</option>
-            {localities.map((locality) => (
-              <option key={locality} value={locality}>
-                {locality}
-              </option>
-            ))}
-          </select>
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-          >
-            <option value="">All Categories</option>
-            {categories.map((category) => (
-              <option
-                key={category.category_id}
-                value={category.category_id.toString()}
-              >
-                {category.category_name}
-              </option>
-            ))}
-          </select>
+          <div className="search-bar">
+            <input
+              type="text"
+              placeholder="Search by title..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+          <div className="dropdown-group">
+            <select
+              value={selectedLocality}
+              onChange={(e) => setSelectedLocality(e.target.value)}
+            >
+              <option value="">All Localities</option>
+              {localities.map((locality) => (
+                <option key={locality} value={locality}>
+                  {locality}
+                </option>
+              ))}
+            </select>
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              <option value="">All Categories</option>
+              {categories.map((category) => (
+                <option
+                  key={category.category_id}
+                  value={category.category_id.toString()}
+                >
+                  {category.category_name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
+        {/* Services list and other elements */}
+
         <div className="services-list">
           {filteredServices.length > 0 ? (
             filteredServices.map((service) => (

@@ -58,7 +58,7 @@ export const ServicePage = () => {
           );
           setRating(totalRating / relatedReviews.length);
         } else {
-          setRating("No ratings yet");
+          setRating("0");
         }
       } catch (error) {
         console.error("Error fetching data:", error);
