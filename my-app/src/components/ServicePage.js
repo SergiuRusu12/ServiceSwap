@@ -3,11 +3,15 @@ import { useParams } from "react-router-dom";
 import "../components-css/ServicePage.css";
 import Toolbar from "./Toolbar.js";
 import { useNavigate } from "react-router-dom";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 export const ServicePage = () => {
   const { serviceId, initiatorIds } = useParams();
   const [service, setService] = useState(null);
   const [currentImage, setCurrentImage] = useState(0);
+  const [rating, setRating] = useState(null);
+  const [ratingLoading, setRatingLoading] = useState(true);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,6 +25,50 @@ export const ServicePage = () => {
 
     fetchServiceDetails();
   }, [serviceId]);
+
+  useEffect(() => {
+    const fetchOrdersAndCalculateRating = async () => {
+      try {
+        // Fetch orders for the user
+        const ordersResponse = await fetch(
+          `http://localhost:9000/api/orders/user/${initiatorIds}`
+        );
+        const ordersData = await ordersResponse.json();
+        const relatedOrders = ordersData.buyerOrders
+          .concat(ordersData.sellerOrders)
+          .filter(
+            (order) => order.service_fk_service_id.toString() === serviceId
+          );
+
+        // Fetch all reviews and calculate rating based on related orders
+        const reviewsResponse = await fetch(
+          `http://localhost:9000/api/reviews`
+        );
+        const reviewsData = await reviewsResponse.json();
+        const relatedReviews = reviewsData.filter((review) =>
+          relatedOrders.some(
+            (order) => order.order_id === review.order_fk_order_id
+          )
+        );
+
+        if (relatedReviews.length > 0) {
+          const totalRating = relatedReviews.reduce(
+            (acc, curr) => acc + curr.rating,
+            0
+          );
+          setRating(totalRating / relatedReviews.length);
+        } else {
+          setRating("No ratings yet");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setRatingLoading(false);
+      }
+    };
+
+    fetchOrdersAndCalculateRating();
+  }, [serviceId, initiatorIds]); // Add dependencies if needed
 
   const handleSendMessage = () => {
     const initiatorId = initiatorIds; // Assuming the user's ID is stored in localStorage
@@ -99,6 +147,10 @@ export const ServicePage = () => {
           <p className="service-locality">Locality: {service.locality}</p>
           <p className="service-exchange">
             Service in exchange: {service.item_in_exchange}
+          </p>
+          <p className="service-rating">
+            {ratingLoading ? "Loading rating..." : `Rating: ${rating}`} / 5{" "}
+            <FontAwesomeIcon icon={faStar} />
           </p>
           <div className="message-button-container">
             <button className="message-button" onClick={handleSendMessage}>
