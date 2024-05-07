@@ -25,7 +25,7 @@ function App() {
         <Route path="/user/:userId" element={<ProfilePage />} />
         <Route path="/chat/:userId/:chatId/:serviceId" element={<ChatRoom />} />
         <Route path="/orders/:userId" element={<Orders />} />
-        <Route path="/admin/:userId" element={<AdminDashboard />} />
+        <Route path="/admin" element={<AdminDashboard />} />
         <Route
           path="/adminServiceApproval"
           element={<AdminServiceApproval />}

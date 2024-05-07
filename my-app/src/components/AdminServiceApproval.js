@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "../components-css/AdminServiceApproval.css";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import ServiceDetailsModal from "./ServiceDetailsModal";
 const AdminServiceApproval = () => {
   const [services, setServices] = useState([]);
+  const [selectedService, setSelectedService] = useState(null);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -36,11 +41,9 @@ const AdminServiceApproval = () => {
     updateServiceStatus(serviceId, "Denied");
     navigate(0);
   };
-
-  const handleCheckService = (serviceId) => {
-    console.log("Checking service:", serviceId);
+  const handleBack = () => {
+    navigate(-1);
   };
-
   const updateServiceStatus = async (serviceId, status) => {
     try {
       const response = await fetch(
@@ -63,9 +66,18 @@ const AdminServiceApproval = () => {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-
+  const handleCloseModal = () => {
+    setShowDetailsModal(false);
+  };
+  const handleCheckService = (service) => {
+    setSelectedService(service);
+    setShowDetailsModal(true);
+  };
   return (
     <div className="admin-service-approval">
+      <button onClick={handleBack} className="back-button">
+        <FontAwesomeIcon icon={faArrowLeft} /> Back
+      </button>
       <h1>Service Approval</h1>
       {services.length > 0 ? (
         services.map((service) => (
@@ -75,13 +87,10 @@ const AdminServiceApproval = () => {
           >
             <h2>{service.title}</h2>
             <div className="button-group">
-              <button
-                onClick={() =>
-                  handleCheckService(service.id || service.service_id)
-                }
-              >
+              <button onClick={() => handleCheckService(service)}>
                 Check Service
               </button>
+
               <button
                 onClick={() => handleApprove(service.id || service.service_id)}
               >
@@ -98,6 +107,11 @@ const AdminServiceApproval = () => {
       ) : (
         <p>No pending services to display.</p>
       )}
+      <ServiceDetailsModal
+        service={selectedService}
+        isOpen={showDetailsModal}
+        closeModal={handleCloseModal}
+      />
     </div>
   );
 };

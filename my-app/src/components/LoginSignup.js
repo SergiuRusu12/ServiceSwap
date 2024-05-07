@@ -61,7 +61,7 @@ const LoginSignup = () => {
         const hashedUserID = pseudoHashUserID(user.user_id);
 
         if (user.user_type === "admin") {
-          navigate(`/admin/${user.user_id}`);
+          navigate(`/admin/`);
         } else {
           navigate(`/main/${hashedUserID}`);
         }
