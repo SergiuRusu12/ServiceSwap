@@ -16,10 +16,6 @@ const Reviews = db.define("Reviews", {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
-  review_text: {
-    type: Sequelize.TEXT,
-    allowNull: false,
-  },
 });
 
 export default Reviews;

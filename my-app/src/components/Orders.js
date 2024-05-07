@@ -18,6 +18,8 @@ const Orders = () => {
   const [reportMessage, setReportMessage] = useState("");
   const [currentOrderId, setCurrentOrderId] = useState(null);
   const [formError, setFormError] = useState("");
+  const [rating, setRating] = useState(5); // Default to 5 stars, or choose your own default
+  const [partiallyCompletedOrders, setPartiallyCompletedOrders] = useState([]);
 
   const navigate = useNavigate();
 
@@ -57,29 +59,41 @@ const Orders = () => {
           })
         );
 
+        // Updated buyer orders filter
+        // Filter for Active Buyer Orders (Excluding "Pending")
         setBuyerOrders(
           ordersWithServices.filter(
             (order) =>
               order.buyer_fk_user_id === parseInt(userId) &&
-              ((order.order_status_buyer === "InProgress" &&
-                order.order_status_seller === "InProgress") ||
-                (order.order_status_buyer === "Completed" &&
-                  order.order_status_seller === "InProgress") ||
-                (order.order_status_buyer === "InProgress" &&
-                  order.order_status_seller === "Completed"))
+              order.order_status_buyer === "InProgress" &&
+              order.order_status_seller !== "Completed" &&
+              order.order_status_seller !== "Pending"
           )
         );
 
+        // Filter for Active Seller Orders (Excluding "Pending")
         setSellerOrders(
           ordersWithServices.filter(
             (order) =>
               order.seller_fk_user_id === parseInt(userId) &&
-              ((order.order_status_buyer === "InProgress" &&
-                order.order_status_seller === "InProgress") ||
-                (order.order_status_buyer === "Completed" &&
-                  order.order_status_seller === "InProgress") ||
-                (order.order_status_buyer === "InProgress" &&
-                  order.order_status_seller === "Completed"))
+              order.order_status_seller === "InProgress" &&
+              order.order_status_buyer !== "Completed" &&
+              order.order_status_buyer !== "Pending"
+          )
+        );
+
+        // Filter for Partially Completed Orders (Excluding "Pending")
+        setPartiallyCompletedOrders(
+          ordersWithServices.filter(
+            (order) =>
+              (order.buyer_fk_user_id === parseInt(userId) &&
+                order.order_status_seller === "Completed" &&
+                order.order_status_buyer !== "Completed" &&
+                order.order_status_buyer !== "Pending") ||
+              (order.seller_fk_user_id === parseInt(userId) &&
+                order.order_status_buyer === "Completed" &&
+                order.order_status_seller !== "Completed" &&
+                order.order_status_seller !== "Pending")
           )
         );
 
@@ -133,13 +147,26 @@ const Orders = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Order status updated:", data);
-        setShowModal(false);
-        // Optionally refresh orders here or navigate
+        // Post review after successful order status update
+        const review = {
+          order_fk_order_id: currentOrderToMark.order_id,
+          rating: rating,
+        };
+        return fetch("http://localhost:9000/api/review", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(review),
+        });
+      })
+      .then((reviewResponse) => reviewResponse.json())
+      .then((reviewData) => {
+        console.log("Review posted:", reviewData);
+        setShowModal(false); // Close modal on success
+        navigate(0); // Optionally refresh or redirect
       })
       .catch((error) => {
-        console.error("Failed to update order status:", error);
+        console.error("Failed to update order status or post review:", error);
       });
-    navigate(0);
   };
 
   const handleCreateReport = (orderId) => {
@@ -283,6 +310,28 @@ const Orders = () => {
             <p>No orders as seller.</p>
           )}
         </div>
+        <div className="role-section completed-section">
+          <h2>Waiting your completion...</h2>
+          {partiallyCompletedOrders.length > 0 ? (
+            partiallyCompletedOrders.map((order) => (
+              <div key={order.order_id} className="order-entry">
+                <p className="order-details">Service: {order.serviceName}</p>
+                <p className="order-details">
+                  Exchanging with:{" "}
+                  {getCategoryNameById(order.service_in_exchange_id)}
+                </p>
+                <p className="order-details">
+                  Status:{" "}
+                  {order.buyer_fk_user_id === parseInt(userId)
+                    ? "Seller Completed"
+                    : "Buyer Completed"}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p>No orders completed on one end.</p>
+          )}
+        </div>
 
         <div className="role-section completed-section">
           <h2>Completed Orders</h2>
@@ -306,6 +355,16 @@ const Orders = () => {
             <div className="modal-content">
               <h4>Confirm Completion</h4>
               <p>Did the other user complete his end of the deal?</p>
+              <div className="rating-container">
+                <label className="rating-label">Rating:</label>
+                <input
+                  type="range"
+                  min="1"
+                  max="5"
+                  value={rating}
+                  onChange={(e) => setRating(parseInt(e.target.value))}
+                />
+              </div>
               <button onClick={confirmMarkAsDone}>Yes</button>
               <button onClick={() => setShowModal(false)}>No</button>
             </div>
