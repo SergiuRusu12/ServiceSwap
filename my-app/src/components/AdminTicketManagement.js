@@ -83,7 +83,7 @@ const AdminTicketManagement = () => {
       ) {
         const serviceStatus = ticket.actions.makeServicePending
           ? "Pending"
-          : "Inactive";
+          : "Denied";
         await updateServiceStatus(
           ticket.orderDetails.service_fk_service_id,
           serviceStatus
@@ -225,7 +225,7 @@ const AdminTicketManagement = () => {
                     />
                     <span className="checkmark"></span>
                     <label htmlFor={`makeServiceInactive-${ticket.ticket_id}`}>
-                      Set Service to Inactive
+                      Set Service to Denied
                     </label>
                   </div>
                   <div className="custom-checkbox">
