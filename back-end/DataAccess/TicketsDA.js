@@ -16,8 +16,19 @@ async function deleteTicketById(ticket_id) {
   return await Tickets.destroy({ where: { ticket_id } });
 }
 
-async function updateTicketById(ticket_id, ticketDetails) {
-  return await Tickets.update(ticketDetails, { where: { ticket_id } });
+// Assuming Sequelize or a similar ORM
+async function updateTicketById(ticketId, updateParams) {
+  try {
+    const ticket = await Tickets.findByPk(ticketId);
+    if (!ticket) {
+      return false;
+    }
+    await ticket.update(updateParams);
+    return true;
+  } catch (error) {
+    console.error("Error updating ticket:", error);
+    return false;
+  }
 }
 
 export {

@@ -43,3 +43,30 @@ button {
 button:hover {
   background-color: #004080;
 }
+.admin-dashboard {
+  position: relative;
+}
+
+.logout-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logout-button:hover {
+  background-color: #c82333;
+}
+
+.logout-button:focus {
+  outline: none;
+}

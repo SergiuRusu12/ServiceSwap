@@ -128,5 +128,22 @@ ordersRouter.get("/orders/user/:userId", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+ordersRouter.patch("/order/:id/statuss", async (req, res) => {
+  const { order_status_buyer, order_status_seller } = req.body;
+  try {
+    const result = await updateOrderById(req.params.id, {
+      order_status_buyer,
+      order_status_seller,
+    });
+    if (result[0]) {
+      res.status(200).json({ message: "Order status updated successfully" });
+    } else {
+      res.status(404).json({ error: true, message: "Order not found" });
+    }
+  } catch (error) {
+    console.error("Failed to update order status:", error);
+    res.status(500).json({ error: true, message: "Internal Server Error" });
+  }
+});
 
 export default ordersRouter;

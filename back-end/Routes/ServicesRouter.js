@@ -13,6 +13,7 @@ import {
   updateServiceExtraImage1ById,
   updateServiceExtraImage2ById,
   getServicesByUserId,
+  updateServiceStatusById,
 } from "../DataAccess/ServicesDA.js";
 
 let servicesRouter = express.Router();
@@ -174,6 +175,21 @@ servicesRouter.get("/services/user/:userId", async (req, res) => {
     res
       .status(500)
       .json({ error: true, message: "Error fetching services for user" });
+  }
+});
+servicesRouter.patch("/service/:id/status", async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  try {
+    const result = await updateServiceStatusById(id, status);
+    if (result) {
+      res.status(200).json({ message: "Service status updated successfully" });
+    } else {
+      res.status(404).json({ error: true, message: "Service not found" });
+    }
+  } catch (error) {
+    console.error("Failed to update service status:", error);
+    res.status(500).json({ error: true, message: "Internal Server Error" });
   }
 });
 

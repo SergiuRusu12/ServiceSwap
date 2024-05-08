@@ -1,0 +1,203 @@
+.ticket-management-container {
+  width: 90%;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.tickets-section h2 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.tickets-list {
+  margin-bottom: 20px;
+}
+
+.ticket {
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  overflow: hidden; /* Contains the overflow within the ticket container */
+}
+
+.ticket h3 {
+  margin: 0 0 10px 0;
+  color: #007bff;
+  word-wrap: break-word; /* Ensures words break to prevent overflow */
+}
+
+.ticket p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adds an ellipsis when text overflows */
+  white-space: nowrap; /* Keeps the text on one line */
+  max-width: 90%; /* Restricts width to prevent overflow outside the parent container */
+}
+
+.ticket button {
+  padding: 8px 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.ticket button:hover {
+  background-color: #218838;
+}
+.ticket-management-container {
+  width: 90%;
+  max-width: 600px; /* Restrict maximum width for better control */
+  margin: 40px auto;
+  padding: 20px;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.9
+  ); /* Semi-transparent white background */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: center; /* Center align the text */
+}
+
+.tickets-section h2 {
+  color: #333;
+  margin-bottom: 20px; /* More space below headers */
+}
+
+.tickets-list {
+  margin: 0;
+  padding: 0;
+  list-style: none; /* Remove bullet points from list */
+}
+
+.ticket {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px; /* More space between tickets */
+  border-radius: 5px;
+  text-align: left; /* Align text to the left inside each ticket */
+}
+
+.ticket h3 {
+  margin: 0;
+  color: #007bff;
+  font-size: 18px; /* Slightly larger font size for visibility */
+  word-wrap: break-word; /* Prevent overflow */
+}
+
+.ticket p {
+  font-size: 16px; /* Increase font size for better readability */
+  color: #666;
+  line-height: 1.5; /* Increase line height for better readability */
+}
+
+.ticket button {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px; /* Match font size with paragraphs */
+  display: inline-block; /* Align button to the right */
+  margin-top: 10px;
+}
+
+.ticket button:hover {
+  background-color: #218838;
+}
+
+/* Add responsiveness to the container for better mobile view */
+@media (max-width: 768px) {
+  .ticket-management-container {
+    width: 95%; /* Make container wider on small screens */
+    padding: 15px; /* Reduce padding on small screens */
+  }
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #00e1ff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Checkbox styling */
+.custom-checkbox {
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  user-select: none;
+  line-height: 24px;
+}
+
+.custom-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+  border-radius: 4px;
+}
+
+/* On mouse-over, add a grey background color */
+.custom-checkbox:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.custom-checkbox input:checked ~ .checkmark {
+  background-color: #2196f3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.custom-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.custom-checkbox .checkmark:after {
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}

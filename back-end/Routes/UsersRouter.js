@@ -7,6 +7,8 @@ import {
   createUser,
   deleteUserById,
   updateUserById,
+  updateUserById2,
+  updateUserTypeById,
 } from "../DataAccess/UsersDA.js";
 
 let userRouter = express.Router();
@@ -28,6 +30,23 @@ userRouter.get("/users", async (req, res) => {
     res.json(users);
   } catch (error) {
     res.status(500).json({ error: true, message: "Error fetching users" });
+  }
+});
+// Patch a user's status
+// Update user status to "banned"
+userRouter.patch("/user/:id/status", async (req, res) => {
+  const { id } = req.params;
+  const { user_type } = req.body;
+  try {
+    const result = await updateUserTypeById(id, user_type);
+    if (result) {
+      res.status(200).json({ message: "User status updated successfully" });
+    } else {
+      res.status(404).json({ error: true, message: "User not found" });
+    }
+  } catch (error) {
+    console.error("Failed to update user status:", error);
+    res.status(500).json({ error: true, message: "Internal Server Error" });
   }
 });
 
@@ -55,18 +74,20 @@ userRouter.delete("/user/:id", async (req, res) => {
   }
 });
 
-// Route to update a user by ID
-userRouter.put("/user/:id", async (req, res) => {
+// userRouter.js
+userRouter.put("/user/:id/status", async (req, res) => {
   try {
-    let result = await updateUserById(req.params.id, req.body);
+    const { user_type } = req.body;
+    let result = await updateUserById(req.params.id, { user_type });
     if (result[0]) {
-      // Check if any rows were updated
-      res.status(200).json({ message: "User updated successfully" });
+      res.status(200).json({ message: "User status updated successfully" });
     } else {
       res.status(404).json({ error: true, message: "User not found" });
     }
   } catch (error) {
-    res.status(500).json({ error: true, message: "Error updating user" });
+    res
+      .status(500)
+      .json({ error: true, message: "Error updating user status" });
   }
 });
 

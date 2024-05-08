@@ -57,6 +57,11 @@ const LoginSignup = () => {
           return;
         }
 
+        if (user.user_type === "banned") {
+          alert("Your account has been banned for not respecting guidelines.");
+          return; // Stops further execution and navigation
+        }
+
         // Pseudo-hash the userID
         const hashedUserID = pseudoHashUserID(user.user_id);
 

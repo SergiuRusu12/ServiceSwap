@@ -75,6 +75,19 @@ async function getServicesByUserId(seller_fk_user_id) {
     },
   });
 }
+async function updateServiceStatusById(serviceId, status) {
+  try {
+    const service = await Services.findByPk(serviceId);
+    if (!service) {
+      return false; // No service found with the given ID
+    }
+    await service.update({ service_status: status });
+    return true; // Successfully updated
+  } catch (error) {
+    console.error("Error updating service status:", error);
+    return false;
+  }
+}
 
 export {
   getServices,
@@ -88,4 +101,5 @@ export {
   updateServiceExtraImage1ById,
   updateServiceExtraImage2ById,
   getServicesByUserId,
+  updateServiceStatusById,
 };
