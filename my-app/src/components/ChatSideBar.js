@@ -24,7 +24,9 @@ function ChatSidebar({ userId }) {
         <div
           key={chat.chat_id}
           className="chat-entry"
-          onClick={() => navigate(`/chat/${userId}/${chat.chat_id}`)}
+          onClick={() =>
+            navigate(`/chat/${userId}/${chat.chat_id}/${chat.service_id_fk}`)
+          }
         >
           <div>{chat.Service.title}</div>
         </div>
