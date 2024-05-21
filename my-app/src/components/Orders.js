@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../components-css/Orders.css";
 import Toolbar from "./Toolbar";
+import { Bar } from "react-chartjs-2";
+import "chart.js/auto"; // Required for Chart.js v3
 
 const Orders = () => {
   const { userId } = useParams();
@@ -20,6 +22,11 @@ const Orders = () => {
   const [formError, setFormError] = useState("");
   const [rating, setRating] = useState(5); // Default to 5 stars, or choose your own default
   const [partiallyCompletedOrders, setPartiallyCompletedOrders] = useState([]);
+  const [orderStatusCounts, setOrderStatusCounts] = useState({
+    InProgress: 0,
+    Completed: 0,
+    Pending: 0,
+  });
 
   const navigate = useNavigate();
 
@@ -178,6 +185,111 @@ const Orders = () => {
     setter(event.target.value);
   };
 
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:9000/api/orders/user/${userId}`
+        );
+        if (!response.ok)
+          throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+
+        calculateStatusCounts(data);
+      } catch (error) {
+        console.error("Failed to fetch orders:", error);
+      }
+    };
+
+    fetchOrders();
+  }, [userId]);
+
+  const calculateStatusCounts = (orders) => {
+    const initialCounts = { InProgress: 0, Completed: 0, Pending: 0 };
+
+    const statusCounts = orders.buyerOrders.concat(orders.sellerOrders).reduce(
+      (acc, order) => {
+        const buyerStatus = order.order_status_buyer;
+        const sellerStatus = order.order_status_seller;
+
+        // Determine combined status based on both buyer and seller statuses
+        if (buyerStatus === "Completed" && sellerStatus === "Completed") {
+          acc.Completed += 1;
+        } else if (
+          (buyerStatus === "Completed" && sellerStatus !== "Completed") ||
+          (sellerStatus === "Completed" && buyerStatus !== "Completed")
+        ) {
+          acc.Pending += 1;
+        } else {
+          acc.InProgress += 1;
+        }
+
+        return acc;
+      },
+      { ...initialCounts }
+    );
+
+    setOrderStatusCounts(statusCounts);
+  };
+
+  const orderStatusChartData = {
+    labels: ["InProgress", "Completed", "Pending"],
+    datasets: [
+      {
+        label: "Order Statuses",
+        data: [
+          orderStatusCounts.InProgress,
+          orderStatusCounts.Completed,
+          orderStatusCounts.Pending,
+        ],
+        backgroundColor: [
+          "rgba(255, 206, 86, 0.2)", // InProgress
+          "rgba(75, 192, 192, 0.2)", // Completed
+          "rgba(255, 99, 132, 0.2)", // Pending
+        ],
+        borderColor: [
+          "rgba(255, 206, 86, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(255, 99, 132, 1)",
+        ],
+        borderWidth: 1,
+      },
+    ],
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+      plugins: {
+        legend: {
+          display: true,
+        },
+        title: {
+          display: true,
+          text: "Order Status Overview",
+        },
+      },
+    },
+  };
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+      },
+      title: {
+        display: true,
+        text: "Order Status Overview",
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
+
   const submitReport = () => {
     setFormError("");
 
@@ -260,6 +372,7 @@ const Orders = () => {
       <Toolbar></Toolbar>
       <div className="orders-container">
         <h1>Your Orders</h1>
+        <Bar data={orderStatusChartData} options={chartOptions} />
 
         <div className="role-section">
           <h2>As Buyer</h2>
