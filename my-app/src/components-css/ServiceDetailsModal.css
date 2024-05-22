@@ -12,7 +12,12 @@
 }
 
 .modal-content-ad {
-  background-color: rgba(243, 235, 235, 0.907);
+  background-color: rgba(
+    34,
+    34,
+    34,
+    0.9
+  ); /* Darker semi-transparent background */
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -20,13 +25,14 @@
   max-height: 80%;
   overflow-y: auto;
   position: relative; /* Added to ensure close button positions correctly */
+  color: #fff; /* White text for better contrast */
 }
 
 .modal-image-ad {
-  max-width: 80%; /* Adjusted to make images smaller */
-  height: auto;
-  display: block; /* Centers the image in the modal */
-  margin: 20px auto; /* Centers image and adds vertical space */
+  max-width: 50%; /* Reduced from 80% to make the image smaller */
+  height: 50%;
+  display: block;
+  margin: 0 auto 20px auto;
 }
 
 .close-button-ad {
@@ -50,8 +56,8 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: #007bff;
-  color: white;
+  background-color: #39ff14; /* Neon green */
+  color: black;
   border: none;
   cursor: pointer;
   padding: 10px;
@@ -69,11 +75,5 @@
 
 .prev-button-ad:hover,
 .next-button-ad:hover {
-  background-color: #0056b3;
-}
-.modal-image-ad {
-  max-width: 50%; /* Reduced from 80% to make the image smaller */
-  height: 50%;
-  display: block;
-  margin: 0 auto 20px auto;
+  background-color: #adff2f; /* Lighter green on hover */
 }

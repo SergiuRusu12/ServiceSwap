@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import { Pie, Bar } from "react-chartjs-2"; // Assuming you're using Chart.js v2
+import { Pie, Bar } from "react-chartjs-2";
 import "../components-css/AdminDashboard.css";
 import {
   Chart as ChartJS,
@@ -15,7 +15,6 @@ import {
   ArcElement,
   PieController,
 } from "chart.js";
-import "../components-css/AdminDashboard.css";
 
 // Registering chart components
 ChartJS.register(
@@ -28,6 +27,7 @@ ChartJS.register(
   ArcElement,
   PieController
 );
+
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [ticketData, setTicketData] = useState({ open: 0, closed: 0 });
@@ -77,25 +77,35 @@ const AdminDashboard = () => {
       legend: {
         display: true,
         position: "top",
+        labels: {
+          color: "#fff", // White text for the legend
+        },
       },
       title: {
         display: true,
-        text: "Ticket Status Distribution", // Replace with your desired title
+        text: "Ticket Status Distribution",
         font: {
           size: 16,
+          color: "#fff", // White text for the title
         },
       },
     },
+    maintainAspectRatio: false, // Allow custom size
   };
+
   const chartOptionsService = {
     responsive: true,
     plugins: {
       legend: {
-        display: false, // Set true if you want to display legend
+        display: false,
       },
       title: {
         display: true,
         text: "Service Status Overview",
+        font: {
+          size: 16,
+          color: "#fff", // White text for the title
+        },
       },
       tooltip: {
         callbacks: {
@@ -115,24 +125,35 @@ const AdminDashboard = () => {
     scales: {
       y: {
         beginAtZero: true,
+        ticks: {
+          color: "#fff", // White text for the scales
+        },
+        grid: {
+          color: "rgba(57, 255, 20, 0.2)", // Light green grid lines
+        },
+      },
+      x: {
+        ticks: {
+          color: "#fff", // White text for the scales
+        },
+        grid: {
+          color: "rgba(57, 255, 20, 0.2)", // Light green grid lines
+        },
       },
     },
+    maintainAspectRatio: false, // Allow custom size
   };
+
   const ticketChartData = {
     labels: ["Open", "Closed"],
     datasets: [
       {
         data: [ticketData.open, ticketData.closed],
         backgroundColor: ["#FF6384", "#36A2EB"],
+        borderColor: ["#FF6384", "#36A2EB"],
+        borderWidth: 1,
       },
     ],
-    options: {
-      ...chartOptionsTicket,
-      title: {
-        ...chartOptionsTicket.title,
-        text: "Ticket Status Distribution", // Specific title for this chart
-      },
-    },
   };
 
   const serviceChartData = {
@@ -141,39 +162,46 @@ const AdminDashboard = () => {
       {
         data: [serviceData.active, serviceData.pending, serviceData.denied],
         backgroundColor: ["#FFCE56", "#FF6384", "#36A2EB"],
+        borderColor: ["#FFCE56", "#FF6384", "#36A2EB"],
+        borderWidth: 1,
       },
     ],
-    options: {
-      ...chartOptionsService,
-      title: {
-        ...chartOptionsService.title,
-        text: "Service Status Overview", // Specific title for this chart
-      },
-    },
   };
-  console.log(serviceData.active, serviceData.pending, serviceData.denied);
+
   return (
     <div className="admin-dashboard">
-      <button className="logout-button" onClick={handleLogout}>
-        <FontAwesomeIcon icon={faSignOutAlt} /> Logout
-      </button>
-      <h1>Admin Dashboard</h1>
+      <div className="admin-header">
+        <h1>Admin Dashboard</h1>
+        <button className="logout-button" onClick={handleLogout}>
+          <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+        </button>
+      </div>
       <div className="admin-sections">
         <div className="admin-section">
           <h2>Tickets Management</h2>
           <p>Review and manage user submitted tickets.</p>
-          <button onClick={() => handleNavigate("/adminTicketManagement")}>
+          <button
+            className="buttonADD"
+            onClick={() => handleNavigate("/adminTicketManagement")}
+          >
             Manage Tickets
           </button>
-          <Pie data={ticketChartData} options={ticketChartData.options} />
+          <div style={{ width: "600px", height: "575px", margin: "0 auto" }}>
+            <Pie data={ticketChartData} options={chartOptionsTicket} />
+          </div>
         </div>
         <div className="admin-section">
           <h2>Services Approval</h2>
           <p>Approve or reject new service submissions.</p>
-          <button onClick={() => handleNavigate("/adminServiceApproval")}>
+          <button
+            className="buttonADD"
+            onClick={() => handleNavigate("/adminServiceApproval")}
+          >
             Approve Services
           </button>
-          <Bar data={serviceChartData} options={serviceChartData.options} />
+          <div style={{ width: "500px", height: "500px", margin: "0 auto" }}>
+            <Bar data={serviceChartData} options={chartOptionsService} />
+          </div>
         </div>
       </div>
     </div>

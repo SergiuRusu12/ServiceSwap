@@ -3,36 +3,68 @@
   margin: 0 auto;
   padding: 20px;
   text-align: center;
+  position: relative;
+  color: #fff; /* White text for better contrast */
+}
+
+.admin-header {
+  position: fixed; /* Fix the header to the top */
+  top: 0;
+  left: 0;
+  width: 100%; /* Make the header span the entire width */
+  background-color: rgba(
+    34,
+    34,
+    34,
+    0.9
+  ); /* Darker semi-transparent background */
+  padding: 20px;
+  border-radius: 0; /* Remove rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it stays on top */
+}
+
+.admin-header h1 {
+  color: #39ff14; /* Neon green text */
+  margin: 0;
 }
 
 .admin-sections {
   display: flex;
   justify-content: space-around;
-  margin-top: 20px;
+  margin-top: 100px; /* Adjust margin to account for the fixed header */
 }
 
 .admin-section {
   padding: 20px;
-  background-color: #f0f0f0;
+  background-color: rgba(
+    34,
+    34,
+    34,
+    0.9
+  ); /* Darker semi-transparent background */
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 45%;
 }
 
 .admin-section h2 {
-  color: #333;
+  color: #39ff14; /* Neon green text */
 }
 
 .admin-section p {
   font-size: 16px;
-  color: #666;
+  color: #adff2f; /* Lighter green text */
   margin: 10px 0 20px;
 }
 
-button {
+.buttonADD {
   padding: 10px 20px;
-  background-color: #0056b3;
-  color: white;
+  background-color: #39ff14; /* Neon green */
+  color: black;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -40,31 +72,28 @@ button {
   transition: background-color 0.3s;
 }
 
-button:hover {
-  background-color: #004080;
-}
-.admin-dashboard {
-  position: relative;
+.buttonADD:hover {
+  background-color: #adff2f; /* Lighter green on hover */
 }
 
 .logout-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 10px 20px;
   font-size: 16px;
-  color: #fff;
-  background-color: #dc3545;
+  color: black;
+  background-color: #f44336;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 8px;
+
+  position: absolute; /* Position it absolutely within the header */
+  right: 60px; /* Slightly to the left by reducing the right offset */
+  bottom: 25%; /* Center vertically */
 }
 
 .logout-button:hover {
-  background-color: #c82333;
+  background-color: #d32f2f; /* Darker red on hover */
 }
 
 .logout-button:focus {

@@ -86,17 +86,22 @@ const AdminServiceApproval = () => {
             className="ad-service-card"
           >
             <h2>{service.title}</h2>
-            <div className="button-group">
-              <button onClick={() => handleCheckService(service)}>
+            <div className="ad-button-group">
+              <button
+                className="adButton"
+                onClick={() => handleCheckService(service)}
+              >
                 Check Service
               </button>
 
               <button
+                className="adButton"
                 onClick={() => handleApprove(service.id || service.service_id)}
               >
                 Approve
               </button>
               <button
+                className="adButton"
                 onClick={() => handleDeny(service.id || service.service_id)}
               >
                 Deny

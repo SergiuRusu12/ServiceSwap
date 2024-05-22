@@ -174,7 +174,16 @@ const AdminTicketManagement = () => {
                 <p>{ticket.ticket_message}</p>
                 <p>Creator: {ticket.username}</p>
                 <div>
-                  <div className="custom-checkbox">
+                  <div
+                    className="custom-checkbox"
+                    onClick={() =>
+                      updateTicketActions(
+                        index,
+                        "closeOrder",
+                        !ticket.actions.closeOrder
+                      )
+                    }
+                  >
                     <input
                       type="checkbox"
                       id={`closeOrder-${ticket.ticket_id}`}
@@ -192,7 +201,16 @@ const AdminTicketManagement = () => {
                       Close Order
                     </label>
                   </div>
-                  <div className="custom-checkbox">
+                  <div
+                    className="custom-checkbox"
+                    onClick={() =>
+                      updateTicketActions(
+                        index,
+                        "makeServicePending",
+                        !ticket.actions.makeServicePending
+                      )
+                    }
+                  >
                     <input
                       type="checkbox"
                       id={`makeServicePending-${ticket.ticket_id}`}
@@ -210,7 +228,16 @@ const AdminTicketManagement = () => {
                       Set Service to Pending
                     </label>
                   </div>
-                  <div className="custom-checkbox">
+                  <div
+                    className="custom-checkbox"
+                    onClick={() =>
+                      updateTicketActions(
+                        index,
+                        "makeServiceInactive",
+                        !ticket.actions.makeServiceInactive
+                      )
+                    }
+                  >
                     <input
                       type="checkbox"
                       id={`makeServiceInactive-${ticket.ticket_id}`}
@@ -228,7 +255,16 @@ const AdminTicketManagement = () => {
                       Set Service to Denied
                     </label>
                   </div>
-                  <div className="custom-checkbox">
+                  <div
+                    className="custom-checkbox"
+                    onClick={() =>
+                      updateTicketActions(
+                        index,
+                        "banUser",
+                        !ticket.actions.banUser
+                      )
+                    }
+                  >
                     <input
                       type="checkbox"
                       id={`banUser-${ticket.ticket_id}`}
