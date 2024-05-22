@@ -11,12 +11,14 @@
   margin-bottom: 20px;
   margin-left: 10px;
   width: 250px; /* Consistent width for the sidebar */
-  background-color: #f8f9fa; /* Soft background color */
+  background-color: rgba(34, 34, 34, 0.9);
   border-right: 1px solid #dee2e6; /* Subtle border for separation */
   padding: 20px; /* Padding for spacing */
   overflow-y: auto; /* Enable scrolling for overflow content */
   border-color: black;
   border-radius: 10px;
+  color: white;
+  padding: 10 10;
 }
 
 .chat-entry {
@@ -50,7 +52,7 @@
   flex-direction: column;
   align-items: center;
   margin: 20px; /* Margin for visual spacing from the viewport edges */
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(34, 34, 34, 0.7);
   border-radius: 8px;
   overflow-y: auto; /* Allow scrolling inside the message container */
   padding: 20px; /* Padding inside the message container */
@@ -80,7 +82,7 @@
   display: flex;
   align-items: center;
   padding: 10px 20px;
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(34, 34, 34, 0.7);
   border-radius: 8px;
   box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.05); /* Subtle top shadow for depth */
 }
@@ -95,14 +97,15 @@
 
 .message-input button {
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #6ef64f;
   color: white;
   border: none;
   border-radius: 20px;
   cursor: pointer;
   margin-left: 5px;
+  margin-bottom: 15px;
 }
 
 .message-input button:hover {
-  background-color: #0056b3;
+  background-color: #9dff47;
 }

@@ -130,7 +130,7 @@ const OrderRequestModal = ({
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
+      <div className="modal-content-orm">
         <h2>{isBuyer ? "Confirm Order" : "Respond to Order"}</h2>
         {serviceDetails && (
           <>

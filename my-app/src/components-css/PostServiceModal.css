@@ -1,5 +1,3 @@
-/* PostServiceModal.css */
-
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -14,17 +12,24 @@
 }
 
 .modal-container {
-  background-color: white;
+  background-color: rgba(
+    34,
+    34,
+    34,
+    0.9
+  ); /* Darker semi-transparent background */
   padding: 2rem;
   border-radius: 10px;
   max-width: 800px;
   width: 90%;
   max-height: 90vh;
   overflow-y: auto;
+  color: #fff; /* White text */
 }
 
 .modal-container h2 {
   margin-bottom: 1rem;
+  color: #39ff14; /* Neon green */
 }
 
 .modal-container form {
@@ -37,8 +42,15 @@
 .modal-container form textarea,
 .modal-container form select {
   padding: 0.5rem;
-  border: 1px solid #ddd;
+  border: 1px solid #39ff14; /* Neon green border */
   border-radius: 4px;
+  background: rgba(
+    57,
+    255,
+    20,
+    0.1
+  ); /* Semi-transparent neon green background */
+  color: #fff; /* White text */
 }
 
 .modal-container form textarea {
@@ -54,7 +66,11 @@
 }
 
 .modal-container form button[type="submit"] {
-  background-color: #007bff;
+  background: linear-gradient(
+    145deg,
+    #39ff14,
+    #adff2f
+  ); /* Neon green to lime gradient */
   color: white;
 }
 
@@ -66,7 +82,30 @@
 .modal-container form button:hover {
   opacity: 0.9;
 }
-/* Add to your existing CSS */
+
+/* Custom styling for select options */
+.modal-container form select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: rgba(
+    57,
+    255,
+    20,
+    0.1
+  ); /* Semi-transparent neon green background */
+  color: #fff; /* White text */
+}
+
+.modal-container form select option {
+  background-color: rgba(
+    34,
+    34,
+    34,
+    0.9
+  ); /* Darker semi-transparent background */
+  color: #39ff14; /* Neon green text */
+}
 
 /* Styling for the image upload area */
 .image-upload-container {
@@ -89,7 +128,7 @@
 
 /* Individual image preview wrapper */
 .preview-wrapper {
-  border: 1px solid #ddd; /* Border for the image */
+  border: 1px solid #39ff14; /* Neon green border */
   border-radius: 4px; /* Rounded corners for the image */
   overflow: hidden; /* Ensures the image does not overflow its border-radius */
   width: 100px; /* Width of the preview */
@@ -97,7 +136,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f8f9fa; /* Light background color */
+  background-color: rgba(57, 255, 20, 0.1); /* Light background color */
   position: relative;
 }
 

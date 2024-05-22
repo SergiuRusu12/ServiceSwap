@@ -6,7 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
-  background: linear-gradient(180deg, #3b58ff, #007bff);
+  background-image: url("../background.jpg");
   overflow: hidden;
 }
 

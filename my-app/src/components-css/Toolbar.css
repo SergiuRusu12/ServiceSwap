@@ -2,11 +2,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #007bff;
-  color: white;
+  background-color: #333; /* Dark grey background */
+  color: #39ff14; /* Neon green text color */
   padding: 10px 20px;
   height: 50px;
-
   position: fixed;
   top: 0;
   left: 0;
@@ -15,31 +14,45 @@
 }
 
 .toolbar-title {
-  padding-left: 20px;
-  font-size: 1.5em;
+  font-size: 2.1em;
   font-weight: bold;
-}
-.toolbar-title {
   cursor: pointer;
+  color: #39ff14; /* Neon green */
+  margin-left: 20px; /* Move title slightly to the right */
 }
+
+.toolbar-container {
+  display: flex;
+  justify-content: center; /* Center the toolbar container */
+  width: 100%;
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 20px;
+}
+
 .toolbar-actions button {
-  background: none;
-  border: none;
-  color: white;
+  background: rgba(57, 255, 20, 0.1); /* Semi-transparent neon green */
+  border: 2px solid #39ff14; /* Neon green border */
+  color: #39ff14; /* Neon green text */
   cursor: pointer;
   padding: 10px;
-  margin-left: 10px;
   font-size: 1em;
-  margin-bottom: 15px;
+  border-radius: 5px;
+  transition: background 0.3s ease, opacity 0.3s ease;
 }
 
 .toolbar-actions button:hover {
+  background: rgba(57, 255, 20, 0.3); /* Darker green on hover */
   opacity: 0.8;
 }
 
 .profile-icon {
   font-size: 1.5em;
-  margin-right: 25px;
+  color: #39ff14; /* Neon green */
 }
 
 /* Modal Styles */

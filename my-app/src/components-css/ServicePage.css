@@ -1,23 +1,17 @@
 .service-page-container {
   display: flex;
   max-width: 1200px;
-  margin: 80px auto;
-  margin-bottom: 20px;
+  width: 90%; /* Adjust this to make the container bigger */
+  margin: 100px auto; /* Center the container */
   padding: 20px;
-  background: rgba(255, 255, 255, 0.75);
+  background: rgba(34, 34, 34, 0.9); /* Darker semi-transparent background */
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: #fff; /* White text */
 }
-.service-details {
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.5);
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  display: flex;
-  flex-direction: column;
-}
+
 .image-container {
-  flex: 0 0 450px; /* Fixed width for the image container */
+  flex: 0 0 500px; /* Increased width for the image container */
   position: relative;
   padding: 10px; /* Optional: adds some space inside the image container */
 }
@@ -25,12 +19,18 @@
 .service-details {
   flex: 1;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: rgba(50, 205, 50, 0.2); /* Semi-transparent green background */
+  border-radius: 10px;
 }
 
 .main-image {
   width: 100%;
   height: auto; /* Maintain aspect ratio */
   object-fit: contain; /* Ensures the image is scaled correctly within its container */
+  border-radius: 10px; /* Add some rounding to match the overall theme */
 }
 
 .prev,
@@ -39,7 +39,7 @@
   top: 50%;
   transform: translateY(-50%);
   background-color: rgba(0, 0, 0, 0.6);
-  color: white;
+  color: #39ff14; /* Neon green text */
   border: none;
   cursor: pointer;
   padding: 15px;
@@ -71,20 +71,21 @@
 
 .dot.active,
 .dot:hover {
-  background-color: #717171;
+  background-color: #39ff14; /* Neon green on active and hover */
 }
 
 .service-title {
-  font-size: 24px;
-  color: #333;
+  font-size: 32px; /* Increased font size */
+  color: #39ff14; /* Neon green text */
   margin-bottom: 10px;
 }
 
 .service-description,
 .service-locality,
-.service-exchange {
-  font-size: 16px;
-  color: #555;
+.service-exchange,
+.service-rating {
+  font-size: 18px;
+  color: #fff; /* White text */
   margin-bottom: 10px;
 }
 
@@ -95,16 +96,23 @@
 
 .message-button {
   padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
+  background: linear-gradient(
+    145deg,
+    #39ff14,
+    #adff2f
+  ); /* Neon green to lime gradient */
+  color: black; /* Black text */
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  text-align: right;
 }
 
 .message-button:hover {
-  background-color: #0056b3;
+  background: linear-gradient(
+    145deg,
+    #adff2f,
+    #39ff14
+  ); /* Reversed gradient on hover */
 }
 
 @media (max-width: 768px) {

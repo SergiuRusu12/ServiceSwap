@@ -1,29 +1,45 @@
+/* Modal Overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7); /* Darker background for better focus */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
-.modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 300px;
+/* Modal Content */
+.modal-content-orm {
+  background-color: rgba(
+    34,
+    34,
+    34,
+    0.7
+  ); /* Darker semi-transparent background */
+  padding: 30px; /* Increased padding for better spacing */
+  border-radius: 15px; /* Smoother corners */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
+  width: auto; /* Auto width based on content with max limit */
+  max-width: 90%; /* Max width to prevent too wide modals on large screens */
   text-align: center;
+  position: relative; /* For absolute positioning of the close button */
+  transition: transform 0.3s ease-out; /* Smooth transform on open/close */
+  color: #fff; /* White text */
 }
 
+/* Modal Actions */
 .modal-actions {
   margin-top: 20px;
+  display: flex;
+  justify-content: center; /* Center align buttons */
+  gap: 10px; /* Space between buttons */
 }
 
+/* Button Styles */
 .confirm-button,
 .close-button,
 .deny-button {
@@ -32,17 +48,56 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth background transition */
 }
 
 .confirm-button {
   background-color: #4caf50;
   color: white;
 }
-.deny-button {
-  color: white;
-  background-color: #007bff;
+
+.confirm-button:hover {
+  background-color: #45a049; /* Slightly darker green on hover */
 }
+
+.deny-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.deny-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
 .close-button {
   background-color: #f44336;
   color: white;
+}
+
+.close-button:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+}
+
+/* Dropdown Styles */
+select {
+  padding: 0.5rem;
+  border: 1px solid #39ff14; /* Neon green border */
+  border-radius: 4px;
+  background: rgba(
+    57,
+    255,
+    20,
+    0.1
+  ); /* Semi-transparent neon green background */
+  color: #fff; /* White text */
+}
+
+select option {
+  background-color: rgba(
+    34,
+    34,
+    34,
+    0.9
+  ); /* Darker semi-transparent background */
+  color: #39ff14; /* Neon green text */
 }

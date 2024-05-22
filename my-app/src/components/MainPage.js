@@ -158,29 +158,27 @@ const MainPage = () => {
             </select>
           </div>
         </div>
-        {/* Services list and other elements */}
-
         <div className="services-list">
           {filteredServices.length > 0 ? (
             filteredServices.map((service) => (
               <div className="service-card" key={service.service_id}>
                 {service.image_url && (
-                  <div className="service-image">
-                    <img src={service.image_url} alt={service.title} />
-                  </div>
+                  <img src={service.image_url} alt={service.title} />
                 )}
                 <div className="service-info">
-                  <h2>{service.title}</h2>
+                  <div className="title-and-button">
+                    <h2>{service.title}</h2>
+                    <button
+                      className="details-button"
+                      onClick={() =>
+                        navigate(`/service/${service.service_id}/${userId}`)
+                      }
+                    >
+                      See details...
+                    </button>
+                  </div>
                   <p>{service.description}</p>
                 </div>
-                <button
-                  className="details-button"
-                  onClick={() =>
-                    navigate(`/service/${service.service_id}/${userId}`)
-                  }
-                >
-                  See details...
-                </button>
               </div>
             ))
           ) : (

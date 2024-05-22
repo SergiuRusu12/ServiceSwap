@@ -5,9 +5,15 @@
   max-width: 1200px;
   margin: 100px auto 50px;
   padding: 50px;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(
+    34,
+    34,
+    34,
+    0.9
+  ); /* Darker semi-transparent background */
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: #fff; /* White text */
 }
 
 /* User Info Section */
@@ -16,17 +22,24 @@
   max-width: 350px; /* Maximum width of the user info section */
   margin: auto; /* Center the user info section */
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(
+    50,
+    205,
+    50,
+    0.2
+  ); /* Semi-transparent green background */
   border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   text-align: left; /* Align text to the left */
   margin-bottom: 30px;
+  color: #fff; /* White text */
 }
 
 .user-info-title-pfp {
   text-align: center;
   font-size: 24px; /* Increase font size for the title */
   margin-bottom: 20px;
+  color: #39ff14; /* Neon green text */
 }
 
 /* User Services Section */
@@ -34,6 +47,7 @@
   text-align: center;
   font-size: 22px; /* Increase font size for section heading */
   margin-bottom: 20px;
+  color: #39ff14; /* Neon green text */
 }
 
 /* Service Cards */
@@ -42,10 +56,16 @@
   margin: 20px auto; /* Consistent margin for all cards */
   display: flex;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(
+    34,
+    34,
+    34,
+    0.9
+  ); /* Darker semi-transparent background */
   padding: 15px;
   border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  color: #fff; /* White text */
 }
 
 /* Service Image */
@@ -62,6 +82,7 @@
   width: 200px;
   flex-grow: 1;
   overflow: hidden; /* Prevent text from overflowing */
+  color: #fff; /* White text */
 }
 
 .service-actions-pfp {
@@ -79,6 +100,7 @@
   width: 100px; /* Fixed width for buttons */
   text-align: center; /* Center text within buttons */
   cursor: pointer;
+  color: #fff; /* White text */
 }
 
 /* Adjust hover effect for buttons */
@@ -89,11 +111,11 @@
 
 /* Differentiate edit and delete button colors */
 .edit-btn-pfp {
-  background-color: #f0ad4e; /* Orange color for edit */
+  background-color: #39ff14; /* Neon green color for edit */
 }
 
 .delete-btn-pfp {
-  background-color: #d9534f; /* Red color for delete */
+  background-color: #f97873; /* Light red color for delete */
 }
 
 /* Adjust the toolbar padding and margins */
@@ -110,13 +132,7 @@ body {
 .profile-page-container-pfp {
   padding: 40px; /* Consistent padding all around */
 }
-.edit-btn-pfp {
-  background-color: #aaff0c; /* Bootstrap 'btn-warning' color */
-}
 
-.delete-btn-pfp {
-  background-color: #f97873; /* Bootstrap 'btn-danger' color */
-}
 .service-info-pfp {
   flex-basis: 70%; /* Adjust this value as needed to set a consistent width */
   padding: 10px; /* Add some padding inside the info container */
@@ -125,7 +141,7 @@ body {
 
 .service-info-pfp h3 {
   font-size: 1.25rem; /* Adjust the title font size */
-  color: #333; /* Change the color if you like */
+  color: #39ff14; /* Neon green text */
   margin: 0 0 10px 0; /* Add some margin below the title */
   white-space: nowrap; /* Keeps the text on a single line */
   overflow: hidden; /* Prevents text from overflowing */
@@ -135,7 +151,7 @@ body {
 .service-info-pfp p {
   font-size: 1rem; /* Adjust the paragraph font size */
   margin: 0; /* Reset margin for the paragraph */
-  color: #666; /* Slightly lighter text color for the description */
+  color: #ccc; /* Lighter text color for the description */
   text-align: justify; /* Justify the text, or choose another alignment */
   overflow: hidden; /* Hide overflow */
   position: relative; /* Position relative to allow for pseudo-element */

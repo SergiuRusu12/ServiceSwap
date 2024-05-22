@@ -8,48 +8,65 @@ body {
 }
 
 .orders-container {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 75px auto;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(
+    34,
+    34,
+    34,
+    0.9
+  ); /* Darker semi-transparent background */
   border-radius: 8px;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
+  color: #fff; /* White text for better contrast */
 }
 
 /* Heading styles within the Orders component */
 .orders-container h1 {
-  color: #333;
-  font-size: 24px;
+  color: #39ff14; /* Neon green text */
+  font-size: 28px;
   margin-bottom: 20px;
 }
 
 .orders-container h2 {
-  color: #555;
-  font-size: 20px;
+  color: #adff2f; /* Lighter green text */
+  font-size: 24px;
   margin-top: 20px;
 }
 
 /* Individual order entry styling */
 .order-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 15px;
   margin: 10px 0;
-  background-color: #f9f9f9;
+  background-color: rgba(
+    50,
+    205,
+    50,
+    0.2
+  ); /* Semi-transparent green background */
   border: 1px solid #e1e1e1;
   border-radius: 5px;
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .order-entry:hover {
-  background-color: #e9e9ef;
+  background-color: rgba(50, 205, 50, 0.4);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Style for order details */
 .order-details {
+  flex-grow: 1;
   font-size: 16px;
-  color: #666;
+  color: white;
+  font-style: bold;
   line-height: 1.5;
+  text-align: left;
 }
 
 /* Clear separation of roles (Buyer/Seller) */
@@ -65,70 +82,66 @@ body {
   }
 
   .orders-container h1 {
-    font-size: 20px;
+    font-size: 24px;
   }
 
   .orders-container h2 {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   .order-entry {
+    flex-direction: column;
+    align-items: flex-start;
     padding: 10px;
   }
 
   .order-details {
     font-size: 14px;
   }
-}
-.order-entry {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  margin: 10px 0;
-  background-color: #f9f9f9;
-  border: 1px solid #e1e1e1;
-  border-radius: 5px;
-  transition: background-color 0.3s, box-shadow 0.3s;
+
+  .order-actions {
+    width: 100%;
+    justify-content: space-around;
+  }
 }
 
-.order-entry:hover {
-  background-color: #e9e9ef;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.order-details {
-  flex-grow: 1;
-}
-
+/* Order actions */
 .order-actions {
-  margin-left: 10px;
   display: flex;
   gap: 10px;
+  flex-direction: column;
 }
 
 .order-actions button {
-  padding: 5px 10px;
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: #007bff;
-  color: white;
+  background-color: #95f13f;
+  color: black;
+  font-size: 16px;
+  transition: background-color 0.2s;
 }
 
 .order-actions button:hover {
-  background-color: #0056b3;
-}
-.completed-section .order-entry {
-  background-color: #a0d7a2; /* Slightly more grayish than the normal entries */
-  color: #666; /* Darker text for better readability on a gray background */
-}
-.partial-completed-section .order-entry {
-  background-color: #efef5c; /* Slightly more grayish than the normal entries */
-  color: #666;
+  background-color: #b5f37b;
 }
 
-* Full-screen modal backdrop */ .modal {
+/* Completed and Partially Completed Order Sections */
+.completed-section .order-entry {
+  background-color: #28a745; /* Green for completed orders */
+  color: #fff;
+}
+
+.partial-completed-section .order-entry {
+  background-color: #ffc107; /* Yellow for partially completed orders */
+  color: #fff;
+}
+
+/* Modal styles */
+.modal-o {
   position: fixed;
   top: 0;
   left: 0;
@@ -139,42 +152,22 @@ body {
   align-items: center;
   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
   z-index: 1050; /* High z-index to ensure it is on top */
+  color: whitesmoke;
 }
 
-/* Modal content box */
-.modal-content {
+.modal-content-o {
   position: relative;
-  padding: 20px;
-  width: 300px; /* Fixed width, adjust as necessary */
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-/* Modal close button */
-.modal-close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  color: #aaa;
-  font-size: 24px;
-}
-.modal-content {
-  background: rgba(255, 255, 255, 0.51);
   padding: 30px; /* Increased padding for better spacing */
-  border-radius: 15px; /* Smoother corners */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
   width: auto; /* Auto width based on content with max limit */
   max-width: 90%; /* Max width to prevent too wide modals on large screens */
+  background-color: rgba(34, 34, 34, 0.9);
+  border-radius: 15px; /* Smoother corners */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
   text-align: center;
-  position: relative; /* For absolute positioning of the close button */
   transition: transform 0.3s ease-out; /* Smooth transform on open/close */
 }
 
-.modal-close-button {
+.modal-o-close-button {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -186,26 +179,19 @@ body {
 }
 
 /* Button styling within the modal */
-.modal button {
+.modal-content-o button {
   padding: 10px 20px;
   margin: 10px; /* Space between buttons */
-  background-color: #007bff; /* Theme color for buttons */
-  color: white;
+  background-color: #95f13f; /* Theme color for buttons */
+  color: black;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.2s; /* Smooth background color transition */
 }
 
-.modal button:hover {
+.modal-content-o button:hover {
   background-color: #0056b3; /* Darker shade on hover */
-}
-
-/* Ensuring that the modal animation is smooth and centered */
-.modal {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 /* Animate modal appearance for better UX */
@@ -220,18 +206,8 @@ body {
   }
 }
 
-.modal-content {
+.modal-content-o {
   animation: modalOpen 0.3s ease-out forwards;
-}
-
-.modal-close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  font-size: 16px;
 }
 
 input[type="text"],
@@ -242,6 +218,8 @@ textarea {
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 4px;
+  color: white; /* Darker text */
+  background-color: rgba(255, 255, 255, 0.9); /* Light background */
 }
 
 button {
@@ -251,14 +229,14 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: #007bff;
+  background-color: #95f13f;
   color: white;
   font-size: 16px;
   transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #95f13f;
 }
 
 button[type="submit"] {
@@ -277,109 +255,96 @@ button.cancel-button:hover {
   background-color: #c82333;
 }
 
-.order-actions {
-  display: flex;
-  flex-direction: column; /* Stacks the buttons vertically */
-  align-items: center; /* Centers the buttons horizontally */
-  gap: 8px; /* Adjusts space between buttons */
-}
-.order-actions button {
-  width: 90%; /* Adjust width as necessary */
-  padding: 10px;
-  margin-top: 5px; /* Adjusts top margin for spacing */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: #007bff;
-  color: white;
-  font-size: 16px;
-  transition: background-color 0.2s; /* Smooth transition for color change */
-}
-
-.order-actions button:hover {
-  background-color: #0056b3;
-}
 .form-error {
   color: red;
   margin: 10px 0;
 }
-Container for label and slider .rating-container {
-  display: flex;
-  align-items: center; /* Aligns items vertically center */
-  justify-content: space-between; /* Adds space between label and slider */
-}
 
-/* Styling for the label to ensure proper alignment and spacing */
-.rating-label {
-  margin-right: 10px; /* Adds some space between the label and the slider */
-}
-
-/* Updated slider CSS */
-input[type="range"] {
-  flex-grow: 1; /* Allows the slider to fill the available space */
-  margin: 0 10px; /* Adds margin to left and right for some space */
-}
-
-/* Other slider styles remain the same */
-input[type="range"]:focus {
-  outline: none;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  background: #007bff;
-  cursor: pointer;
-  border-radius: 50%;
-}
-
-input[type="range"]::-webkit-slider-runnable-track,
-input[type="range"]::-moz-range-track,
-input[type="range"]::-ms-track {
-  width: 100%;
-  height: 5px;
-  background: #ddd;
-  border-radius: 5px;
-}
-
-/* Container for label and slider */
+/* Rating container */
 .rating-container {
   display: flex;
-  align-items: center; /* Aligns items vertically center */
-  justify-content: space-between; /* Adds space between label and slider */
+  align-items: center;
+  justify-content: space-between;
+  margin: 15px 0;
+  color: white;
 }
 
-/* Styling for the label to ensure proper alignment and spacing */
+/* Rating label */
 .rating-label {
-  margin-right: 10px; /* Adds some space between the label and the slider */
+  margin-right: 10px;
+  font-size: 16px;
+  color: #333;
+  color: white;
 }
 
-/* Updated slider CSS */
+/* General styles for the range input */
 input[type="range"] {
-  flex-grow: 1; /* Allows the slider to fill the available space */
-  margin: 0 10px; /* Adds margin to left and right for some space */
+  -webkit-appearance: none;
+  width: 100%;
+  margin: 0 10px;
+  background: transparent;
 }
 
-/* Other slider styles remain the same */
 input[type="range"]:focus {
   outline: none;
 }
 
+/* Styles for the slider track */
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px; /* Adjust height to match the thumb */
+  background: #39ff14; /* Change to your desired color */
+  border-radius: 5px;
+}
+
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 8px; /* Adjust height to match the thumb */
+  background: #39ff14; /* Change to your desired color */
+  border-radius: 5px;
+}
+
+input[type="range"]::-ms-track {
+  width: 100%;
+  height: 8px; /* Adjust height to match the thumb */
+  background: #39ff14; /* Change to your desired color */
+  border-radius: 5px;
+  border-color: transparent;
+  color: transparent;
+}
+
+/* Styles for the slider thumb */
 input[type="range"]::-webkit-slider-thumb {
-  appearance: none;
+  -webkit-appearance: none;
   width: 20px;
   height: 20px;
-  background: #007bff;
+  background: gray; /* Change to your desired color */
+  cursor: pointer;
+  border-radius: 50%;
+  margin-top: -6px; /* Align the thumb with the track */
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: gray;
   cursor: pointer;
   border-radius: 50%;
 }
 
-input[type="range"]::-webkit-slider-runnable-track,
-input[type="range"]::-moz-range-track,
-input[type="range"]::-ms-track {
-  width: 100%;
-  height: 5px;
-  background: #ddd;
-  border-radius: 5px;
+input[type="range"]::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  background: gray; /* Change to your desired color */
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+/* Specific styles for Firefox to ensure proper alignment */
+input[type="range"]::-moz-focus-outer {
+  border: 0;
+}
+
+input[type="range"]::-moz-range-thumb {
+  border: none;
 }

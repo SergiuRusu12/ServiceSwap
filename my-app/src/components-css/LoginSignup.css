@@ -5,8 +5,10 @@
   max-width: 850px;
   margin: auto;
   margin-top: 100px;
-  background-color: rgba(240, 248, 255, 0.5); /* aliceblue with transparency */
-  border-radius: 10%;
+  background: rgba(34, 34, 34, 0.7); /* Darker semi-transparent background */
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
 }
 
 .header {
@@ -21,27 +23,44 @@
 .text {
   font-size: 50px;
   font-weight: bold;
-  color: rgb(33, 33, 242); /* Adjusted to a darker blue to fit the theme */
+  color: #39ff14; /* Neon green */
+  background: -webkit-linear-gradient(
+    left,
+    #39ff14,
+    #adff2f
+  ); /* Gradient with neon green */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .inputs {
   margin-top: 50px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
   align-items: center;
 }
+
 .input {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin: auto;
   width: 400px;
   height: 50px;
-  background-color: rgba(208, 224, 240, 0.5);
-  /* Light blue-themed background for inputs */
-  border-radius: 6px;
+  background: rgba(
+    57,
+    255,
+    20,
+    0.1
+  ); /* Semi-transparent neon green background */
+  border-radius: 30px;
   padding: 0 25px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease;
+}
+
+.input:hover {
+  background: rgba(57, 255, 20, 0.3); /* Slightly darker on hover */
 }
 
 .icons {
@@ -50,6 +69,7 @@
   justify-content: center;
   align-items: center;
   height: 22px;
+  color: #39ff14; /* Neon green icons */
 }
 
 .input input {
@@ -59,27 +79,16 @@
   outline: none;
   font-size: 18px;
   background: transparent;
+  color: #fff; /* White text */
 }
 
-.role-selection {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
-  font-size: 18px;
-  width: 100%;
+.input input::placeholder {
+  color: rgba(255, 255, 255, 0.7); /* Light grey placeholder text */
 }
 
-.role-selection input[type="radio"] {
-  transform: scale(0.75);
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-.role-selection label {
-  display: flex;
-  align-items: center;
-  padding: 0 25px;
+.input input:focus {
+  outline: none;
+  border: none;
 }
 
 .submit-container {
@@ -90,8 +99,7 @@
   margin: 25px auto;
 }
 
-.submit,
-.login {
+.submit {
   display: flex;
   justify-self: center;
   justify-content: center;
@@ -99,21 +107,55 @@
   width: 200px;
   height: 50px;
   color: #fff;
-  background-color: #0465cb; /* Adjusted to medium blue for a stronger blue theme */
-  border-radius: 50px;
+  background: linear-gradient(
+    145deg,
+    #39ff14,
+    #adff2f
+  ); /* Neon green to lime gradient */
+  border-radius: 25px;
   font-size: 15px;
   font-weight: bold;
   cursor: pointer;
   text-align: center;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.submit:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(
+    145deg,
+    #adff2f,
+    #39ff14
+  ); /* Reversed gradient on hover */
 }
 
 .gray {
-  background-color: #a0b0d0; /* Light gray-blue, for a more themed approach */
-  color: #676767;
+  background-color: #676767; /* Dark gray */
+  color: #ccc; /* Light gray text */
   cursor: not-allowed;
 }
 
 #subBtn {
-  background-color: #0465cb; /* Dark blue for the submit button for contrast */
+  background: linear-gradient(
+    145deg,
+    #39ff14,
+    #adff2f
+  ); /* Neon green to lime gradient */
   margin-bottom: 25px;
+  border: none;
+  border-radius: 25px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+#subBtn:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(
+    145deg,
+    #adff2f,
+    #39ff14
+  ); /* Reversed gradient on hover */
 }

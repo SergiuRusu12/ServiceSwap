@@ -464,8 +464,8 @@ const Orders = () => {
         </div>
 
         {showModal && (
-          <div className="modal">
-            <div className="modal-content">
+          <div className="modal-o">
+            <div className="modal-content-o">
               <h4>Confirm Completion</h4>
               <p>Did the other user complete his end of the deal?</p>
               <div className="rating-container">
@@ -484,8 +484,8 @@ const Orders = () => {
           </div>
         )}
         {showReportModal && (
-          <div className="modal">
-            <div className="modal-content">
+          <div className="modal-o">
+            <div className="modal-content-o">
               <h4>Create Report Ticket</h4>
               <input
                 type="text"
