@@ -1,5 +1,3 @@
-// userRouter.js
-
 import express from "express";
 import {
   getUsers,
@@ -13,7 +11,6 @@ import {
 
 let userRouter = express.Router();
 
-// Route to create a new user
 userRouter.post("/user", async (req, res) => {
   try {
     const newUser = await createUser(req.body);
@@ -23,7 +20,6 @@ userRouter.post("/user", async (req, res) => {
   }
 });
 
-// Route to get all users
 userRouter.get("/users", async (req, res) => {
   try {
     const users = await getUsers();
@@ -32,8 +28,7 @@ userRouter.get("/users", async (req, res) => {
     res.status(500).json({ error: true, message: "Error fetching users" });
   }
 });
-// Patch a user's status
-// Update user status to "banned"
+
 userRouter.patch("/user/:id/status", async (req, res) => {
   const { id } = req.params;
   const { user_type } = req.body;
@@ -50,7 +45,6 @@ userRouter.patch("/user/:id/status", async (req, res) => {
   }
 });
 
-// Route to get a user by ID
 userRouter.get("/user/:id", async (req, res) => {
   try {
     const user = await getUserById(req.params.id);
@@ -64,7 +58,6 @@ userRouter.get("/user/:id", async (req, res) => {
   }
 });
 
-// Route to delete a user by ID
 userRouter.delete("/user/:id", async (req, res) => {
   try {
     await deleteUserById(req.params.id);
@@ -74,7 +67,6 @@ userRouter.delete("/user/:id", async (req, res) => {
   }
 });
 
-// userRouter.js
 userRouter.put("/user/:id/status", async (req, res) => {
   try {
     const { user_type } = req.body;

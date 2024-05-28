@@ -1,5 +1,3 @@
-// ordersRouter.js
-
 import express from "express";
 import Orders from "../Entities/Orders.js";
 import {
@@ -11,8 +9,6 @@ import {
 } from "../DataAccess/OrdersDA.js";
 
 let ordersRouter = express.Router();
-
-// Example POST route handler in your ordersRouter
 
 ordersRouter.post("/order", async (req, res) => {
   const {
@@ -41,9 +37,6 @@ ordersRouter.post("/order", async (req, res) => {
   }
 });
 
-// Add this inside ordersRouter.js
-
-// Route to get an order by chatId
 ordersRouter.get("/orders/byChat/:chatId", async (req, res) => {
   const { chatId } = req.params;
   try {
@@ -62,17 +55,14 @@ ordersRouter.get("/orders/byChat/:chatId", async (req, res) => {
   }
 });
 
-// Route to get all orders
 ordersRouter.get("/orders", async (req, res) => {
   return res.json(await getOrders());
 });
 
-// Route to get an order by ID
 ordersRouter.get("/order/:id", async (req, res) => {
   return res.json(await getOrderById(req.params.id));
 });
 
-// Route to delete an order by ID
 ordersRouter.delete("/order/:id", async (req, res) => {
   await deleteOrderById(req.params.id);
   return res.status(204).send();
@@ -86,9 +76,9 @@ ordersRouter.put("/order/:id", async (req, res) => {
     return res.status(404).json({ error: true, message: "Order not found" });
   }
 });
-// Updates the order status for either buyer or seller
+
 ordersRouter.patch("/order/:id/status", async (req, res) => {
-  const { userId, status, role } = req.body; // role should be either 'buyer' or 'seller'
+  const { userId, status, role } = req.body;
   try {
     const order = await getOrderById(req.params.id);
     if (!order) {

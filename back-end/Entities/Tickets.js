@@ -19,7 +19,7 @@ const Tickets = db.define("Tickets", {
   ticket_status: {
     type: Sequelize.STRING,
     allowNull: false,
-    defaultValue: "Open", // Assuming default status is "Open"
+    defaultValue: "Open",
   },
   ticket_creator_user_id_fk: {
     type: Sequelize.INTEGER,

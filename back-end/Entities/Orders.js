@@ -22,20 +22,19 @@ const Orders = db.define("Orders", {
   },
   service_in_exchange_id: {
     type: Sequelize.INTEGER,
-    allowNull: true, // This field can be null if no service is exchanged
+    allowNull: true,
   },
   order_status_buyer: {
     type: Sequelize.STRING,
     allowNull: false,
-    defaultValue: "Pending", // Defaulting to 'Pending'
+    defaultValue: "Pending",
   },
   order_status_seller: {
     type: Sequelize.STRING,
     allowNull: false,
-    defaultValue: "Pending", // Defaulting to 'Pending'
+    defaultValue: "Pending",
   },
   chat_id: {
-    // Ensure you have this field if using chat_id to link orders
     type: Sequelize.INTEGER,
     allowNull: false,
   },

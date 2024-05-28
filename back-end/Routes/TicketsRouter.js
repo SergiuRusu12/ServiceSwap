@@ -12,8 +12,7 @@ let ticketsRouter = express.Router();
 ticketsRouter.post("/tickets", async (req, res) => {
   return res.status(201).json(await createTicket(req.body));
 });
-// Patch a ticket's status to 'Closed'
-// PATCH route to update the status of a ticket to 'Closed'
+
 ticketsRouter.patch("/tickets/:id/close", async (req, res) => {
   try {
     const ticketId = req.params.id;
@@ -44,7 +43,6 @@ ticketsRouter.delete("/tickets/:id", async (req, res) => {
   return res.status(204).send();
 });
 
-// ticketsRouter.js
 ticketsRouter.put("/tickets/:id/close", async (req, res) => {
   try {
     const result = await updateTicketById(req.params.id, { status: "Closed" });

@@ -37,21 +37,21 @@ const Services = db.define("Services", {
     allowNull: false,
   },
   locality: {
-    type: Sequelize.STRING, // Assuming locality is a string like "Cluj-Napoca"
-    allowNull: true, // Assuming locality may not be applicable to all categories, set to false if it's always required
+    type: Sequelize.STRING,
+    allowNull: true,
   },
   image_url: {
     type: Sequelize.STRING,
-    allowNull: true, // or false if you want to make it required
+    allowNull: true,
   },
   extra_image_1: {
     type: Sequelize.STRING,
-    allowNull: true, // Set to false if the image is required
+    allowNull: true,
   },
-  // Adding the extra_image_3 field
+
   extra_image_2: {
     type: Sequelize.STRING,
-    allowNull: true, // Set to false if the image is required
+    allowNull: true,
   },
 });
 

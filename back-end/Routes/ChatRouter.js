@@ -49,8 +49,6 @@ chatRouter.get("/user/:userId/chats", async (req, res) => {
   }
 });
 
-// Express route handler in your Node.js backend
-// Express route handler in your Node.js backend
 chatRouter.post("/chats/initiate", async (req, res) => {
   const { initiator_id, receiver_id, service_id } = req.body;
   try {
@@ -58,7 +56,7 @@ chatRouter.post("/chats/initiate", async (req, res) => {
       where: {
         initiator_id,
         receiver_id,
-        service_id_fk: service_id, // Changed from service_id to service_id_fk
+        service_id_fk: service_id,
       },
     });
     if (existingChat) {
@@ -67,8 +65,8 @@ chatRouter.post("/chats/initiate", async (req, res) => {
       const newChat = await Chat.create({
         initiator_id,
         receiver_id,
-        service_id_fk: service_id, // Ensure to use the correct column name
-        timestamp: new Date(), // Set the timestamp to the current time
+        service_id_fk: service_id,
+        timestamp: new Date(),
       });
       res.status(201).json(newChat);
     }

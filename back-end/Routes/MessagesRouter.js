@@ -19,7 +19,6 @@ messageRouter.get("/chats/:chatId/messages", async (req, res) => {
   }
 });
 
-// Route to create a new message
 messageRouter.post("/messages", async (req, res) => {
   const { chat_id_fk, sender_id, service_id_fk, message_content } = req.body;
   if (!chat_id_fk || !sender_id || !message_content) {
@@ -29,7 +28,7 @@ messageRouter.post("/messages", async (req, res) => {
     const message = await createMessage({
       chat_id_fk,
       sender_id,
-      service_id_fk, // Ensure this is correctly extracted
+      service_id_fk,
       message_content,
     });
 
@@ -42,7 +41,6 @@ messageRouter.post("/messages", async (req, res) => {
   }
 });
 
-// Route to delete a message
 messageRouter.delete("/messages/:messageId", async (req, res) => {
   try {
     const messageId = parseInt(req.params.messageId, 10);

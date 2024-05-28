@@ -38,7 +38,7 @@ async function getChatsByUserId(userId) {
         },
         {
           model: Services,
-          attributes: ["title", "service_id"], // Include the 'id' attribute here
+          attributes: ["title", "service_id"],
         },
       ],
       order: [["chat_id", "DESC"]],

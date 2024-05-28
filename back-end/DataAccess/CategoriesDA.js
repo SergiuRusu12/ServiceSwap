@@ -1,5 +1,3 @@
-// CategoriesDA.js
-
 import Categories from "../Entities/Categories.js";
 
 async function getCategories() {
@@ -35,5 +33,5 @@ export {
   createCategory,
   deleteCategoryById,
   updateCategoryById,
-  getCategoriesByIds, // Make sure to export this new function
+  getCategoriesByIds,
 };

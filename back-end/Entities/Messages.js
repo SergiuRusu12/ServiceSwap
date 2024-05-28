@@ -12,7 +12,7 @@ const Message = db.define("Message", {
     type: Sequelize.INTEGER,
     allowNull: false,
     references: {
-      model: "Chat", // Assuming your chat model is named 'Chat'
+      model: "Chat",
       key: "chat_id",
     },
   },
