@@ -5,7 +5,6 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase";
 
 const PostServiceModal = (props) => {
-  // Accept props here
   const { isOpen, setModalOpen, refreshServices, context, serviceToEdit } =
     props;
 
@@ -17,7 +16,7 @@ const PostServiceModal = (props) => {
     itemInExchange: "",
     category: "",
     locality: "",
-    serviceStatus: "Pending", // default value
+    serviceStatus: "Pending",
   });
   const removeSelectedImage = (indexToRemove) => {
     setSelectedImages(
@@ -39,7 +38,6 @@ const PostServiceModal = (props) => {
     setSelectedImages([...files]);
   };
 
-  // Fetch categories independently
   useEffect(() => {
     if (isOpen) {
       const fetchCategories = async () => {
@@ -59,7 +57,6 @@ const PostServiceModal = (props) => {
     }
   }, [isOpen]);
 
-  // Set form data for editing independently
   useEffect(() => {
     if (isOpen && serviceToEdit && categories.length) {
       const category =
@@ -84,7 +81,6 @@ const PostServiceModal = (props) => {
     }
   }, [isOpen, serviceToEdit, categories]);
 
-  // Reset form when modal is closed
   useEffect(() => {
     if (!isOpen) {
       setFormData({
@@ -99,7 +95,6 @@ const PostServiceModal = (props) => {
     }
   }, [isOpen]);
 
-  // Localities array
   const localities = [
     "Alba Iulia",
     "Alexandria",
@@ -160,24 +155,21 @@ const PostServiceModal = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Verify that at least one image is selected or already exists
     if (selectedImages.length === 0) {
       alert("Please upload at least one image.");
       return;
     }
 
     try {
-      // Gather URLs from already uploaded images and upload new images if necessary
       const existingImageUrls = selectedImages.filter(
         (img) => typeof img === "string"
       );
-      const newImageUrls = await uploadImages(); // This function uploads only new images
+      const newImageUrls = await uploadImages();
       const allImageUrls = [...existingImageUrls, ...newImageUrls];
 
-      // Prepare the service data with the image URLs
       const serviceData = {
         ...formData,
-        price: null, // Replace with actual logic if managing price
+        price: null,
         item_in_exchange: formData.itemInExchange,
         seller_fk_user_id: parseInt(atob(localStorage.getItem("hashedUserID"))),
         service_status: "Pending",
@@ -208,7 +200,6 @@ const PostServiceModal = (props) => {
         throw new Error("Network response was not ok");
       }
 
-      // Clear the form and close the modal upon success
       setFormData({
         title: "",
         description: "",
@@ -220,7 +211,6 @@ const PostServiceModal = (props) => {
       setSelectedImages([]);
       setModalOpen(false);
 
-      // Refresh the list of services
       if (context === "ProfilePage") {
         props.refreshPage();
       } else {
@@ -232,8 +222,6 @@ const PostServiceModal = (props) => {
       alert("Failed to post the service. Please try again.");
     }
   };
-
-  // ...
 
   if (!isOpen) return null;
 
@@ -312,7 +300,6 @@ const PostServiceModal = (props) => {
             />
             <div className="image-preview">
               {selectedImages.map((image, index) => {
-                // Check if 'image' is a File object; if it's a string, it's assumed to be a URL
                 const isFileObject = image instanceof File;
                 const imageUrl = isFileObject
                   ? URL.createObjectURL(image)

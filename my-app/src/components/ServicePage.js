@@ -29,7 +29,6 @@ export const ServicePage = () => {
   useEffect(() => {
     const fetchOrdersAndCalculateRating = async () => {
       try {
-        // Fetch orders for the user
         const ordersResponse = await fetch(
           `http://localhost:9000/api/orders/user/${initiatorIds}`
         );
@@ -40,7 +39,6 @@ export const ServicePage = () => {
             (order) => order.service_fk_service_id.toString() === serviceId
           );
 
-        // Fetch all reviews and calculate rating based on related orders
         const reviewsResponse = await fetch(
           `http://localhost:9000/api/reviews`
         );
@@ -68,11 +66,11 @@ export const ServicePage = () => {
     };
 
     fetchOrdersAndCalculateRating();
-  }, [serviceId, initiatorIds]); // Add dependencies if needed
+  }, [serviceId, initiatorIds]);
 
   const handleSendMessage = () => {
-    const initiatorId = initiatorIds; // Assuming the user's ID is stored in localStorage
-    const receiverId = service.seller_fk_user_id; // Assuming the service object has this field
+    const initiatorId = initiatorIds;
+    const receiverId = service.seller_fk_user_id;
 
     fetch("http://localhost:9000/api/chats/initiate", {
       method: "POST",
@@ -85,7 +83,6 @@ export const ServicePage = () => {
     })
       .then((res) => res.json())
       .then((chat) => {
-        ///chat/:userId/:chatId/:serviceId
         navigate(`/chat/${initiatorIds}/${chat.chat_id}/${serviceId}`);
       })
       .catch((err) => console.error("Failed to initiate or find chat", err));

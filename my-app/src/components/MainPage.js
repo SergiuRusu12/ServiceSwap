@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../components-css/MainPage.css";
 import { useNavigate } from "react-router-dom";
-// import { storage } from "../firebase"; // Make sure the path is correct
-// import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Toolbar from "./Toolbar";
 import { useParams } from "react-router-dom";
 
@@ -83,7 +81,7 @@ const MainPage = () => {
       const response = await fetch("http://localhost:9000/api/services");
       const data = await response.json();
       setServices(data);
-      console.log("Services refreshed", data); // Check if the services are updated
+      console.log("Services refreshed", data);
     } catch (error) {
       console.error("Failed to refresh services:", error);
     }

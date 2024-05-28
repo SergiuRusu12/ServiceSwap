@@ -34,7 +34,6 @@ const AdminTicketManagement = () => {
           );
           const orderData = await orderRes.json();
 
-          // Determine the target user for banning based on who is not the ticket creator
           const targetUserForBan =
             ticket.ticket_creator_user_id_fk === orderData.buyer_fk_user_id
               ? orderData.seller_fk_user_id
@@ -91,7 +90,7 @@ const AdminTicketManagement = () => {
       }
 
       await closeTicket(ticket.ticket_id);
-      fetchTicketsAndDetails(); // Refresh ticket list after actions
+      fetchTicketsAndDetails();
     } catch (error) {
       console.error(error);
     }

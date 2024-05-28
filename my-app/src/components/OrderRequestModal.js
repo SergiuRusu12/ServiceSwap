@@ -18,7 +18,6 @@ const OrderRequestModal = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch service details and set the default category
     fetch(`http://localhost:9000/api/service/${serviceId}`)
       .then((res) => res.json())
       .then((data) => {
@@ -27,7 +26,6 @@ const OrderRequestModal = ({
       })
       .catch((err) => console.error("Failed to fetch service details", err));
 
-    // Fetch all categories for the dropdown
     fetch("http://localhost:9000/api/categories")
       .then((res) => res.json())
       .then((data) => {
@@ -80,7 +78,7 @@ const OrderRequestModal = ({
       .then((response) => response.json())
       .then((data) => {
         console.log("Order created:", data);
-        onConfirm(); // Optionally, call the passed onConfirm for any additional actions
+        onConfirm();
       })
       .catch((err) => {
         console.error("Failed to create order:", err);
@@ -89,7 +87,6 @@ const OrderRequestModal = ({
   };
 
   const handleAccept = () => {
-    // API call to update the order status to 'InProgress'
     fetch(
       `http://localhost:9000/api/order/${orderDetails[0].order_id}/status`,
       {
@@ -107,21 +104,20 @@ const OrderRequestModal = ({
       .then((response) => response.json())
       .then((data) => {
         console.log("Order updated:", data);
-        onConfirm(); // You can refresh or handle UI changes as needed
+        onConfirm();
       })
       .catch((err) => console.error("Failed to update order status:", err));
     navigate(0);
   };
 
   const handleDeny = () => {
-    // API call to delete the order
     fetch(`http://localhost:9000/api/order/${orderDetails[0].order_id}`, {
       method: "DELETE",
     })
       .then((response) => {
         if (response.ok) {
           console.log("Order deleted");
-          onClose(); // Close modal and refresh or handle UI changes as needed
+          onClose();
         }
       })
       .catch((err) => console.error("Failed to delete order:", err));
@@ -140,7 +136,7 @@ const OrderRequestModal = ({
             <p>
               <strong>Description:</strong> {serviceDetails.description}
             </p>
-            {!isBuyer && ( // This will only show for non-buyers
+            {!isBuyer && (
               <div>
                 <p>
                   <strong>Service in Exchange Offered:</strong> {exch}

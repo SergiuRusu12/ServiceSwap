@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import "../components-css/ChatRoom.css";
 import Toolbar from "./Toolbar.js";
 import ChatSidebar from "./ChatSideBar.js";
-import OrderRequestModal from "./OrderRequestModal.js"; // Import your Modal component once created
+import OrderRequestModal from "./OrderRequestModal.js";
 
 function ChatRoom() {
   const { chatId, serviceId } = useParams();
@@ -60,9 +60,9 @@ function ChatRoom() {
         );
         if (orderResponse.ok) {
           const orderData = await orderResponse.json();
-          setOrderDetails(orderData); // Assuming you have a state hook to store order details
+          setOrderDetails(orderData);
         } else {
-          setOrderDetails(null); // No orders found or error
+          setOrderDetails(null);
         }
       } catch (error) {
         console.error("Error fetching details:", error);
@@ -97,12 +97,12 @@ function ChatRoom() {
   };
 
   const handleOrderInitiation = () => {
-    setShowModal(true); // Shows the modal for order confirmation
+    setShowModal(true);
   };
 
   const handleConfirmOrder = (selectedCategory) => {
     console.log("Order confirmed with service in exchange:", selectedCategory);
-    // Implement the API call to initiate the order here
+
     setShowModal(false);
     navigate(0);
   };
@@ -143,7 +143,6 @@ function ChatRoom() {
             />
             <button onClick={sendMessage}>Send</button>
             {isBuyer && !orderDetails && (
-              // orderDetails[0].order_status_buyer === "Pending" && (
               <button onClick={handleOrderInitiation}>Initiate Order</button>
             )}
             {!isBuyer &&
@@ -161,7 +160,7 @@ function ChatRoom() {
           onClose={() => setShowModal(false)}
           onConfirm={handleConfirmOrder}
           serviceId={serviceId}
-          userId={userId} // pass userId to the modal
+          userId={userId}
           sellerId={sellerId}
           chatId={chatId}
           isBuyer={isBuyer}

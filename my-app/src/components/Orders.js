@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import "../components-css/Orders.css";
 import Toolbar from "./Toolbar";
 import { Bar } from "react-chartjs-2";
-import "chart.js/auto"; // Required for Chart.js v3
+import "chart.js/auto";
 
 const Orders = () => {
   const { userId } = useParams();
@@ -20,7 +20,7 @@ const Orders = () => {
   const [reportMessage, setReportMessage] = useState("");
   const [currentOrderId, setCurrentOrderId] = useState(null);
   const [formError, setFormError] = useState("");
-  const [rating, setRating] = useState(5); // Default to 5 stars, or choose your own default
+  const [rating, setRating] = useState(5);
   const [partiallyCompletedOrders, setPartiallyCompletedOrders] = useState([]);
   const [orderStatusCounts, setOrderStatusCounts] = useState({
     InProgress: 0,
@@ -30,7 +30,6 @@ const Orders = () => {
 
   const navigate = useNavigate();
 
-  // Fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -45,7 +44,6 @@ const Orders = () => {
     fetchCategories();
   }, []);
 
-  // Fetch orders and service titles
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -66,8 +64,6 @@ const Orders = () => {
           })
         );
 
-        // Updated buyer orders filter
-        // Filter for Active Buyer Orders (Excluding "Pending")
         setBuyerOrders(
           ordersWithServices.filter(
             (order) =>
@@ -78,7 +74,6 @@ const Orders = () => {
           )
         );
 
-        // Filter for Active Seller Orders (Excluding "Pending")
         setSellerOrders(
           ordersWithServices.filter(
             (order) =>
@@ -89,7 +84,6 @@ const Orders = () => {
           )
         );
 
-        // Filter for Partially Completed Orders (Excluding "Pending")
         setPartiallyCompletedOrders(
           ordersWithServices.filter(
             (order) =>
@@ -123,7 +117,6 @@ const Orders = () => {
     fetchOrders();
   }, [userId]);
 
-  // Utility to get category name by ID
   const getCategoryNameById = (categoryId) => {
     const category = categories.find((cat) => cat.category_id === categoryId);
     return category ? category.category_name : "Not specified";
@@ -154,7 +147,6 @@ const Orders = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Order status updated:", data);
-        // Post review after successful order status update
         const review = {
           order_fk_order_id: currentOrderToMark.order_id,
           rating: rating,
@@ -168,8 +160,8 @@ const Orders = () => {
       .then((reviewResponse) => reviewResponse.json())
       .then((reviewData) => {
         console.log("Review posted:", reviewData);
-        setShowModal(false); // Close modal on success
-        navigate(0); // Optionally refresh or redirect
+        setShowModal(false);
+        navigate(0);
       })
       .catch((error) => {
         console.error("Failed to update order status or post review:", error);
@@ -212,7 +204,6 @@ const Orders = () => {
         const buyerStatus = order.order_status_buyer;
         const sellerStatus = order.order_status_seller;
 
-        // Determine combined status based on both buyer and seller statuses
         if (buyerStatus === "Completed" && sellerStatus === "Completed") {
           acc.Completed += 1;
         } else if (
@@ -322,7 +313,7 @@ const Orders = () => {
       })
       .then((data) => {
         console.log("Ticket created:", data);
-        // Update the order status for both buyer and seller
+
         const updateOrderStatus = async () => {
           const statuses = ["buyer", "seller"];
           for (const role of statuses) {
@@ -348,10 +339,10 @@ const Orders = () => {
         console.log(
           "Order status updated to 'Closed' for both buyer and seller"
         );
-        setShowReportModal(false); // Close modal on success
+        setShowReportModal(false);
         setReportTitle("");
         setReportMessage("");
-        navigate(0); // Refresh or redirect as needed
+        navigate(0);
       })
       .catch((error) => {
         console.error("Failed to process your request:", error);

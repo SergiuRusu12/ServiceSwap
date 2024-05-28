@@ -52,10 +52,10 @@ const Toolbar = ({ onEditService, ...props }) => {
   const navigateToChats = () => {
     const hashedUserID = localStorage.getItem("hashedUserID");
     if (hashedUserID) {
-      const userID = atob(hashedUserID); // Decoding the base64 user ID
+      const userID = atob(hashedUserID);
       navigate(`/chats/${userID}`);
     } else {
-      navigate("/login"); // Redirect to login or some other page if userID is not found
+      navigate("/login");
     }
   };
 

@@ -7,7 +7,7 @@ const Chats = () => {
   const { userId } = useParams();
   const [chats, setChats] = useState([]);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true); // Initialize as true since data fetch starts immediately
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const Chats = () => {
   }, [userId]);
 
   const handleChatClick = (chatId, serviceId) => {
-    navigate(`/chat/${userId}/${chatId}/${serviceId}`); // Navigate with correct serviceId
+    navigate(`/chat/${userId}/${chatId}/${serviceId}`);
   };
 
   const handleServicePage = (serviceId) => {
@@ -72,7 +72,7 @@ const Chats = () => {
                 <button
                   className="chat-service-button"
                   onClick={(e) => {
-                    e.stopPropagation(); // Prevent the chat click event
+                    e.stopPropagation();
                     handleServicePage(chat.Service.service_id);
                   }}
                 >

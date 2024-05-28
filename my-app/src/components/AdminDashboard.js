@@ -16,7 +16,6 @@ import {
   PieController,
 } from "chart.js";
 
-// Registering chart components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -78,7 +77,7 @@ const AdminDashboard = () => {
         display: true,
         position: "top",
         labels: {
-          color: "#fff", // White text for the legend
+          color: "#fff",
         },
       },
       title: {
@@ -86,11 +85,11 @@ const AdminDashboard = () => {
         text: "Ticket Status Distribution",
         font: {
           size: 16,
-          color: "#fff", // White text for the title
+          color: "#fff",
         },
       },
     },
-    maintainAspectRatio: false, // Allow custom size
+    maintainAspectRatio: false,
   };
 
   const chartOptionsService = {
@@ -104,7 +103,7 @@ const AdminDashboard = () => {
         text: "Service Status Overview",
         font: {
           size: 16,
-          color: "#fff", // White text for the title
+          color: "#fff",
         },
       },
       tooltip: {
@@ -126,22 +125,22 @@ const AdminDashboard = () => {
       y: {
         beginAtZero: true,
         ticks: {
-          color: "#fff", // White text for the scales
+          color: "#fff",
         },
         grid: {
-          color: "rgba(57, 255, 20, 0.2)", // Light green grid lines
+          color: "rgba(57, 255, 20, 0.2)",
         },
       },
       x: {
         ticks: {
-          color: "#fff", // White text for the scales
+          color: "#fff",
         },
         grid: {
-          color: "rgba(57, 255, 20, 0.2)", // Light green grid lines
+          color: "rgba(57, 255, 20, 0.2)",
         },
       },
     },
-    maintainAspectRatio: false, // Allow custom size
+    maintainAspectRatio: false,
   };
 
   const ticketChartData = {

@@ -16,14 +16,12 @@ const ProfilePage = () => {
   const [deniedServices, setDeniedServices] = useState([]);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [serviceToEdit, setServiceToEdit] = useState(null);
-  // Handler for the edit button
+
   const openEditModal = (service) => {
     setServiceToEdit(service);
     setEditModalOpen(true);
   };
   const refreshUserServices = useCallback(async () => {
-    // Fetching user services logic here
-    // This is similar to what you have in fetchUserDataAndServices
     try {
       const servicesResponse = await fetch(
         `http://localhost:9000/api/services/user/${userId}`
@@ -35,7 +33,6 @@ const ProfilePage = () => {
     }
   }, [userId]);
 
-  // Wrap the fetching logic with useCallback
   const fetchUserDataAndServices = useCallback(async () => {
     try {
       const userResponse = await fetch(
@@ -61,14 +58,14 @@ const ProfilePage = () => {
     } catch (error) {
       console.error("Error:", error);
     }
-  }, [userId]); // Dependencies for useCallback
+  }, [userId]);
 
   useEffect(() => {
     fetchUserDataAndServices();
-  }, [fetchUserDataAndServices]); // Including the dependency here
+  }, [fetchUserDataAndServices]);
 
   const deleteService = async (serviceId) => {
-    console.log("Attempting to delete service with ID:", serviceId); // Log the service ID
+    console.log("Attempting to delete service with ID:", serviceId);
     if (window.confirm("Are you sure you want to delete this service?")) {
       try {
         const response = await fetch(
@@ -80,8 +77,8 @@ const ProfilePage = () => {
         if (!response.ok) {
           throw new Error("Failed to delete the service.");
         }
-        console.log(`Service with ID: ${serviceId} deleted successfully.`); // Confirm deletion
-        // Refresh the services by filtering out the deleted one
+        console.log(`Service with ID: ${serviceId} deleted successfully.`);
+
         setServices(
           services.filter((service) => service.service_id !== serviceId)
         );
@@ -95,16 +92,15 @@ const ProfilePage = () => {
     setServices(
       services.map((service) => {
         if (service.service_id === updatedService.service_id) {
-          return updatedService; // Return the updated service data
+          return updatedService;
         }
-        return service; // Return unmodified service data
+        return service;
       })
     );
   };
 
   if (!user) return <div>Loading...</div>;
   const refreshPage = () => {
-    // Navigate to the current user's profile page to cause a remount
     navigate(`/user/${userId}`);
   };
 

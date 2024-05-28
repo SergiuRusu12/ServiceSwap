@@ -33,18 +33,16 @@ const LoginSignup = () => {
     );
   };
 
-  // A pseudo "hashing" function to obfuscate the userID
   const pseudoHashUserID = (userID) => {
-    const base64encoded = btoa(userID.toString()); // Base64 encode (not secure hashing!)
+    const base64encoded = btoa(userID.toString());
     return base64encoded;
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevents the default page reload on form submission
+    event.preventDefault();
     const endpoint = action === "Login" ? "/api/users" : "/api/user";
 
     if (action === "Login") {
-      // Handle login
       try {
         const usersResponse = await fetch(`http://localhost:9000${endpoint}`);
         const users = await usersResponse.json();
@@ -59,10 +57,9 @@ const LoginSignup = () => {
 
         if (user.user_type === "banned") {
           alert("Your account has been banned for not respecting guidelines.");
-          return; // Stops further execution and navigation
+          return;
         }
 
-        // Pseudo-hash the userID
         const hashedUserID = pseudoHashUserID(user.user_id);
 
         if (user.user_type === "admin") {
@@ -76,7 +73,6 @@ const LoginSignup = () => {
         alert("An error occurred during login. Please try again.");
       }
     } else {
-      // Sign up validations and logic
       if (!validateUsername(username)) {
         alert("Username must be at least 3 characters long.");
         return;
@@ -133,7 +129,7 @@ const LoginSignup = () => {
       <div className="header">
         <div className="text">{action}</div>
       </div>
-      {/* Rest of your component */}
+
       <div className="inputs">
         {/* Email input for Sign Up */}
         {action === "Sign Up" && (
