@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { Pie, Bar } from "react-chartjs-2";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 import "../components-css/AdminDashboard.css";
 import {
   Chart as ChartJS,
@@ -24,7 +25,8 @@ ChartJS.register(
   Tooltip,
   Legend,
   ArcElement,
-  PieController
+  PieController,
+  ChartDataLabels // Register the plugin
 );
 
 const AdminDashboard = () => {
@@ -87,6 +89,17 @@ const AdminDashboard = () => {
           size: 16,
           color: "#fff",
         },
+      },
+      datalabels: {
+        formatter: (value, context) => {
+          const total = context.dataset.data.reduce(
+            (acc, curr) => acc + curr,
+            0
+          );
+          const percentage = ((value / total) * 100).toFixed(2) + "%";
+          return percentage;
+        },
+        color: "#fff",
       },
     },
     maintainAspectRatio: false,

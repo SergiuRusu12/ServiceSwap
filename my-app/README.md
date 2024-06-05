@@ -79,6 +79,7 @@ npm i react-chartjs-2 chart.js
 npm install @fortawesome/fontawesome-svg-core @fortawesome/free-brands-svg-icons @fortawesome/free-regular-svg-icons @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome
 npm install --save react-modal
 cd ..
+npm install chartjs-plugin-datalabels
 
 cd back-end
 npm install firebase

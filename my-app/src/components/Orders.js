@@ -234,9 +234,9 @@ const Orders = () => {
           orderStatusCounts.Pending,
         ],
         backgroundColor: [
-          "rgba(255, 206, 86, 0.2)", // InProgress
-          "rgba(75, 192, 192, 0.2)", // Completed
-          "rgba(255, 99, 132, 0.2)", // Pending
+          "rgba(255, 206, 86, 0.8)", // InProgress
+          "rgba(75, 192, 192, 0.8)", // Completed
+          "rgba(255, 99, 132, 0.8)", // Pending
         ],
         borderColor: [
           "rgba(255, 206, 86, 1)",
