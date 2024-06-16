@@ -121,7 +121,7 @@ const ProfilePage = () => {
             </p>
           </div>
           <div className="user-services-pfp">
-            <h2>My Services</h2>
+            <h1>My Services</h1>
             <div className="services-list-pfp">
               {[
                 { title: "Active Services", data: activeServices },

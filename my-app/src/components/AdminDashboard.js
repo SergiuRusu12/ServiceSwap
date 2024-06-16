@@ -26,7 +26,7 @@ ChartJS.register(
   Legend,
   ArcElement,
   PieController,
-  ChartDataLabels // Register the plugin
+  ChartDataLabels
 );
 
 const AdminDashboard = () => {

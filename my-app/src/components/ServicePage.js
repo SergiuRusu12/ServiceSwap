@@ -146,8 +146,14 @@ export const ServicePage = () => {
             Service in exchange: {service.item_in_exchange}
           </p>
           <p className="service-rating">
-            {ratingLoading ? "Loading rating..." : `Rating: ${rating}`} / 5{" "}
-            <FontAwesomeIcon icon={faStar} />
+            {ratingLoading
+              ? "Loading rating..."
+              : `Rating: ${
+                  typeof rating === "number" && rating >= 0
+                    ? rating.toFixed(2)
+                    : rating
+                }`}{" "}
+            / 5 <FontAwesomeIcon icon={faStar} />
           </p>
           <div className="message-button-container">
             <button className="message-button" onClick={handleSendMessage}>
