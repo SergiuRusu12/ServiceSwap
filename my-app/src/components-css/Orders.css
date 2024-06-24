@@ -348,3 +348,15 @@ input[type="range"]::-moz-focus-outer {
 input[type="range"]::-moz-range-thumb {
   border: none;
 }
+
+.rating-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.rating-value {
+  margin-top: 5px;
+  color: #fff; /* Adjust color as needed */
+}

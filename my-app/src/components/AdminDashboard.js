@@ -89,6 +89,7 @@ const AdminDashboard = () => {
           size: 16,
           color: "#fff",
         },
+        color: "#fff",
       },
       datalabels: {
         formatter: (value, context) => {
@@ -99,7 +100,12 @@ const AdminDashboard = () => {
           const percentage = ((value / total) * 100).toFixed(2) + "%";
           return percentage;
         },
-        color: "#fff",
+        color: "#000",
+      },
+      tooltip: {
+        titleColor: "#fff",
+        bodyColor: "#fff",
+        footerColor: "#fff",
       },
     },
     maintainAspectRatio: false,
@@ -110,6 +116,9 @@ const AdminDashboard = () => {
     plugins: {
       legend: {
         display: false,
+        labels: {
+          color: "#fff",
+        },
       },
       title: {
         display: true,
@@ -118,6 +127,7 @@ const AdminDashboard = () => {
           size: 16,
           color: "#fff",
         },
+        color: "#fff",
       },
       tooltip: {
         callbacks: {
@@ -132,6 +142,12 @@ const AdminDashboard = () => {
             return label;
           },
         },
+        titleColor: "#fff",
+        bodyColor: "#fff",
+        footerColor: "#fff",
+      },
+      datalabels: {
+        color: "#000",
       },
     },
     scales: {
@@ -198,7 +214,7 @@ const AdminDashboard = () => {
           >
             Manage Tickets
           </button>
-          <div style={{ width: "600px", height: "575px", margin: "0 auto" }}>
+          <div style={{ width: "500px", height: "360px", margin: "0 auto" }}>
             <Pie data={ticketChartData} options={chartOptionsTicket} />
           </div>
         </div>
@@ -211,7 +227,7 @@ const AdminDashboard = () => {
           >
             Approve Services
           </button>
-          <div style={{ width: "500px", height: "500px", margin: "0 auto" }}>
+          <div style={{ width: "500px", height: "360px", margin: "0 auto" }}>
             <Bar data={serviceChartData} options={chartOptionsService} />
           </div>
         </div>

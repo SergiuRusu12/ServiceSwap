@@ -35,7 +35,7 @@
 .admin-sections {
   display: flex;
   justify-content: space-around;
-  margin-top: 100px; /* Adjust margin to account for the fixed header */
+  margin-top: 70px; /* Adjust margin to account for the fixed header */
 }
 
 .admin-section {
@@ -62,7 +62,7 @@
 }
 
 .buttonADD {
-  padding: 10px 20px;
+  padding: 9px 20px;
   background-color: #39ff14; /* Neon green */
   color: black;
   border: none;

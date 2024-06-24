@@ -246,39 +246,67 @@ const Orders = () => {
         borderWidth: 1,
       },
     ],
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-      },
-      plugins: {
-        legend: {
-          display: true,
-        },
-        title: {
-          display: true,
-          text: "Order Status Overview",
-        },
-      },
-    },
   };
+
   const chartOptions = {
     responsive: true,
     plugins: {
       legend: {
         display: true,
+        labels: {
+          color: "#fff",
+        },
       },
       title: {
         display: true,
         text: "Order Status Overview",
+        font: {
+          size: 16,
+          color: "#fff",
+        },
+        color: "#fff",
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            let label = context.dataset.label || "";
+            if (label) {
+              label += ": ";
+            }
+            if (context.parsed.y !== null) {
+              label += context.parsed.y;
+            }
+            return label;
+          },
+        },
+        titleColor: "#fff",
+        bodyColor: "#fff",
+        footerColor: "#fff",
+      },
+      datalabels: {
+        color: "#000",
       },
     },
     scales: {
       y: {
         beginAtZero: true,
+        ticks: {
+          color: "#fff",
+        },
+        grid: {
+          color: "rgba(57, 255, 20, 0.2)",
+        },
+      },
+      x: {
+        ticks: {
+          color: "#fff",
+        },
+        grid: {
+          color: "rgba(57, 255, 20, 0.2)",
+        },
       },
     },
+    maintainAspectRatio: false,
   };
 
   const submitReport = () => {
@@ -460,7 +488,6 @@ const Orders = () => {
               <h4>Confirm Completion</h4>
               <p>Did the other user complete his end of the deal?</p>
               <div className="rating-container">
-                <label className="rating-label">Rating:</label>
                 <input
                   type="range"
                   min="1"
@@ -468,12 +495,14 @@ const Orders = () => {
                   value={rating}
                   onChange={(e) => setRating(parseInt(e.target.value))}
                 />
+                <div className="rating-value">Rating: {rating}</div>
               </div>
               <button onClick={confirmMarkAsDone}>Yes</button>
               <button onClick={() => setShowModal(false)}>No</button>
             </div>
           </div>
         )}
+
         {showReportModal && (
           <div className="modal-o">
             <div className="modal-content-o">
